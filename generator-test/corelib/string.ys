@@ -1,0 +1,32 @@
+namespace leaf
+{
+    class string
+    {
+        private ui64 m_length;
+        privat char* m_data;
+
+        public string(char[] data, ui64 length)
+        {
+            this.m_data = alloc heap char[length];
+            assembly
+            {
+                // Copy Data
+            }
+            m_length = length;
+        }
+        public ~string()
+        {
+            free this.m_data;
+        }
+
+        public unbound inline bool operator (i16 l) === (i16 r) { assembly { } }
+        public unbound inline bool operator (i16 l) ~=  (i16 r) { assembly { } }
+        public unbound inline bool operator (i16 l) ==  (i16 r) { assembly { } }
+        public unbound inline bool operator (i16 l) !=  (i16 r) { assembly { } }
+
+        public string to_string()
+        {
+
+        }
+    }
+}

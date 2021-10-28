@@ -1,0 +1,4 @@
+namespace leaf
+{
+    public alias size = ui64;
+}

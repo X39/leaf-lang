@@ -1,0 +1,36 @@
+namespace leaf
+{
+    class f32
+    {
+        <!pragma size 4!>
+        
+        public unbound inline bool operator (f32 l) +   (f32 r) { assembly { } }
+        public unbound inline bool operator (f32 l) -   (f32 r) { assembly { } }
+        public unbound inline bool operator (f32 l) *   (f32 r) { assembly { } }
+        public unbound inline bool operator (f32 l) /   (f32 r) { assembly { } }
+        public unbound inline bool operator (f32 l) <<< (f32 r) { assembly { } }
+        public unbound inline bool operator (f32 l) <<  (f32 r) { assembly { } }
+        public unbound inline bool operator (f32 l) <=  (f32 r) { assembly { } }
+        public unbound inline bool operator (f32 l) <   (f32 r) { assembly { } }
+        public unbound inline bool operator (f32 l) >>> (f32 r) { assembly { } }
+        public unbound inline bool operator (f32 l) >>  (f32 r) { assembly { } }
+        public unbound inline bool operator (f32 l) >=  (f32 r) { assembly { } }
+        public unbound inline bool operator (f32 l) >   (f32 r) { assembly { } }
+        public unbound inline bool operator (f32 l) ||  (f32 r) { assembly { } }
+        public unbound inline bool operator (f32 l) |   (f32 r) { assembly { } }
+        public unbound inline bool operator (f32 l) &&  (f32 r) { assembly { } }
+        public unbound inline bool operator (f32 l) &   (f32 r) { assembly { } }
+        public unbound inline bool operator (f32 l) ~=  (f32 r) { assembly { } }
+        public unbound inline bool operator (f32 l) !=  (f32 r) { assembly { } }
+        public unbound inline bool operator (f32 l) ^   (f32 r) { assembly { } }
+        public unbound inline bool operator ! (f32 r) { assembly { } }
+        public unbound inline bool operator ~ (f32 r) { assembly { } }
+        public unbound inline bool operator + (f32 r) { assembly { } }
+        public unbound inline bool operator - (f32 r) { assembly { } }
+
+        public string to_string()
+        {
+            
+        }
+    }
+}

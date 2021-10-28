@@ -1,0 +1,19 @@
+namespace leaf
+{
+    class array<TValue, TSize = size>
+    {
+        <!pragma size 8!>
+
+        public array() { assembly { } }
+
+        public TSize size { get { assembly { } } }
+
+        public T [TSize index]
+        {
+            get { assembly { } }
+            set { assembly { } }
+        }
+        public void resize(TSize new_size) { assembly { } }
+        public string to_string() { return $"array<{nameof(TValue)}, {nameof(TSize)}> {{ size: {size} }}"; }
+    }
+}

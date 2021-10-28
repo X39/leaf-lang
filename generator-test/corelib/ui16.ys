@@ -1,0 +1,36 @@
+namespace leaf
+{
+    class ui16
+    {
+        <!pragma size 2!>
+        
+        public unbound inline bool operator (ui16 l) +   (ui16 r) { assembly { } }
+        public unbound inline bool operator (ui16 l) -   (ui16 r) { assembly { } }
+        public unbound inline bool operator (ui16 l) *   (ui16 r) { assembly { } }
+        public unbound inline bool operator (ui16 l) /   (ui16 r) { assembly { } }
+        public unbound inline bool operator (ui16 l) <<< (ui16 r) { assembly { } }
+        public unbound inline bool operator (ui16 l) <<  (ui16 r) { assembly { } }
+        public unbound inline bool operator (ui16 l) <=  (ui16 r) { assembly { } }
+        public unbound inline bool operator (ui16 l) <   (ui16 r) { assembly { } }
+        public unbound inline bool operator (ui16 l) >>> (ui16 r) { assembly { } }
+        public unbound inline bool operator (ui16 l) >>  (ui16 r) { assembly { } }
+        public unbound inline bool operator (ui16 l) >=  (ui16 r) { assembly { } }
+        public unbound inline bool operator (ui16 l) >   (ui16 r) { assembly { } }
+        public unbound inline bool operator (ui16 l) ||  (ui16 r) { assembly { } }
+        public unbound inline bool operator (ui16 l) |   (ui16 r) { assembly { } }
+        public unbound inline bool operator (ui16 l) &&  (ui16 r) { assembly { } }
+        public unbound inline bool operator (ui16 l) &   (ui16 r) { assembly { } }
+        public unbound inline bool operator (ui16 l) ==  (ui16 r) { assembly { } }
+        public unbound inline bool operator (ui16 l) !=  (ui16 r) { assembly { } }
+        public unbound inline bool operator (ui16 l) ^   (ui16 r) { assembly { } }
+        public unbound inline bool operator ! (ui16 r) { assembly { } }
+        public unbound inline bool operator ~ (ui16 r) { assembly { } }
+        public unbound inline bool operator + (ui16 r) { assembly { } }
+        public unbound inline bool operator - (ui16 r) { assembly { } }
+
+        public string to_string()
+        {
+            
+        }
+    }
+}

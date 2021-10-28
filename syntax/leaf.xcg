@@ -1,0 +1,117 @@
+/* comment */
+token integer-binary
+    require once 0b
+    require plus { 0-9, underscore }
+    
+token integer-hex
+    require once 0x
+    require plus { 0-9, underscore }
+
+token integer-unsigned
+    require plus { 0-9 }
+    
+token integer-signed-negative
+    require once -
+    require plus { 0-9 }
+    
+token integer-signed-positive
+    require once +
+    require plus { 0-9 }
+
+token integer
+    require once { integer-signed-positive, integer-signed-negative, integer-unsigned }
+
+token scalar
+    require once { integer }
+    require once .
+    require once { integer }
+    
+token slash: "/"
+    require once /
+    
+token star: "*"
+    require once *
+    
+token plus: "+"
+    require once +
+    
+token minus: "-"
+    require once -
+    
+token underscore: "_"
+    require once _
+
+token true
+    require once true
+
+token false
+    require once false
+
+token ident
+    require once { a-z, A-Z, underscore }
+    require [0, *) { a-z, A-Z, 0-9, underscore }
+    backtrack not once -
+
+token string-formatable-start
+    require once $
+    require once "
+    require not [0, *) {
+    require once {
+
+token string-formatable-fake
+    require once $
+    require once "
+    require not [0, *) { string-unescaped-ending }
+    require once "
+
+token string-formatable-continuation
+    require once }
+    require not [0, *) {
+    require once {
+
+token string-formatable-end
+    require once }
+    require not [0, *) { string-unescaped-ending }
+    require once "
+
+token string-unescaped-ending
+    backtrack not once \
+    require once "
+
+token string
+    require once "
+    require not [0, *) { string-unescaped-ending }
+    require once "
+
+token char-unescaped-ending
+    backtrack not once \
+    require once '
+    
+token char
+    require once '
+    require not [0, *) { char-unescaped-ending }
+    require once '
+
+
+comment
+    start //
+    end EOL
+comment
+    start /*
+    end */
+
+
+production main
+    if match using
+        while match using
+            match @[usings]using
+    while not eof
+        alternatives
+            match @[namespaces]namespace
+            match @[conversions]conversion
+            match @[classes]class
+            match @[methods]method
+            match @[properties]property
+            match @[fields]field
+            match @[pragmas]pragma
+            error

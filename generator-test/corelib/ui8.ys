@@ -1,0 +1,36 @@
+namespace leaf
+{
+    class ui8
+    {
+        <!pragma size 1!>
+        
+        public unbound inline bool operator (ui8 l) +   (ui8 r) { assembly { } }
+        public unbound inline bool operator (ui8 l) -   (ui8 r) { assembly { } }
+        public unbound inline bool operator (ui8 l) *   (ui8 r) { assembly { } }
+        public unbound inline bool operator (ui8 l) /   (ui8 r) { assembly { } }
+        public unbound inline bool operator (ui8 l) <<< (ui8 r) { assembly { } }
+        public unbound inline bool operator (ui8 l) <<  (ui8 r) { assembly { } }
+        public unbound inline bool operator (ui8 l) <=  (ui8 r) { assembly { } }
+        public unbound inline bool operator (ui8 l) <   (ui8 r) { assembly { } }
+        public unbound inline bool operator (ui8 l) >>> (ui8 r) { assembly { } }
+        public unbound inline bool operator (ui8 l) >>  (ui8 r) { assembly { } }
+        public unbound inline bool operator (ui8 l) >=  (ui8 r) { assembly { } }
+        public unbound inline bool operator (ui8 l) >   (ui8 r) { assembly { } }
+        public unbound inline bool operator (ui8 l) ||  (ui8 r) { assembly { } }
+        public unbound inline bool operator (ui8 l) |   (ui8 r) { assembly { } }
+        public unbound inline bool operator (ui8 l) &&  (ui8 r) { assembly { } }
+        public unbound inline bool operator (ui8 l) &   (ui8 r) { assembly { } }
+        public unbound inline bool operator (ui8 l) ==  (ui8 r) { assembly { } }
+        public unbound inline bool operator (ui8 l) !=  (ui8 r) { assembly { } }
+        public unbound inline bool operator (ui8 l) ^   (ui8 r) { assembly { } }
+        public unbound inline bool operator ! (ui8 r) { assembly { } }
+        public unbound inline bool operator ~ (ui8 r) { assembly { } }
+        public unbound inline bool operator + (ui8 r) { assembly { } }
+        public unbound inline bool operator - (ui8 r) { assembly { } }
+
+        public string to_string()
+        {
+            
+        }
+    }
+}

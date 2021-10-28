@@ -1,0 +1,13 @@
+namespace leaf
+{
+    class reference<TValue>
+    {
+        <!pragma size 8!>
+
+        private reference() { assembly { } }
+        public string to_string() { assembly { } }
+
+        public operator . { assembly { } }
+        public operator -> { assembly { } }
+    }
+}

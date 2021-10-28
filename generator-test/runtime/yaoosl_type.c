@@ -1,0 +1,10 @@
+#include "leaf_type.h"
+
+leaf_GENERIC_IMPLEMENTATION_LIST(leaf_parameter_info);
+leaf_GENERIC_IMPLEMENTATION_LIST(leaf_method_info);
+leaf_GENERIC_IMPLEMENTATION_LIST(leaf_property_info);
+leaf_GENERIC_IMPLEMENTATION_LIST(leaf_field_info);
+leaf_GENERIC_IMPLEMENTATION_LIST(leaf_method_call_reference);
+leaf_GENERIC_IMPLEMENTATION_LIST2(uint8_t, uint8);
+leaf_GENERIC_IMPLEMENTATION_LIST2(struct leaf_type, leaf_type);
+leaf_GENERIC_IMPLEMENTATION_LIST2(struct leaf_type*, leaf_type_ptr);

@@ -1,0 +1,26 @@
+Conversion
+    1. Conversion of any type to any other type may happen,
+       as long as there is a chain of conversions available that can lead to the desired type.
+       eg. `MyClass` -> `DateTime` -> `uint64_t` (unix timestamp) -> `string`
+    2. Conversion will always pick the shortest route to a given type
+       eg. (vs 1) `MyClass` -> `DateTime` -> `string`
+    3. If there is more then one conversion available at a given solving depths, conversion cannot be done and an error shall be raised.
+       eg. Library 1 and 2 both implement a conversion for MyClass to string
+Runtime Contents:
+    - Value Stack
+        A blob of bytes that is guaranteed to not resize.
+    - 
+Calling Convention:
+    - For instance methods, `this` is always the 0th parameter
+    - `this` always is a reference
+    - For unbound methods, the 0th parameter is whatever the user defines
+    - A method is responsible for cleaning up all input arguments and shall only ever leave the return value on the value stack
+    - A call at runtime involves three to four steps:
+        1. Push the arguments to the stack (0th first)
+        2. Push the method pointer to the stack
+        3. Emit the call OPC
+        4. IF the method return type is not void, the value will be placed at SL
+    - A call at compiletime involves two to three steps:
+        1. Push the arguments to the stack (0th first)
+        2. Emit the call direct OPC with an arg that points to the refered method
+        3. IF the method return type is not void, the value will be placed at SL
