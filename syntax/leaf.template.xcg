@@ -25,7 +25,8 @@ production template-definition
         match @[items]template-definition-item-direct-type
     while match ","
         alternatives
-            match "," @[items]template-definition-item
+            match @[items]template-definition-item-identifier
+            match @[items]template-definition-item-direct-type
             match ","
             error
     match ">"

@@ -107,6 +107,8 @@ production main
             match @[usings]using
     while not eof
         alternatives
+            match @[contract]contract
+            match @[aliases]alias
             match @[namespaces]namespace
             match @[conversions]conversion
             match @[classes]class

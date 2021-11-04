@@ -12,6 +12,7 @@ production namespace
     match "{"
     while not match "}"
         alternatives
+            match @[contracts]contract
             match @[aliases]alias-encapsulated
             match @[constants]constant
             match @[usings]using
@@ -36,12 +37,14 @@ production class
     match "{"
     while not match "}"
         alternatives
+            match @[contracts]contract
             match @[aliases]alias-encapsulated
             match @[constants]constant
             match @[usings]using
             match @[indexers]indexer
             match @[operators-binary]operator-binary-overload
             match @[operators-unary]operator-unary-overload
+            match @[operators-nullar]operator-nullar-overload
             match @[conversions]conversion
             match @[classes]class
             match @[constructors]constructor
@@ -219,7 +222,7 @@ production field
     match @[target-type]type-match @[name]ident ";"
 
 production constant
-    match "const" @[target-type]type-match @[name]ident = @[exp-or] ";"
+    match "const" @[target-type]type-match @[name]ident "=" @[value]exp-or ";"
 
 production using
     match "using"

@@ -1,5 +1,5 @@
 #pragma once
-#include "../leaf_compiler.hpp"
+#include "../compiler.hpp"
 #include "stage_base.hpp"
 #include <vector>
 #include <string>

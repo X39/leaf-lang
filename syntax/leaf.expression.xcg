@@ -33,11 +33,29 @@ production exp-constant
         match @[t]char
 
 production exp-lambda
-    match @[args]method-arglist @[scope]scope
+    alternatives
+        match @[capture]capture-list @[args]method-arglist @[scope]scope-lambda
+        match @[args]method-arglist @[scope]scope-lambda
+
+production capture-list-item
+    alternatives
+        match @[capture-type]"copy"
+    match @[variable]ident
+
+production capture-list
+    match "["
+    if match capture-list-item
+        match @[items]capture-list-item
+        while match capture-list-item
+            match "," @[items]capture-list-item
+        if match ","
+            match ","
+    match "]"
     
 production exp-value
     alternatives
-        match @[exp-lambda]exp-constant
+        match @[exp-lambda]exp-lambda
+        match @[exp-constant]exp-constant
         match @[scalar]scalar-literal
         match @[integer-hex]integer-hex-literal
         match @[integer-binary]integer-binary-literal
