@@ -12,19 +12,43 @@ production namespace
     match "{"
     while not match "}"
         alternatives
-            match @[contracts]contract
-            match @[aliases]alias-encapsulated
-            match @[constants]constant
             match @[usings]using
-            match @[namespaces]namespace
-            match @[conversions]conversion
-            match @[classes]class
-            match @[methods]method
-            match @[properties]property
-            match @[fields]field
             match @[pragmas]pragma
+            match @[aliases]alias-encapsulated
+            match @[classes]class
+            match @[constants]constant
+            match @[contracts]contract
+            match @[conversions]conversion
+            match @[fields]field
+            match @[methods]method
+            match @[namespaces]namespace
+            match @[properties]property
             error
     match "}"
+
+production class-extends
+    match ":"
+    match @[types]type-navigation
+    while match ","
+        alternatives
+            match "," @[types]type-navigation
+            match ","
+
+production class-implements
+    match "implementing"
+    match @[types]type-navigation
+    while match ","
+        alternatives
+            match "," @[types]type-navigation
+            match ","
+
+production class-imports
+    match "importing"
+    match @[types]type-navigation
+    while match ","
+        alternatives
+            match "," @[types]type-navigation
+            match ","
     
 production class
     while match attribute
@@ -32,28 +56,33 @@ production class
     match @[scope]encapsulation "class" @[name]ident
     if match template-definition
         match @[template]template-definition
-    if match lifetime
-        match @[lifetime]lifetime
+    if match class-extends
+        match @[extends]class-extends
+    if match class-implements
+        match @[implements]class-implements
+    if match class-imports
+        match @[imports]class-imports
     match "{"
     while not match "}"
         alternatives
-            match @[contracts]contract
-            match @[aliases]alias-encapsulated
-            match @[constants]constant
             match @[usings]using
-            match @[indexers]indexer
-            match @[operators-binary]operator-binary-overload
-            match @[operators-unary]operator-unary-overload
-            match @[operators-nullar]operator-nullar-overload
-            match @[conversions]conversion
-            match @[classes]class
-            match @[constructors]constructor
-            match @[destructors]destructor
-            match @[copystructors]copystructor
-            match @[properties]property
-            match @[fields]field
-            match @[methods]method
             match @[pragmas]pragma
+            match @[aliases]alias-encapsulated
+            match @[classes]class
+            match @[constants]constant
+            match @[constructors]constructor
+            match @[contracts]contract
+            match @[copystructors]copystructor
+            match @[conversions]conversion
+            match @[destructors]destructor
+            match @[fields]field
+            match @[indexers]indexer
+            match @[methods]method
+            match @[namespaces]namespace
+            match @[operators-binary]operator-binary-overload
+            match @[operators-nullar]operator-nullar-overload
+            match @[operators-unary]operator-unary-overload
+            match @[properties]property
             error
     match "}"
 

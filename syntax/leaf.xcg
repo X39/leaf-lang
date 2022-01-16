@@ -102,18 +102,16 @@ comment
 
 
 production main
-    if match using
-        while match using
-            match @[usings]using
     while not eof
         alternatives
-            match @[contract]contract
-            match @[aliases]alias
-            match @[namespaces]namespace
-            match @[conversions]conversion
-            match @[classes]class
-            match @[methods]method
-            match @[properties]property
-            match @[fields]field
+            match @[usings]using
             match @[pragmas]pragma
+            match @[aliases]alias
+            match @[classes]class
+            match @[contract]contract
+            match @[conversions]conversion
+            match @[fields]field
+            match @[methods]method
+            match @[namespaces]namespace
+            match @[properties]property
             error

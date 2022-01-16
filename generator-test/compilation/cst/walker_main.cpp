@@ -15,16 +15,18 @@
 #include "walker_contract.hpp"
 #include "walker_alias.hpp"
 
-void leaf::compilation::walkers::walker_main::register_contents(compilation_unit cu)
+void leaf::compilation::cst::walker_main::register_contents(compilation_unit cu)
 {
-    for (const auto &node: m_node.pragmas)
-    {
-        cu.push_back(data::pragma(*node));
-    }
+    auto using_scope = cu.with_using_scope();
     for (const auto &node: m_node.usings)
     {
         cu.push_back(data::using_(*node));
     }
+    for (const auto &node: m_node.pragmas)
+    {
+        cu.push_back(data::pragma(*node));
+    }
+
     for (const auto &node: m_node.namespaces)
     {
         walker_namespace(*node).register_contents(cu);

@@ -2,7 +2,7 @@
 // Created by marco.silipo on 29.09.2021.
 //
 
-#ifndef SOLUTION_TYPE_BUILDER_HPP
+#ifndef SOLUTION_AST_TYPE_BUILDER_HPP
 #define SOLUTION_TYPE_BUILDER_HPP
 
 
@@ -18,4 +18,4 @@ namespace leaf::compilation::builders
 }
 
 
-#endif //SOLUTION_TYPE_BUILDER_HPP
+#endif //SOLUTION_AST_TYPE_BUILDER_HPP

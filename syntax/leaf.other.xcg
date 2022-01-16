@@ -29,6 +29,12 @@ production alloc
         match "alloc" "heap" @[type]type-navigation @[body]call-body
             set capture is-stack false
             set capture is-heap true
+        match "alloc" @[allocator]ident @[type]type-navigation "[" @[exp]expression "]"
+            set capture is-stack false
+            set capture is-heap true
+        match "alloc" @[allocator]ident @[type]type-navigation @[body]call-body
+            set capture is-stack false
+            set capture is-heap true
 
 
 
@@ -39,49 +45,33 @@ production typeof
 production nameof
     match "nameof" "(" @[value]exp-or ")"
 
+production fqnameof
+    match "fqnameof" "(" @[value]exp-or ")"
+
 production sizeof
     match "sizeof" "(" @[type]type-match ")"
 
 left-recursive ident-navigation
-    match @[left]ident-navigation "." @[right]ident
+    match @[left]ident-navigation "::" @[right]ident
     match @[left]ident
     
 left-recursive type-navigation
-    match @[left]type-navigation "." @[right]ident @[template]template-usage
-    match @[left]type-navigation "." @[right]ident
+    match @[left]type-navigation "::" @[right]ident @[template]template-usage
+    match @[left]type-navigation "::" @[right]ident
     match @[left]type-navigation @[template]template-usage
     match @[left]ident
     
-production lifetime
-    match "'"
-    alternatives
-        match "scope"
-            set capture is-scope true
-        match "static"
-            set capture is-static true
-        match @[named]ident
-    
 production type-match
     alternatives
-        match @[base]type-navigation "[" "]" "*" @[lifetime]lifetime
+        match @[allocator]ident @[base]type-navigation "[" "]"
             set capture is-array true
-            set capture is-heap true
-        match @[base]type-navigation "*" @[lifetime]lifetime
+        match @[allocator]ident @[base]type-navigation
             set capture is-array false
-            set capture is-heap true
-        match @[base]type-navigation @[lifetime]lifetime
-            set capture is-array false
-            set capture is-heap false
-        match @[base]type-navigation "[" "]" "*"
+        match @[base]type-navigation "[" "]"
             set capture is-array true
-            set capture is-heap true
-        match @[base]type-navigation "*"
-            set capture is-array false
-            set capture is-heap true
         match @[base]type-navigation
             set capture is-array false
-            set capture is-heap false
-    
+
 production string-formatable
     match @[parts]string-formatable-start
     match expression

@@ -186,7 +186,7 @@ bool leaf::compilation::stages::register_contents::visit_enter(std::shared_ptr<l
     if (!m_parameter_info_list) { return false; }
     // node->type->base
     leaf_parameter_info inf;
-    if (!fill_type_reference(inf.type_reference, node->type)) { return false; }
+    if (!fill_type_reference(inf.ast_type_reference, node->type)) { return false; }
     if (!leaf_string_create2(m_cu->get(node->name).data(), node->name.length, &inf.name)) { return false; }
     if (!leaf_parameter_info_list_push_back(m_parameter_info_list, inf)) { return false; }
     return true;

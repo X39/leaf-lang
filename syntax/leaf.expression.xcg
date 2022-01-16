@@ -22,6 +22,7 @@ production exp-constant
     alternatives
         match @[typeof]typeof
         match @[nameof]nameof
+        match @[fqnameof]fqnameof
         match @[sizeof]sizeof
         match @[t]scalar
         match @[t]false
@@ -55,14 +56,13 @@ production capture-list
 production exp-value
     alternatives
         match @[exp-lambda]exp-lambda
-        match @[exp-constant]exp-constant
+        match @[constants]exp-constant
         match @[scalar]scalar-literal
         match @[integer-hex]integer-hex-literal
         match @[integer-binary]integer-binary-literal
         match @[integer]integer-literal
         match @[character]char-literal
         match @[string]string-literal
-        match @[constant]exp-constant
 
 production exp-nullar
     alternatives

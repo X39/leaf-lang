@@ -6,11 +6,13 @@
 #define SOLUTION_WALKER_NAMESPACE_HPP
 
 #include "../../parser.hpp"
-#include "../compilation_unit.hpp"
+#include "../utility.hpp"
+#include "compilation_unit.hpp"
 #include "../data/pragma.hpp"
+#include "../data/ast/type.hpp"
 
 
-namespace leaf::compilation::walkers
+namespace leaf::compilation::cst
 {
     class walker_namespace
     {
@@ -21,7 +23,7 @@ namespace leaf::compilation::walkers
         {
         }
 
-        void register_contents(compilation_unit cu);
+        void register_contents(compilation_unit& cu);
     };
 }
 

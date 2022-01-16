@@ -55,27 +55,33 @@ add_executable (generator-test
         compilation-old/builders/encapsulated_alias_declaration.hpp
         compilation-old/builders/file_builder.cpp
         compilation-old/builders/file_builder.hpp
-        compilation/walkers/walker_main.cpp
-        compilation/walkers/walker_main.hpp
-        compilation/compilation_unit.cpp
-        compilation/compilation_unit.hpp
-        compilation/walkers/walker_class.cpp
-        compilation/walkers/walker_class.hpp
+        compilation/cst/walker_main.cpp
+        compilation/cst/walker_main.hpp
+        compilation/cst/compilation_unit.cpp
+        compilation/cst/compilation_unit.hpp
+        compilation/cst/walker_class.cpp
+        compilation/cst/walker_class.hpp
         compilation/data/pragma.hpp
-        compilation/walkers/walker_namespace.cpp
-        compilation/walkers/walker_namespace.hpp
+        compilation/cst/walker_namespace.cpp
+        compilation/cst/walker_namespace.hpp
         compilation/data/using.hpp
-        compilation/walkers/walker_field.cpp
-        compilation/walkers/walker_field.hpp
-        compilation/walkers/walker_conversion.cpp
-        compilation/walkers/walker_conversion.hpp
-        compilation/walkers/walker_method.cpp
-        compilation/walkers/walker_method.hpp
-        compilation/walkers/walker_property.cpp
-        compilation/walkers/walker_property.hpp
-        compilation/walkers/walker_alias.cpp
-        compilation/walkers/walker_alias.hpp
-        compilation/walkers/walker_contract.cpp
-        compilation/walkers/walker_contract.hpp)
+        compilation/cst/walker_field.cpp
+        compilation/cst/walker_field.hpp
+        compilation/cst/walker_conversion.cpp
+        compilation/cst/walker_conversion.hpp
+        compilation/cst/walker_method.cpp
+        compilation/cst/walker_method.hpp
+        compilation/cst/walker_property.cpp
+        compilation/cst/walker_property.hpp
+        compilation/cst/walker_alias.cpp
+        compilation/cst/walker_alias.hpp
+        compilation/cst/walker_contract.cpp
+        compilation/cst/walker_contract.hpp
+        compilation/data/ast/type.cpp
+        compilation/data/ast/type.hpp
+        compilation/utility.cpp
+        compilation/utility.hpp
+        compilation/cst/ast_type_builder.cpp
+        compilation/cst/ast_type_builder.hpp compilation/cst/walker_attribute.cpp compilation/cst/walker_attribute.hpp compilation/cst/walker_constant.cpp compilation/cst/walker_constant.hpp compilation/cst/ast_type_reference.cpp compilation/cst/ast_type_reference.hpp)
 
 # TODO: Add tests and install targets if needed.

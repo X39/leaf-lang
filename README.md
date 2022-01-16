@@ -1,10 +1,21 @@
 # ![leaf-logo](logo-32px.png) leaf language
+*Parser for syntax was generated using [XCG](https://github.com/X39/XCG).
+Related files are to be found inside the `syntax` folder.*
 
-Leaf language is an in-development language that aims
-to combine the best of Rust, C++ and C# into a single language
-while providing more clear verbs for common keywords (eg. `unbound` instead of `static`).
+# Design Goals
+Leaf is about a developers choices, about the toolbelt he wants (or has available)
+for his frameworks, APIs or gigantic minification efforts.
 
-The syntax is generated using [XCG](https://github.com/X39/XCG) and can be found in the `syntax` folder.
+There should never be an argument about "do we need this feature in the language really", as the
+language itself has to support all that awesomeness we all do. If one thinks that return-type
+directed methods should be possible, it has to be made possible. If one wants to use `async` and `await`,
+then there shall be syntactic suggar for it. If one wants to create magnificent and beautiful frameworks with
+`"<p>My <span class="fat">fancy</span> html framework"_html` then, again, it has to be possible.
+
+Leaf should never block your goals as a language.
+There may not be a suited framework (aka: written code) yet,
+but the language will never attempt to hinder you in
+building that framework.
 
 # How will it look like
 **Disclaimer:**

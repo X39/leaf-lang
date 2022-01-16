@@ -6,11 +6,11 @@
 #define SOLUTION_WALKER_CLASS_HPP
 
 #include "../../parser.hpp"
-#include "../compilation_unit.hpp"
+#include "compilation_unit.hpp"
 #include "../data/pragma.hpp"
 
 
-namespace leaf::compilation::walkers
+namespace leaf::compilation::cst
 {
     class walker_class
     {

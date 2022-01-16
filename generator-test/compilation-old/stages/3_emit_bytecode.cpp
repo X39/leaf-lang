@@ -291,7 +291,7 @@ leaf_method_info_ptr leaf::compilation::stages::emit_bytecode::find_matching_met
             for (auto [type_reference, type_ptr] : params)
             {
                 auto parameter = ptr->parameters.data[arg_index++];
-                if (parameter.type_reference != type_reference)
+                if (parameter.ast_type_reference != type_reference)
                 {
                     break;
                 }

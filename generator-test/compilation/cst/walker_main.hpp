@@ -6,9 +6,9 @@
 #define SOLUTION_WALKER_MAIN_HPP
 
 #include "../../parser.hpp"
-#include "../compilation_unit.hpp"
+#include "compilation_unit.hpp"
 
-namespace leaf::compilation::walkers
+namespace leaf::compilation::cst
 {
     class walker_main
     {

@@ -5,14 +5,14 @@ production contract
     match "{"
     while not match "}"
         alternatives
-            match contract-method
             match contract-constructor
-            match contract-indexer
-            match contract-operator-binary-overload
-            match contract-operator-unary-overload
-            match contract-operator-nullar-overload
-            match contract-property
             match contract-field
+            match contract-indexer
+            match contract-method
+            match contract-operator-binary-overload
+            match contract-operator-nullar-overload
+            match contract-operator-unary-overload
+            match contract-property
     match "}"
 
 production contract-method
