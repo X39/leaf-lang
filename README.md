@@ -3,8 +3,11 @@
 Related files are to be found inside the `syntax` folder.*
 
 # Design Goals
-Leaf is about a developers choices, about the toolbelt he wants (or has available)
+Leaf is about a developers choices, about the toolbelt the dev wants (or has available)
 for his frameworks, APIs or gigantic minification efforts.
+
+Stuff like building shared-applications (as in service workers) and working with those should feel
+as natural as possible.
 
 There should never be an argument about "do we need this feature in the language really", as the
 language itself has to support all that awesomeness we all do. If one thinks that return-type
