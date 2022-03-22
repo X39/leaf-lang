@@ -1,0 +1,5 @@
+left-recursive type-navigation
+    match @[left]type-navigation "::" @[right]ident @[template]template-usage
+    match @[left]type-navigation "::" @[right]ident
+    match @[left]type-navigation @[template]template-usage
+    match @[left]ident

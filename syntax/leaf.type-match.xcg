@@ -1,0 +1,18 @@
+production type-match
+    alternatives
+        match @[match]type-match-no-allocator
+        match @[match]type-match-with-allocator
+
+production type-match-no-allocator
+    alternatives
+        match @[base]type-navigation "[" "]"
+            set capture is-array true
+        match @[base]type-navigation
+            set capture is-array false
+
+production type-match-with-allocator
+    alternatives
+        match @[allocator]ident @[base]type-navigation "[" "]"
+            set capture is-array true
+        match @[allocator]ident @[base]type-navigation
+            set capture is-array false

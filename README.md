@@ -27,21 +27,21 @@ Due to the nature of leaf, the following syntax might be outdated.
 ```
 namespace leaf.example
 {
-    public class tree
+    public class Tree
     {
-        public unbound i32 count
+        public unbound i32 Count
         {
-            get { return count_backing; }
+            get { return _countBacking; }
             set
             {
-                count_backing = value;
+                _countBacking = value;
                 leaf.stdout.print($"count has changed to {count_backing}");
             }
         }
-        private unbound i32 count_backing;
+        private unbound i32 _countBacking;
         
         
-        local tree seed()
+        local Tree Seed()
         {
             alias branch = tree;
             auto sapling = new stack branch();
@@ -49,5 +49,32 @@ namespace leaf.example
             return sapling;
         }
     }
+    
+    // Contracts are pseudo types that define a requirement of input types.
+    // An input type does not have to implement a contract to make it feasable
+    // for it.
+    public contract CBranch
+    {
+        CEnumerable<RLeaf> Leafs { get; } 
+    }
+    
+    // Interfaces are compile-time reflection pseudo-types,
+    // allowing to create pseudo-methods
+    public reflecting contract RLeaf
+    {
+        bool Equals(RLeaf t)
+        {
+            // for, if and all other control structures
+            // do not require ()
+            for field f of RLeaf
+            {
+                if f != f(t)
+                    return false;
+            }
+            return true;
+        }
+    }
 }
 ```
+
+# How is the 

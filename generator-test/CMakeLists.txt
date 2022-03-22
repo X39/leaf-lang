@@ -82,6 +82,6 @@ add_executable (generator-test
         compilation/utility.cpp
         compilation/utility.hpp
         compilation/cst/ast_type_builder.cpp
-        compilation/cst/ast_type_builder.hpp compilation/cst/walker_attribute.cpp compilation/cst/walker_attribute.hpp compilation/cst/walker_constant.cpp compilation/cst/walker_constant.hpp compilation/cst/ast_type_reference.cpp compilation/cst/ast_type_reference.hpp)
+        compilation/cst/ast_type_builder.hpp compilation/cst/walker_attribute.cpp compilation/cst/walker_attribute.hpp compilation/cst/walker_constant.cpp compilation/cst/walker_constant.hpp compilation/cst/ast_type_reference.cpp compilation/cst/ast_type_reference.hpp compilation/cst/walker_type_match.cpp compilation/cst/walker_type_match.cpp compilation/cst/walker_type_match.hpp)
 
 # TODO: Add tests and install targets if needed.

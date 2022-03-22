@@ -16,12 +16,12 @@ namespace leaf::parsing
         class resettable;
     public:
         class token;
+        class attribute;
+        class attribute_item;
         class attribute_arg_item_a;
-        class attribute_arg_item_b;
         class attribute_args_a;
         class attribute_args_b;
-        class attribute_item;
-        class attribute;
+        class attribute_arg_item_b;
         class contract;
         class contract_method;
         class contract_constructor;
@@ -90,7 +90,6 @@ namespace leaf::parsing
         class nameof;
         class fqnameof;
         class sizeof_;
-        class type_match;
         class string_formatable;
         class string_literal;
         class scalar_literal;
@@ -111,6 +110,9 @@ namespace leaf::parsing
         class template_definition_item_direct_type;
         class template_definition_item_identifier;
         class template_definition;
+        class type_match;
+        class type_match_no_allocator;
+        class type_match_with_allocator;
         class main;
         class exp_chain;
         class exp_binary_4;
@@ -125,12 +127,12 @@ namespace leaf::parsing
         class exp_or;
         class ident_navigation;
         class type_navigation;
+        class attribute_state;
+        class attribute_item_state;
         class attribute_arg_item_a_state;
-        class attribute_arg_item_b_state;
         class attribute_args_a_state;
         class attribute_args_b_state;
-        class attribute_item_state;
-        class attribute_state;
+        class attribute_arg_item_b_state;
         class contract_state;
         class contract_method_state;
         class contract_constructor_state;
@@ -199,7 +201,6 @@ namespace leaf::parsing
         class nameof_state;
         class fqnameof_state;
         class sizeof__state;
-        class type_match_state;
         class string_formatable_state;
         class string_literal_state;
         class scalar_literal_state;
@@ -220,6 +221,9 @@ namespace leaf::parsing
         class template_definition_item_direct_type_state;
         class template_definition_item_identifier_state;
         class template_definition_state;
+        class type_match_state;
+        class type_match_no_allocator_state;
+        class type_match_with_allocator_state;
         class main_state;
         class exp_chain_state;
         class exp_binary_4_state;
@@ -273,12 +277,12 @@ namespace leaf::parsing
         std::optional<size_t> token_string(size_t depth);
         std::optional<size_t> token_char_unescaped_ending(size_t depth);
         std::optional<size_t> token_char_(size_t depth);
-        std::optional<size_t> token__colon(size_t depth);
+        std::optional<size_t> token__square_bracket_open(size_t depth);
         std::optional<size_t> token__comma(size_t depth);
+        std::optional<size_t> token__square_bracket_close(size_t depth);
         std::optional<size_t> token__round_bracket_open(size_t depth);
         std::optional<size_t> token__round_bracket_close(size_t depth);
-        std::optional<size_t> token__square_bracket_open(size_t depth);
-        std::optional<size_t> token__square_bracket_close(size_t depth);
+        std::optional<size_t> token__equal(size_t depth);
         std::optional<size_t> token__contract(size_t depth);
         std::optional<size_t> token__curly_bracket_open(size_t depth);
         std::optional<size_t> token__curly_bracket_close(size_t depth);
@@ -311,6 +315,7 @@ namespace leaf::parsing
         std::optional<size_t> token__if(size_t depth);
         std::optional<size_t> token__else(size_t depth);
         std::optional<size_t> token__for(size_t depth);
+        std::optional<size_t> token__colon(size_t depth);
         std::optional<size_t> token__case(size_t depth);
         std::optional<size_t> token__switch(size_t depth);
         std::optional<size_t> token__default(size_t depth);
@@ -318,7 +323,6 @@ namespace leaf::parsing
         std::optional<size_t> token__assembly(size_t depth);
         std::optional<size_t> token__copy(size_t depth);
         std::optional<size_t> token__tilde_equal(size_t depth);
-        std::optional<size_t> token__equal(size_t depth);
         std::optional<size_t> token__public(size_t depth);
         std::optional<size_t> token__local(size_t depth);
         std::optional<size_t> token__derived(size_t depth);
@@ -346,58 +350,58 @@ namespace leaf::parsing
         std::optional<size_t> token__sizeof(size_t depth);
         std::optional<size_t> token__colon_colon(size_t depth);
         std::optional<size_t> token__return(size_t depth);
-        std::optional<size_t> token__auto_841(size_t depth);
+        std::optional<size_t> token__auto_821(size_t depth);
         std::optional<size_t> token__exclamation_greater_then(size_t depth);
         std::optional<size_t> token__align(size_t depth);
         std::optional<size_t> token__size(size_t depth);
         std::optional<size_t> token__disable(size_t depth);
         std::optional<size_t> token__enable(size_t depth);
         std::optional<size_t> token__identifier(size_t depth);
-        bool m_expor_104(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_arg_item_a>& actual, leaf::parsing::instance::attribute_arg_item_a_state& state, size_t depth);
-        bool p_can_attribute_arg_item_a(size_t depth);
-        std::shared_ptr<leaf::parsing::instance::attribute_arg_item_a> p_match_attribute_arg_item_a(size_t depth);
-        bool m_ident_colon_expor_105(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_arg_item_b>& actual, leaf::parsing::instance::attribute_arg_item_b_state& state, size_t depth);
-        bool p_can_attribute_arg_item_b(size_t depth);
-        std::shared_ptr<leaf::parsing::instance::attribute_arg_item_b> p_match_attribute_arg_item_b(size_t depth);
-        bool m_attributeargitema_106(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_a>& actual, leaf::parsing::instance::attribute_args_a_state& state, size_t depth);
-        bool m_attributeargitema_107(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_a>& actual, leaf::parsing::instance::attribute_args_a_state& state, size_t depth);
-        bool m_comma_attributeargitema_108(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_a>& actual, leaf::parsing::instance::attribute_args_a_state& state, size_t depth);
-        bool while109_110(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_a>& actual, leaf::parsing::instance::attribute_args_a_state& state, size_t depth);
-        bool m_comma_111(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_a>& actual, leaf::parsing::instance::attribute_args_a_state& state, size_t depth);
-        bool m_comma_112(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_a>& actual, leaf::parsing::instance::attribute_args_a_state& state, size_t depth);
-        bool if113_114(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_a>& actual, leaf::parsing::instance::attribute_args_a_state& state, size_t depth);
-        bool p_can_attribute_args_a(size_t depth);
-        std::shared_ptr<leaf::parsing::instance::attribute_args_a> p_match_attribute_args_a(size_t depth);
-        bool m_attributeargitemb_115(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_b>& actual, leaf::parsing::instance::attribute_args_b_state& state, size_t depth);
-        bool m_attributeargitemb_116(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_b>& actual, leaf::parsing::instance::attribute_args_b_state& state, size_t depth);
-        bool m_comma_attributeargitemb_117(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_b>& actual, leaf::parsing::instance::attribute_args_b_state& state, size_t depth);
-        bool while118_119(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_b>& actual, leaf::parsing::instance::attribute_args_b_state& state, size_t depth);
-        bool m_comma_120(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_b>& actual, leaf::parsing::instance::attribute_args_b_state& state, size_t depth);
-        bool m_comma_121(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_b>& actual, leaf::parsing::instance::attribute_args_b_state& state, size_t depth);
-        bool if122_123(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_b>& actual, leaf::parsing::instance::attribute_args_b_state& state, size_t depth);
-        bool p_can_attribute_args_b(size_t depth);
-        std::shared_ptr<leaf::parsing::instance::attribute_args_b> p_match_attribute_args_b(size_t depth);
-        bool m_typematch_124(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_item>& actual, leaf::parsing::instance::attribute_item_state& state, size_t depth);
-        bool m_typematch_roundbracketopen_roundbracketclose_125(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_item>& actual, leaf::parsing::instance::attribute_item_state& state, size_t depth);
-        bool m_typematch_roundbracketopen_attributeargsa_attributeargsb_roundbracketclose_126(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_item>& actual, leaf::parsing::instance::attribute_item_state& state, size_t depth);
-        bool m_typematch_roundbracketopen_attributeargsa_roundbracketclose_127(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_item>& actual, leaf::parsing::instance::attribute_item_state& state, size_t depth);
-        bool m_typematch_roundbracketopen_attributeargsb_roundbracketclose_128(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_item>& actual, leaf::parsing::instance::attribute_item_state& state, size_t depth);
-        bool alternatives129(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_item>& actual, leaf::parsing::instance::attribute_item_state& state, size_t depth);
-        bool p_can_attribute_item(size_t depth);
-        std::shared_ptr<leaf::parsing::instance::attribute_item> p_match_attribute_item(size_t depth);
-        bool m_squarebracketopen_130(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth);
-        bool m_attributeitem_131(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth);
-        bool m_attributeitem_132(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth);
-        bool m_attributeitem_133(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth);
-        bool m_comma_attributeitem_134(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth);
-        bool while135_136(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth);
-        bool m_comma_137(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth);
-        bool m_comma_138(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth);
-        bool if139_140(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth);
-        bool if141_142(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth);
-        bool m_squarebracketclose_143(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth);
+        bool m_squarebracketopen_104(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth);
+        bool m_attributeitem_105(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth);
+        bool m_attributeitem_106(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth);
+        bool m_attributeitem_107(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth);
+        bool m_comma_attributeitem_108(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth);
+        bool while109_110(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth);
+        bool m_comma_111(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth);
+        bool m_comma_112(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth);
+        bool if113_114(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth);
+        bool if115_116(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth);
+        bool m_squarebracketclose_117(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth);
         bool p_can_attribute(size_t depth);
         std::shared_ptr<leaf::parsing::instance::attribute> p_match_attribute(size_t depth);
+        bool m_typematchnoallocator_118(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_item>& actual, leaf::parsing::instance::attribute_item_state& state, size_t depth);
+        bool m_typematchnoallocator_roundbracketopen_roundbracketclose_119(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_item>& actual, leaf::parsing::instance::attribute_item_state& state, size_t depth);
+        bool m_typematchnoallocator_roundbracketopen_attributeargsa_attributeargsb_roundbracketclose_120(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_item>& actual, leaf::parsing::instance::attribute_item_state& state, size_t depth);
+        bool m_typematchnoallocator_roundbracketopen_attributeargsa_roundbracketclose_121(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_item>& actual, leaf::parsing::instance::attribute_item_state& state, size_t depth);
+        bool m_typematchnoallocator_roundbracketopen_attributeargsb_roundbracketclose_122(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_item>& actual, leaf::parsing::instance::attribute_item_state& state, size_t depth);
+        bool alternatives123(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_item>& actual, leaf::parsing::instance::attribute_item_state& state, size_t depth);
+        bool p_can_attribute_item(size_t depth);
+        std::shared_ptr<leaf::parsing::instance::attribute_item> p_match_attribute_item(size_t depth);
+        bool m_expor_124(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_arg_item_a>& actual, leaf::parsing::instance::attribute_arg_item_a_state& state, size_t depth);
+        bool p_can_attribute_arg_item_a(size_t depth);
+        std::shared_ptr<leaf::parsing::instance::attribute_arg_item_a> p_match_attribute_arg_item_a(size_t depth);
+        bool m_attributeargitema_125(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_a>& actual, leaf::parsing::instance::attribute_args_a_state& state, size_t depth);
+        bool m_attributeargitema_126(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_a>& actual, leaf::parsing::instance::attribute_args_a_state& state, size_t depth);
+        bool m_comma_attributeargitema_127(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_a>& actual, leaf::parsing::instance::attribute_args_a_state& state, size_t depth);
+        bool while128_129(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_a>& actual, leaf::parsing::instance::attribute_args_a_state& state, size_t depth);
+        bool m_comma_130(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_a>& actual, leaf::parsing::instance::attribute_args_a_state& state, size_t depth);
+        bool m_comma_131(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_a>& actual, leaf::parsing::instance::attribute_args_a_state& state, size_t depth);
+        bool if132_133(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_a>& actual, leaf::parsing::instance::attribute_args_a_state& state, size_t depth);
+        bool p_can_attribute_args_a(size_t depth);
+        std::shared_ptr<leaf::parsing::instance::attribute_args_a> p_match_attribute_args_a(size_t depth);
+        bool m_attributeargitemb_134(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_b>& actual, leaf::parsing::instance::attribute_args_b_state& state, size_t depth);
+        bool m_attributeargitemb_135(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_b>& actual, leaf::parsing::instance::attribute_args_b_state& state, size_t depth);
+        bool m_comma_attributeargitemb_136(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_b>& actual, leaf::parsing::instance::attribute_args_b_state& state, size_t depth);
+        bool while137_138(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_b>& actual, leaf::parsing::instance::attribute_args_b_state& state, size_t depth);
+        bool m_comma_139(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_b>& actual, leaf::parsing::instance::attribute_args_b_state& state, size_t depth);
+        bool m_comma_140(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_b>& actual, leaf::parsing::instance::attribute_args_b_state& state, size_t depth);
+        bool if141_142(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_b>& actual, leaf::parsing::instance::attribute_args_b_state& state, size_t depth);
+        bool p_can_attribute_args_b(size_t depth);
+        std::shared_ptr<leaf::parsing::instance::attribute_args_b> p_match_attribute_args_b(size_t depth);
+        bool m_ident_equal_expor_143(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_arg_item_b>& actual, leaf::parsing::instance::attribute_arg_item_b_state& state, size_t depth);
+        bool p_can_attribute_arg_item_b(size_t depth);
+        std::shared_ptr<leaf::parsing::instance::attribute_arg_item_b> p_match_attribute_arg_item_b(size_t depth);
         bool m_encapsulation_contract_ident_144(bool is_can, std::shared_ptr<leaf::parsing::instance::contract>& actual, leaf::parsing::instance::contract_state& state, size_t depth);
         bool m_templatedefinition_145(bool is_can, std::shared_ptr<leaf::parsing::instance::contract>& actual, leaf::parsing::instance::contract_state& state, size_t depth);
         bool m_templatedefinition_146(bool is_can, std::shared_ptr<leaf::parsing::instance::contract>& actual, leaf::parsing::instance::contract_state& state, size_t depth);
@@ -1043,240 +1047,248 @@ namespace leaf::parsing
         bool m_sizeof_roundbracketopen_typematch_roundbracketclose_714(bool is_can, std::shared_ptr<leaf::parsing::instance::sizeof_>& actual, leaf::parsing::instance::sizeof__state& state, size_t depth);
         bool p_can_sizeof_(size_t depth);
         std::shared_ptr<leaf::parsing::instance::sizeof_> p_match_sizeof_(size_t depth);
-        bool m_ident_typenavigation_squarebracketopen_squarebracketclose_715(bool is_can, std::shared_ptr<leaf::parsing::instance::type_match>& actual, leaf::parsing::instance::type_match_state& state, size_t depth);
-        bool m_ident_typenavigation_716(bool is_can, std::shared_ptr<leaf::parsing::instance::type_match>& actual, leaf::parsing::instance::type_match_state& state, size_t depth);
-        bool m_typenavigation_squarebracketopen_squarebracketclose_717(bool is_can, std::shared_ptr<leaf::parsing::instance::type_match>& actual, leaf::parsing::instance::type_match_state& state, size_t depth);
-        bool m_typenavigation_718(bool is_can, std::shared_ptr<leaf::parsing::instance::type_match>& actual, leaf::parsing::instance::type_match_state& state, size_t depth);
-        bool alternatives719(bool is_can, std::shared_ptr<leaf::parsing::instance::type_match>& actual, leaf::parsing::instance::type_match_state& state, size_t depth);
-        bool p_can_type_match(size_t depth);
-        std::shared_ptr<leaf::parsing::instance::type_match> p_match_type_match(size_t depth);
-        bool m_stringformatablestart_720(bool is_can, std::shared_ptr<leaf::parsing::instance::string_formatable>& actual, leaf::parsing::instance::string_formatable_state& state, size_t depth);
-        bool m_expression_721(bool is_can, std::shared_ptr<leaf::parsing::instance::string_formatable>& actual, leaf::parsing::instance::string_formatable_state& state, size_t depth);
+        bool m_stringformatablestart_715(bool is_can, std::shared_ptr<leaf::parsing::instance::string_formatable>& actual, leaf::parsing::instance::string_formatable_state& state, size_t depth);
+        bool m_expression_716(bool is_can, std::shared_ptr<leaf::parsing::instance::string_formatable>& actual, leaf::parsing::instance::string_formatable_state& state, size_t depth);
+        bool m_stringformatableend_717(bool is_can, std::shared_ptr<leaf::parsing::instance::string_formatable>& actual, leaf::parsing::instance::string_formatable_state& state, size_t depth);
+        bool m_stringformatablecontinuation_718(bool is_can, std::shared_ptr<leaf::parsing::instance::string_formatable>& actual, leaf::parsing::instance::string_formatable_state& state, size_t depth);
+        bool m_expression_719(bool is_can, std::shared_ptr<leaf::parsing::instance::string_formatable>& actual, leaf::parsing::instance::string_formatable_state& state, size_t depth);
+        bool while720_721(bool is_can, std::shared_ptr<leaf::parsing::instance::string_formatable>& actual, leaf::parsing::instance::string_formatable_state& state, size_t depth);
         bool m_stringformatableend_722(bool is_can, std::shared_ptr<leaf::parsing::instance::string_formatable>& actual, leaf::parsing::instance::string_formatable_state& state, size_t depth);
-        bool m_stringformatablecontinuation_723(bool is_can, std::shared_ptr<leaf::parsing::instance::string_formatable>& actual, leaf::parsing::instance::string_formatable_state& state, size_t depth);
-        bool m_expression_724(bool is_can, std::shared_ptr<leaf::parsing::instance::string_formatable>& actual, leaf::parsing::instance::string_formatable_state& state, size_t depth);
-        bool while725_726(bool is_can, std::shared_ptr<leaf::parsing::instance::string_formatable>& actual, leaf::parsing::instance::string_formatable_state& state, size_t depth);
-        bool m_stringformatableend_727(bool is_can, std::shared_ptr<leaf::parsing::instance::string_formatable>& actual, leaf::parsing::instance::string_formatable_state& state, size_t depth);
         bool p_can_string_formatable(size_t depth);
         std::shared_ptr<leaf::parsing::instance::string_formatable> p_match_string_formatable(size_t depth);
-        bool m_ident_stringformatable_ident_728(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth);
-        bool m_stringformatable_ident_729(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth);
-        bool m_ident_stringformatable_730(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth);
-        bool m_stringformatable_731(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth);
-        bool m_ident_stringformatablefake_ident_732(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth);
-        bool m_stringformatablefake_ident_733(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth);
-        bool m_ident_stringformatablefake_734(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth);
-        bool m_stringformatablefake_735(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth);
-        bool m_ident_string_ident_736(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth);
-        bool m_string_ident_737(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth);
-        bool m_ident_string_738(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth);
-        bool m_string_739(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth);
-        bool alternatives740(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth);
+        bool m_ident_stringformatable_ident_723(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth);
+        bool m_stringformatable_ident_724(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth);
+        bool m_ident_stringformatable_725(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth);
+        bool m_stringformatable_726(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth);
+        bool m_ident_stringformatablefake_ident_727(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth);
+        bool m_stringformatablefake_ident_728(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth);
+        bool m_ident_stringformatablefake_729(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth);
+        bool m_stringformatablefake_730(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth);
+        bool m_ident_string_ident_731(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth);
+        bool m_string_ident_732(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth);
+        bool m_ident_string_733(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth);
+        bool m_string_734(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth);
+        bool alternatives735(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth);
         bool p_can_string_literal(size_t depth);
         std::shared_ptr<leaf::parsing::instance::string_literal> p_match_string_literal(size_t depth);
-        bool m_ident_scalar_ident_741(bool is_can, std::shared_ptr<leaf::parsing::instance::scalar_literal>& actual, leaf::parsing::instance::scalar_literal_state& state, size_t depth);
-        bool m_scalar_ident_742(bool is_can, std::shared_ptr<leaf::parsing::instance::scalar_literal>& actual, leaf::parsing::instance::scalar_literal_state& state, size_t depth);
-        bool m_ident_scalar_743(bool is_can, std::shared_ptr<leaf::parsing::instance::scalar_literal>& actual, leaf::parsing::instance::scalar_literal_state& state, size_t depth);
-        bool m_scalar_744(bool is_can, std::shared_ptr<leaf::parsing::instance::scalar_literal>& actual, leaf::parsing::instance::scalar_literal_state& state, size_t depth);
-        bool alternatives745(bool is_can, std::shared_ptr<leaf::parsing::instance::scalar_literal>& actual, leaf::parsing::instance::scalar_literal_state& state, size_t depth);
+        bool m_ident_scalar_ident_736(bool is_can, std::shared_ptr<leaf::parsing::instance::scalar_literal>& actual, leaf::parsing::instance::scalar_literal_state& state, size_t depth);
+        bool m_scalar_ident_737(bool is_can, std::shared_ptr<leaf::parsing::instance::scalar_literal>& actual, leaf::parsing::instance::scalar_literal_state& state, size_t depth);
+        bool m_ident_scalar_738(bool is_can, std::shared_ptr<leaf::parsing::instance::scalar_literal>& actual, leaf::parsing::instance::scalar_literal_state& state, size_t depth);
+        bool m_scalar_739(bool is_can, std::shared_ptr<leaf::parsing::instance::scalar_literal>& actual, leaf::parsing::instance::scalar_literal_state& state, size_t depth);
+        bool alternatives740(bool is_can, std::shared_ptr<leaf::parsing::instance::scalar_literal>& actual, leaf::parsing::instance::scalar_literal_state& state, size_t depth);
         bool p_can_scalar_literal(size_t depth);
         std::shared_ptr<leaf::parsing::instance::scalar_literal> p_match_scalar_literal(size_t depth);
-        bool m_ident_integerhex_ident_746(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_hex_literal>& actual, leaf::parsing::instance::integer_hex_literal_state& state, size_t depth);
-        bool m_integerhex_ident_747(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_hex_literal>& actual, leaf::parsing::instance::integer_hex_literal_state& state, size_t depth);
-        bool m_ident_integerhex_748(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_hex_literal>& actual, leaf::parsing::instance::integer_hex_literal_state& state, size_t depth);
-        bool m_integerhex_749(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_hex_literal>& actual, leaf::parsing::instance::integer_hex_literal_state& state, size_t depth);
-        bool alternatives750(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_hex_literal>& actual, leaf::parsing::instance::integer_hex_literal_state& state, size_t depth);
+        bool m_ident_integerhex_ident_741(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_hex_literal>& actual, leaf::parsing::instance::integer_hex_literal_state& state, size_t depth);
+        bool m_integerhex_ident_742(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_hex_literal>& actual, leaf::parsing::instance::integer_hex_literal_state& state, size_t depth);
+        bool m_ident_integerhex_743(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_hex_literal>& actual, leaf::parsing::instance::integer_hex_literal_state& state, size_t depth);
+        bool m_integerhex_744(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_hex_literal>& actual, leaf::parsing::instance::integer_hex_literal_state& state, size_t depth);
+        bool alternatives745(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_hex_literal>& actual, leaf::parsing::instance::integer_hex_literal_state& state, size_t depth);
         bool p_can_integer_hex_literal(size_t depth);
         std::shared_ptr<leaf::parsing::instance::integer_hex_literal> p_match_integer_hex_literal(size_t depth);
-        bool m_ident_integerbinary_ident_751(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_binary_literal>& actual, leaf::parsing::instance::integer_binary_literal_state& state, size_t depth);
-        bool m_integerbinary_ident_752(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_binary_literal>& actual, leaf::parsing::instance::integer_binary_literal_state& state, size_t depth);
-        bool m_ident_integerbinary_753(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_binary_literal>& actual, leaf::parsing::instance::integer_binary_literal_state& state, size_t depth);
-        bool m_integerbinary_754(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_binary_literal>& actual, leaf::parsing::instance::integer_binary_literal_state& state, size_t depth);
-        bool alternatives755(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_binary_literal>& actual, leaf::parsing::instance::integer_binary_literal_state& state, size_t depth);
+        bool m_ident_integerbinary_ident_746(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_binary_literal>& actual, leaf::parsing::instance::integer_binary_literal_state& state, size_t depth);
+        bool m_integerbinary_ident_747(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_binary_literal>& actual, leaf::parsing::instance::integer_binary_literal_state& state, size_t depth);
+        bool m_ident_integerbinary_748(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_binary_literal>& actual, leaf::parsing::instance::integer_binary_literal_state& state, size_t depth);
+        bool m_integerbinary_749(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_binary_literal>& actual, leaf::parsing::instance::integer_binary_literal_state& state, size_t depth);
+        bool alternatives750(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_binary_literal>& actual, leaf::parsing::instance::integer_binary_literal_state& state, size_t depth);
         bool p_can_integer_binary_literal(size_t depth);
         std::shared_ptr<leaf::parsing::instance::integer_binary_literal> p_match_integer_binary_literal(size_t depth);
-        bool m_ident_integer_ident_756(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_literal>& actual, leaf::parsing::instance::integer_literal_state& state, size_t depth);
-        bool m_integer_ident_757(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_literal>& actual, leaf::parsing::instance::integer_literal_state& state, size_t depth);
-        bool m_ident_integer_758(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_literal>& actual, leaf::parsing::instance::integer_literal_state& state, size_t depth);
-        bool m_integer_759(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_literal>& actual, leaf::parsing::instance::integer_literal_state& state, size_t depth);
-        bool alternatives760(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_literal>& actual, leaf::parsing::instance::integer_literal_state& state, size_t depth);
+        bool m_ident_integer_ident_751(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_literal>& actual, leaf::parsing::instance::integer_literal_state& state, size_t depth);
+        bool m_integer_ident_752(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_literal>& actual, leaf::parsing::instance::integer_literal_state& state, size_t depth);
+        bool m_ident_integer_753(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_literal>& actual, leaf::parsing::instance::integer_literal_state& state, size_t depth);
+        bool m_integer_754(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_literal>& actual, leaf::parsing::instance::integer_literal_state& state, size_t depth);
+        bool alternatives755(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_literal>& actual, leaf::parsing::instance::integer_literal_state& state, size_t depth);
         bool p_can_integer_literal(size_t depth);
         std::shared_ptr<leaf::parsing::instance::integer_literal> p_match_integer_literal(size_t depth);
-        bool m_ident_char_ident_761(bool is_can, std::shared_ptr<leaf::parsing::instance::char_literal>& actual, leaf::parsing::instance::char_literal_state& state, size_t depth);
-        bool m_char_ident_762(bool is_can, std::shared_ptr<leaf::parsing::instance::char_literal>& actual, leaf::parsing::instance::char_literal_state& state, size_t depth);
-        bool m_ident_char_763(bool is_can, std::shared_ptr<leaf::parsing::instance::char_literal>& actual, leaf::parsing::instance::char_literal_state& state, size_t depth);
-        bool m_char_764(bool is_can, std::shared_ptr<leaf::parsing::instance::char_literal>& actual, leaf::parsing::instance::char_literal_state& state, size_t depth);
-        bool alternatives765(bool is_can, std::shared_ptr<leaf::parsing::instance::char_literal>& actual, leaf::parsing::instance::char_literal_state& state, size_t depth);
+        bool m_ident_char_ident_756(bool is_can, std::shared_ptr<leaf::parsing::instance::char_literal>& actual, leaf::parsing::instance::char_literal_state& state, size_t depth);
+        bool m_char_ident_757(bool is_can, std::shared_ptr<leaf::parsing::instance::char_literal>& actual, leaf::parsing::instance::char_literal_state& state, size_t depth);
+        bool m_ident_char_758(bool is_can, std::shared_ptr<leaf::parsing::instance::char_literal>& actual, leaf::parsing::instance::char_literal_state& state, size_t depth);
+        bool m_char_759(bool is_can, std::shared_ptr<leaf::parsing::instance::char_literal>& actual, leaf::parsing::instance::char_literal_state& state, size_t depth);
+        bool alternatives760(bool is_can, std::shared_ptr<leaf::parsing::instance::char_literal>& actual, leaf::parsing::instance::char_literal_state& state, size_t depth);
         bool p_can_char_literal(size_t depth);
         std::shared_ptr<leaf::parsing::instance::char_literal> p_match_char_literal(size_t depth);
-        bool m_typematch_ident_766(bool is_can, std::shared_ptr<leaf::parsing::instance::declaration>& actual, leaf::parsing::instance::declaration_state& state, size_t depth);
+        bool m_typematch_ident_761(bool is_can, std::shared_ptr<leaf::parsing::instance::declaration>& actual, leaf::parsing::instance::declaration_state& state, size_t depth);
         bool p_can_declaration(size_t depth);
         std::shared_ptr<leaf::parsing::instance::declaration> p_match_declaration(size_t depth);
-        bool m_return_semicolon_767(bool is_can, std::shared_ptr<leaf::parsing::instance::return_statement>& actual, leaf::parsing::instance::return_statement_state& state, size_t depth);
-        bool m_return_expression_semicolon_768(bool is_can, std::shared_ptr<leaf::parsing::instance::return_statement>& actual, leaf::parsing::instance::return_statement_state& state, size_t depth);
-        bool alternatives769(bool is_can, std::shared_ptr<leaf::parsing::instance::return_statement>& actual, leaf::parsing::instance::return_statement_state& state, size_t depth);
+        bool m_return_semicolon_762(bool is_can, std::shared_ptr<leaf::parsing::instance::return_statement>& actual, leaf::parsing::instance::return_statement_state& state, size_t depth);
+        bool m_return_expression_semicolon_763(bool is_can, std::shared_ptr<leaf::parsing::instance::return_statement>& actual, leaf::parsing::instance::return_statement_state& state, size_t depth);
+        bool alternatives764(bool is_can, std::shared_ptr<leaf::parsing::instance::return_statement>& actual, leaf::parsing::instance::return_statement_state& state, size_t depth);
         bool p_can_return_statement(size_t depth);
         std::shared_ptr<leaf::parsing::instance::return_statement> p_match_return_statement(size_t depth);
-        bool m_alias_770(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth);
-        bool m_constant_771(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth);
-        bool m_returnstatement_772(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth);
-        bool m_declaration_equal_expression_semicolon_773(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth);
-        bool m_declaration_semicolon_774(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth);
-        bool m_expression_semicolon_775(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth);
-        bool m_semicolon_776(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth);
-        bool m_pragma_777(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth);
-        bool alternatives778(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth);
+        bool m_alias_765(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth);
+        bool m_constant_766(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth);
+        bool m_returnstatement_767(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth);
+        bool m_declaration_equal_expression_semicolon_768(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth);
+        bool m_declaration_semicolon_769(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth);
+        bool m_expression_semicolon_770(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth);
+        bool m_semicolon_771(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth);
+        bool m_pragma_772(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth);
+        bool alternatives773(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth);
         bool p_can_statement(size_t depth);
         std::shared_ptr<leaf::parsing::instance::statement> p_match_statement(size_t depth);
-        bool m_auto841_779(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth);
-        bool m_exclamationgreaterthen_780(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth);
-        bool m_pragmadisable_781(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth);
-        bool m_pragmaenable_782(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth);
-        bool m_pragmasize_783(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth);
-        bool m_pragmaalign_784(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth);
-        bool alternatives785(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth);
-        bool while786_787(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth);
-        bool m_exclamationgreaterthen_788(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth);
+        bool m_auto821_774(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth);
+        bool m_exclamationgreaterthen_775(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth);
+        bool m_pragmadisable_776(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth);
+        bool m_pragmaenable_777(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth);
+        bool m_pragmasize_778(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth);
+        bool m_pragmaalign_779(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth);
+        bool alternatives780(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth);
+        bool while781_782(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth);
+        bool m_exclamationgreaterthen_783(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth);
         bool p_can_pragma(size_t depth);
         std::shared_ptr<leaf::parsing::instance::pragma> p_match_pragma(size_t depth);
-        bool m_align_789(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_align>& actual, leaf::parsing::instance::pragma_align_state& state, size_t depth);
-        bool m_integerbinary_790(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_align>& actual, leaf::parsing::instance::pragma_align_state& state, size_t depth);
-        bool m_integerhex_791(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_align>& actual, leaf::parsing::instance::pragma_align_state& state, size_t depth);
-        bool m_integer_792(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_align>& actual, leaf::parsing::instance::pragma_align_state& state, size_t depth);
-        bool alternatives793(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_align>& actual, leaf::parsing::instance::pragma_align_state& state, size_t depth);
+        bool m_align_784(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_align>& actual, leaf::parsing::instance::pragma_align_state& state, size_t depth);
+        bool m_integerbinary_785(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_align>& actual, leaf::parsing::instance::pragma_align_state& state, size_t depth);
+        bool m_integerhex_786(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_align>& actual, leaf::parsing::instance::pragma_align_state& state, size_t depth);
+        bool m_integer_787(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_align>& actual, leaf::parsing::instance::pragma_align_state& state, size_t depth);
+        bool alternatives788(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_align>& actual, leaf::parsing::instance::pragma_align_state& state, size_t depth);
         bool p_can_pragma_align(size_t depth);
         std::shared_ptr<leaf::parsing::instance::pragma_align> p_match_pragma_align(size_t depth);
-        bool m_size_794(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_size>& actual, leaf::parsing::instance::pragma_size_state& state, size_t depth);
-        bool m_integerbinary_795(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_size>& actual, leaf::parsing::instance::pragma_size_state& state, size_t depth);
-        bool m_integerhex_796(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_size>& actual, leaf::parsing::instance::pragma_size_state& state, size_t depth);
-        bool m_integer_797(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_size>& actual, leaf::parsing::instance::pragma_size_state& state, size_t depth);
-        bool alternatives798(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_size>& actual, leaf::parsing::instance::pragma_size_state& state, size_t depth);
+        bool m_size_789(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_size>& actual, leaf::parsing::instance::pragma_size_state& state, size_t depth);
+        bool m_integerbinary_790(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_size>& actual, leaf::parsing::instance::pragma_size_state& state, size_t depth);
+        bool m_integerhex_791(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_size>& actual, leaf::parsing::instance::pragma_size_state& state, size_t depth);
+        bool m_integer_792(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_size>& actual, leaf::parsing::instance::pragma_size_state& state, size_t depth);
+        bool alternatives793(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_size>& actual, leaf::parsing::instance::pragma_size_state& state, size_t depth);
         bool p_can_pragma_size(size_t depth);
         std::shared_ptr<leaf::parsing::instance::pragma_size> p_match_pragma_size(size_t depth);
-        bool m_disable_799(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_disable>& actual, leaf::parsing::instance::pragma_disable_state& state, size_t depth);
-        bool m_ident_800(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_disable>& actual, leaf::parsing::instance::pragma_disable_state& state, size_t depth);
+        bool m_disable_794(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_disable>& actual, leaf::parsing::instance::pragma_disable_state& state, size_t depth);
+        bool m_ident_795(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_disable>& actual, leaf::parsing::instance::pragma_disable_state& state, size_t depth);
         bool p_can_pragma_disable(size_t depth);
         std::shared_ptr<leaf::parsing::instance::pragma_disable> p_match_pragma_disable(size_t depth);
-        bool m_enable_801(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_enable>& actual, leaf::parsing::instance::pragma_enable_state& state, size_t depth);
-        bool m_ident_802(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_enable>& actual, leaf::parsing::instance::pragma_enable_state& state, size_t depth);
+        bool m_enable_796(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_enable>& actual, leaf::parsing::instance::pragma_enable_state& state, size_t depth);
+        bool m_ident_797(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_enable>& actual, leaf::parsing::instance::pragma_enable_state& state, size_t depth);
         bool p_can_pragma_enable(size_t depth);
         std::shared_ptr<leaf::parsing::instance::pragma_enable> p_match_pragma_enable(size_t depth);
-        bool m_ident_803(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage_item>& actual, leaf::parsing::instance::template_usage_item_state& state, size_t depth);
+        bool m_ident_798(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage_item>& actual, leaf::parsing::instance::template_usage_item_state& state, size_t depth);
         bool p_can_template_usage_item(size_t depth);
         std::shared_ptr<leaf::parsing::instance::template_usage_item> p_match_template_usage_item(size_t depth);
-        bool m_lessthen_804(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage>& actual, leaf::parsing::instance::template_usage_state& state, size_t depth);
-        bool m_templateusageitem_805(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage>& actual, leaf::parsing::instance::template_usage_state& state, size_t depth);
-        bool m_comma_806(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage>& actual, leaf::parsing::instance::template_usage_state& state, size_t depth);
-        bool m_comma_templateusageitem_807(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage>& actual, leaf::parsing::instance::template_usage_state& state, size_t depth);
-        bool alternatives808(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage>& actual, leaf::parsing::instance::template_usage_state& state, size_t depth);
-        bool while809_810(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage>& actual, leaf::parsing::instance::template_usage_state& state, size_t depth);
-        bool m_greaterthen_811(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage>& actual, leaf::parsing::instance::template_usage_state& state, size_t depth);
+        bool m_lessthen_799(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage>& actual, leaf::parsing::instance::template_usage_state& state, size_t depth);
+        bool m_templateusageitem_800(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage>& actual, leaf::parsing::instance::template_usage_state& state, size_t depth);
+        bool m_comma_801(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage>& actual, leaf::parsing::instance::template_usage_state& state, size_t depth);
+        bool m_comma_templateusageitem_802(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage>& actual, leaf::parsing::instance::template_usage_state& state, size_t depth);
+        bool alternatives803(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage>& actual, leaf::parsing::instance::template_usage_state& state, size_t depth);
+        bool while804_805(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage>& actual, leaf::parsing::instance::template_usage_state& state, size_t depth);
+        bool m_greaterthen_806(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage>& actual, leaf::parsing::instance::template_usage_state& state, size_t depth);
         bool p_can_template_usage(size_t depth);
         std::shared_ptr<leaf::parsing::instance::template_usage> p_match_template_usage(size_t depth);
-        bool m_ident_812(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition_item_direct_type>& actual, leaf::parsing::instance::template_definition_item_direct_type_state& state, size_t depth);
-        bool m_equal_813(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition_item_direct_type>& actual, leaf::parsing::instance::template_definition_item_direct_type_state& state, size_t depth);
-        bool m_equal_expvalue_814(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition_item_direct_type>& actual, leaf::parsing::instance::template_definition_item_direct_type_state& state, size_t depth);
-        bool if815_816(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition_item_direct_type>& actual, leaf::parsing::instance::template_definition_item_direct_type_state& state, size_t depth);
+        bool m_ident_807(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition_item_direct_type>& actual, leaf::parsing::instance::template_definition_item_direct_type_state& state, size_t depth);
+        bool m_equal_808(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition_item_direct_type>& actual, leaf::parsing::instance::template_definition_item_direct_type_state& state, size_t depth);
+        bool m_equal_expvalue_809(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition_item_direct_type>& actual, leaf::parsing::instance::template_definition_item_direct_type_state& state, size_t depth);
+        bool if810_811(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition_item_direct_type>& actual, leaf::parsing::instance::template_definition_item_direct_type_state& state, size_t depth);
         bool p_can_template_definition_item_direct_type(size_t depth);
         std::shared_ptr<leaf::parsing::instance::template_definition_item_direct_type> p_match_template_definition_item_direct_type(size_t depth);
-        bool m_identifier_ident_817(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition_item_identifier>& actual, leaf::parsing::instance::template_definition_item_identifier_state& state, size_t depth);
+        bool m_identifier_ident_812(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition_item_identifier>& actual, leaf::parsing::instance::template_definition_item_identifier_state& state, size_t depth);
         bool p_can_template_definition_item_identifier(size_t depth);
         std::shared_ptr<leaf::parsing::instance::template_definition_item_identifier> p_match_template_definition_item_identifier(size_t depth);
-        bool m_lessthen_818(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth);
-        bool m_templatedefinitionitemidentifier_819(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth);
-        bool m_templatedefinitionitemdirecttype_820(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth);
+        bool m_lessthen_813(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth);
+        bool m_templatedefinitionitemidentifier_814(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth);
+        bool m_templatedefinitionitemdirecttype_815(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth);
+        bool alternatives816(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth);
+        bool m_comma_817(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth);
+        bool m_templatedefinitionitemidentifier_818(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth);
+        bool m_templatedefinitionitemdirecttype_819(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth);
+        bool m_comma_820(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth);
         bool alternatives821(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth);
-        bool m_comma_822(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth);
-        bool m_templatedefinitionitemidentifier_823(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth);
-        bool m_templatedefinitionitemdirecttype_824(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth);
-        bool m_comma_825(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth);
-        bool alternatives826(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth);
-        bool while827_828(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth);
-        bool m_greaterthen_829(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth);
+        bool while822_823(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth);
+        bool m_greaterthen_824(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth);
         bool p_can_template_definition(size_t depth);
         std::shared_ptr<leaf::parsing::instance::template_definition> p_match_template_definition(size_t depth);
-        bool m_using_830(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth);
-        bool m_pragma_831(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth);
-        bool m_alias_832(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth);
-        bool m_class_833(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth);
-        bool m_contract_834(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth);
-        bool m_conversion_835(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth);
-        bool m_field_836(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth);
-        bool m_method_837(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth);
-        bool m_namespace_838(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth);
-        bool m_property_839(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth);
-        bool alternatives840(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth);
-        bool while841_842(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth);
+        bool m_typematchnoallocator_825(bool is_can, std::shared_ptr<leaf::parsing::instance::type_match>& actual, leaf::parsing::instance::type_match_state& state, size_t depth);
+        bool m_typematchwithallocator_826(bool is_can, std::shared_ptr<leaf::parsing::instance::type_match>& actual, leaf::parsing::instance::type_match_state& state, size_t depth);
+        bool alternatives827(bool is_can, std::shared_ptr<leaf::parsing::instance::type_match>& actual, leaf::parsing::instance::type_match_state& state, size_t depth);
+        bool p_can_type_match(size_t depth);
+        std::shared_ptr<leaf::parsing::instance::type_match> p_match_type_match(size_t depth);
+        bool m_typenavigation_squarebracketopen_squarebracketclose_828(bool is_can, std::shared_ptr<leaf::parsing::instance::type_match_no_allocator>& actual, leaf::parsing::instance::type_match_no_allocator_state& state, size_t depth);
+        bool m_typenavigation_829(bool is_can, std::shared_ptr<leaf::parsing::instance::type_match_no_allocator>& actual, leaf::parsing::instance::type_match_no_allocator_state& state, size_t depth);
+        bool alternatives830(bool is_can, std::shared_ptr<leaf::parsing::instance::type_match_no_allocator>& actual, leaf::parsing::instance::type_match_no_allocator_state& state, size_t depth);
+        bool p_can_type_match_no_allocator(size_t depth);
+        std::shared_ptr<leaf::parsing::instance::type_match_no_allocator> p_match_type_match_no_allocator(size_t depth);
+        bool m_ident_typenavigation_squarebracketopen_squarebracketclose_831(bool is_can, std::shared_ptr<leaf::parsing::instance::type_match_with_allocator>& actual, leaf::parsing::instance::type_match_with_allocator_state& state, size_t depth);
+        bool m_ident_typenavigation_832(bool is_can, std::shared_ptr<leaf::parsing::instance::type_match_with_allocator>& actual, leaf::parsing::instance::type_match_with_allocator_state& state, size_t depth);
+        bool alternatives833(bool is_can, std::shared_ptr<leaf::parsing::instance::type_match_with_allocator>& actual, leaf::parsing::instance::type_match_with_allocator_state& state, size_t depth);
+        bool p_can_type_match_with_allocator(size_t depth);
+        std::shared_ptr<leaf::parsing::instance::type_match_with_allocator> p_match_type_match_with_allocator(size_t depth);
+        bool m_using_834(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth);
+        bool m_pragma_835(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth);
+        bool m_alias_836(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth);
+        bool m_class_837(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth);
+        bool m_contract_838(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth);
+        bool m_conversion_839(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth);
+        bool m_field_840(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth);
+        bool m_method_841(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth);
+        bool m_namespace_842(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth);
+        bool m_property_843(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth);
+        bool alternatives844(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth);
+        bool while845_846(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth);
         bool p_can_main(size_t depth);
         std::shared_ptr<leaf::parsing::instance::main> p_match_main(size_t depth);
-        bool m_expchain_dot_call_843(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_chain>& actual, leaf::parsing::instance::exp_chain_state& state, size_t depth);
-        bool m_expchain_dot_ident_844(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_chain>& actual, leaf::parsing::instance::exp_chain_state& state, size_t depth);
-        bool m_expchain_minusgreaterthen_call_845(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_chain>& actual, leaf::parsing::instance::exp_chain_state& state, size_t depth);
-        bool m_expchain_minusgreaterthen_ident_846(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_chain>& actual, leaf::parsing::instance::exp_chain_state& state, size_t depth);
-        bool m_expchain_squarebracketopen_expression_squarebracketclose_847(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_chain>& actual, leaf::parsing::instance::exp_chain_state& state, size_t depth);
-        bool m_expchain_templateusage_848(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_chain>& actual, leaf::parsing::instance::exp_chain_state& state, size_t depth);
-        bool m_expchainstart_849(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_chain>& actual, leaf::parsing::instance::exp_chain_state& state, size_t depth);
+        bool m_expchain_dot_call_847(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_chain>& actual, leaf::parsing::instance::exp_chain_state& state, size_t depth);
+        bool m_expchain_dot_ident_848(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_chain>& actual, leaf::parsing::instance::exp_chain_state& state, size_t depth);
+        bool m_expchain_minusgreaterthen_call_849(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_chain>& actual, leaf::parsing::instance::exp_chain_state& state, size_t depth);
+        bool m_expchain_minusgreaterthen_ident_850(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_chain>& actual, leaf::parsing::instance::exp_chain_state& state, size_t depth);
+        bool m_expchain_squarebracketopen_expression_squarebracketclose_851(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_chain>& actual, leaf::parsing::instance::exp_chain_state& state, size_t depth);
+        bool m_expchain_templateusage_852(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_chain>& actual, leaf::parsing::instance::exp_chain_state& state, size_t depth);
+        bool m_expchainstart_853(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_chain>& actual, leaf::parsing::instance::exp_chain_state& state, size_t depth);
         bool lr_can_exp_chain(size_t depth);
         std::shared_ptr<leaf::parsing::instance::exp_chain> lr_match_exp_chain(size_t depth);
-        bool m_expbinary4_lessthenlessthen_expunary_850(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_4>& actual, leaf::parsing::instance::exp_binary_4_state& state, size_t depth);
-        bool m_expbinary4_greaterthengreaterthen_expunary_851(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_4>& actual, leaf::parsing::instance::exp_binary_4_state& state, size_t depth);
-        bool m_expbinary4_lessthenlessthenlessthen_expunary_852(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_4>& actual, leaf::parsing::instance::exp_binary_4_state& state, size_t depth);
-        bool m_expbinary4_greaterthengreaterthengreaterthen_expunary_853(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_4>& actual, leaf::parsing::instance::exp_binary_4_state& state, size_t depth);
-        bool m_expunary_854(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_4>& actual, leaf::parsing::instance::exp_binary_4_state& state, size_t depth);
+        bool m_expbinary4_lessthenlessthen_expunary_854(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_4>& actual, leaf::parsing::instance::exp_binary_4_state& state, size_t depth);
+        bool m_expbinary4_greaterthengreaterthen_expunary_855(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_4>& actual, leaf::parsing::instance::exp_binary_4_state& state, size_t depth);
+        bool m_expbinary4_lessthenlessthenlessthen_expunary_856(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_4>& actual, leaf::parsing::instance::exp_binary_4_state& state, size_t depth);
+        bool m_expbinary4_greaterthengreaterthengreaterthen_expunary_857(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_4>& actual, leaf::parsing::instance::exp_binary_4_state& state, size_t depth);
+        bool m_expunary_858(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_4>& actual, leaf::parsing::instance::exp_binary_4_state& state, size_t depth);
         bool lr_can_exp_binary_4(size_t depth);
         std::shared_ptr<leaf::parsing::instance::exp_binary_4> lr_match_exp_binary_4(size_t depth);
-        bool m_expbinary3_ampersand_expbinary4_855(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_3>& actual, leaf::parsing::instance::exp_binary_3_state& state, size_t depth);
-        bool m_expbinary4_856(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_3>& actual, leaf::parsing::instance::exp_binary_3_state& state, size_t depth);
+        bool m_expbinary3_ampersand_expbinary4_859(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_3>& actual, leaf::parsing::instance::exp_binary_3_state& state, size_t depth);
+        bool m_expbinary4_860(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_3>& actual, leaf::parsing::instance::exp_binary_3_state& state, size_t depth);
         bool lr_can_exp_binary_3(size_t depth);
         std::shared_ptr<leaf::parsing::instance::exp_binary_3> lr_match_exp_binary_3(size_t depth);
-        bool m_expbinary2_circumflex_expbinary3_857(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_2>& actual, leaf::parsing::instance::exp_binary_2_state& state, size_t depth);
-        bool m_expbinary3_858(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_2>& actual, leaf::parsing::instance::exp_binary_2_state& state, size_t depth);
+        bool m_expbinary2_circumflex_expbinary3_861(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_2>& actual, leaf::parsing::instance::exp_binary_2_state& state, size_t depth);
+        bool m_expbinary3_862(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_2>& actual, leaf::parsing::instance::exp_binary_2_state& state, size_t depth);
         bool lr_can_exp_binary_2(size_t depth);
         std::shared_ptr<leaf::parsing::instance::exp_binary_2> lr_match_exp_binary_2(size_t depth);
-        bool m_expbinary1_verticalbar_expbinary2_859(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_1>& actual, leaf::parsing::instance::exp_binary_1_state& state, size_t depth);
-        bool m_expbinary2_860(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_1>& actual, leaf::parsing::instance::exp_binary_1_state& state, size_t depth);
+        bool m_expbinary1_verticalbar_expbinary2_863(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_1>& actual, leaf::parsing::instance::exp_binary_1_state& state, size_t depth);
+        bool m_expbinary2_864(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_1>& actual, leaf::parsing::instance::exp_binary_1_state& state, size_t depth);
         bool lr_can_exp_binary_1(size_t depth);
         std::shared_ptr<leaf::parsing::instance::exp_binary_1> lr_match_exp_binary_1(size_t depth);
-        bool m_exparithmetic2_slash_expbinary1_861(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_arithmetic_2>& actual, leaf::parsing::instance::exp_arithmetic_2_state& state, size_t depth);
-        bool m_exparithmetic2_star_expbinary1_862(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_arithmetic_2>& actual, leaf::parsing::instance::exp_arithmetic_2_state& state, size_t depth);
-        bool m_expbinary1_863(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_arithmetic_2>& actual, leaf::parsing::instance::exp_arithmetic_2_state& state, size_t depth);
+        bool m_exparithmetic2_slash_expbinary1_865(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_arithmetic_2>& actual, leaf::parsing::instance::exp_arithmetic_2_state& state, size_t depth);
+        bool m_exparithmetic2_star_expbinary1_866(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_arithmetic_2>& actual, leaf::parsing::instance::exp_arithmetic_2_state& state, size_t depth);
+        bool m_expbinary1_867(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_arithmetic_2>& actual, leaf::parsing::instance::exp_arithmetic_2_state& state, size_t depth);
         bool lr_can_exp_arithmetic_2(size_t depth);
         std::shared_ptr<leaf::parsing::instance::exp_arithmetic_2> lr_match_exp_arithmetic_2(size_t depth);
-        bool m_exparithmetic1_plus_exparithmetic2_864(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_arithmetic_1>& actual, leaf::parsing::instance::exp_arithmetic_1_state& state, size_t depth);
-        bool m_exparithmetic1_minus_exparithmetic2_865(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_arithmetic_1>& actual, leaf::parsing::instance::exp_arithmetic_1_state& state, size_t depth);
-        bool m_exparithmetic2_866(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_arithmetic_1>& actual, leaf::parsing::instance::exp_arithmetic_1_state& state, size_t depth);
+        bool m_exparithmetic1_plus_exparithmetic2_868(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_arithmetic_1>& actual, leaf::parsing::instance::exp_arithmetic_1_state& state, size_t depth);
+        bool m_exparithmetic1_minus_exparithmetic2_869(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_arithmetic_1>& actual, leaf::parsing::instance::exp_arithmetic_1_state& state, size_t depth);
+        bool m_exparithmetic2_870(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_arithmetic_1>& actual, leaf::parsing::instance::exp_arithmetic_1_state& state, size_t depth);
         bool lr_can_exp_arithmetic_1(size_t depth);
         std::shared_ptr<leaf::parsing::instance::exp_arithmetic_1> lr_match_exp_arithmetic_1(size_t depth);
-        bool m_expcompare_lessthenequal_exparithmetic1_867(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_compare>& actual, leaf::parsing::instance::exp_compare_state& state, size_t depth);
-        bool m_expcompare_lessthen_exparithmetic1_868(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_compare>& actual, leaf::parsing::instance::exp_compare_state& state, size_t depth);
-        bool m_expcompare_greaterthenequal_exparithmetic1_869(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_compare>& actual, leaf::parsing::instance::exp_compare_state& state, size_t depth);
-        bool m_expcompare_greaterthen_exparithmetic1_870(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_compare>& actual, leaf::parsing::instance::exp_compare_state& state, size_t depth);
-        bool m_exparithmetic1_871(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_compare>& actual, leaf::parsing::instance::exp_compare_state& state, size_t depth);
+        bool m_expcompare_lessthenequal_exparithmetic1_871(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_compare>& actual, leaf::parsing::instance::exp_compare_state& state, size_t depth);
+        bool m_expcompare_lessthen_exparithmetic1_872(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_compare>& actual, leaf::parsing::instance::exp_compare_state& state, size_t depth);
+        bool m_expcompare_greaterthenequal_exparithmetic1_873(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_compare>& actual, leaf::parsing::instance::exp_compare_state& state, size_t depth);
+        bool m_expcompare_greaterthen_exparithmetic1_874(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_compare>& actual, leaf::parsing::instance::exp_compare_state& state, size_t depth);
+        bool m_exparithmetic1_875(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_compare>& actual, leaf::parsing::instance::exp_compare_state& state, size_t depth);
         bool lr_can_exp_compare(size_t depth);
         std::shared_ptr<leaf::parsing::instance::exp_compare> lr_match_exp_compare(size_t depth);
-        bool m_expequality_exclamationequal_expcompare_872(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_equality>& actual, leaf::parsing::instance::exp_equality_state& state, size_t depth);
-        bool m_expequality_equalequalequal_expcompare_873(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_equality>& actual, leaf::parsing::instance::exp_equality_state& state, size_t depth);
-        bool m_expequality_equalequal_expcompare_874(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_equality>& actual, leaf::parsing::instance::exp_equality_state& state, size_t depth);
-        bool m_expequality_tildeequal_expcompare_875(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_equality>& actual, leaf::parsing::instance::exp_equality_state& state, size_t depth);
-        bool m_expcompare_876(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_equality>& actual, leaf::parsing::instance::exp_equality_state& state, size_t depth);
+        bool m_expequality_exclamationequal_expcompare_876(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_equality>& actual, leaf::parsing::instance::exp_equality_state& state, size_t depth);
+        bool m_expequality_equalequalequal_expcompare_877(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_equality>& actual, leaf::parsing::instance::exp_equality_state& state, size_t depth);
+        bool m_expequality_equalequal_expcompare_878(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_equality>& actual, leaf::parsing::instance::exp_equality_state& state, size_t depth);
+        bool m_expequality_tildeequal_expcompare_879(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_equality>& actual, leaf::parsing::instance::exp_equality_state& state, size_t depth);
+        bool m_expcompare_880(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_equality>& actual, leaf::parsing::instance::exp_equality_state& state, size_t depth);
         bool lr_can_exp_equality(size_t depth);
         std::shared_ptr<leaf::parsing::instance::exp_equality> lr_match_exp_equality(size_t depth);
-        bool m_expand_ampersandampersand_expequality_877(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_and>& actual, leaf::parsing::instance::exp_and_state& state, size_t depth);
-        bool m_expequality_878(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_and>& actual, leaf::parsing::instance::exp_and_state& state, size_t depth);
+        bool m_expand_ampersandampersand_expequality_881(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_and>& actual, leaf::parsing::instance::exp_and_state& state, size_t depth);
+        bool m_expequality_882(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_and>& actual, leaf::parsing::instance::exp_and_state& state, size_t depth);
         bool lr_can_exp_and(size_t depth);
         std::shared_ptr<leaf::parsing::instance::exp_and> lr_match_exp_and(size_t depth);
-        bool m_expor_verticalbarverticalbar_expand_879(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_or>& actual, leaf::parsing::instance::exp_or_state& state, size_t depth);
-        bool m_expand_880(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_or>& actual, leaf::parsing::instance::exp_or_state& state, size_t depth);
+        bool m_expor_verticalbarverticalbar_expand_883(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_or>& actual, leaf::parsing::instance::exp_or_state& state, size_t depth);
+        bool m_expand_884(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_or>& actual, leaf::parsing::instance::exp_or_state& state, size_t depth);
         bool lr_can_exp_or(size_t depth);
         std::shared_ptr<leaf::parsing::instance::exp_or> lr_match_exp_or(size_t depth);
-        bool m_identnavigation_coloncolon_ident_881(bool is_can, std::shared_ptr<leaf::parsing::instance::ident_navigation>& actual, leaf::parsing::instance::ident_navigation_state& state, size_t depth);
-        bool m_ident_882(bool is_can, std::shared_ptr<leaf::parsing::instance::ident_navigation>& actual, leaf::parsing::instance::ident_navigation_state& state, size_t depth);
+        bool m_identnavigation_coloncolon_ident_885(bool is_can, std::shared_ptr<leaf::parsing::instance::ident_navigation>& actual, leaf::parsing::instance::ident_navigation_state& state, size_t depth);
+        bool m_ident_886(bool is_can, std::shared_ptr<leaf::parsing::instance::ident_navigation>& actual, leaf::parsing::instance::ident_navigation_state& state, size_t depth);
         bool lr_can_ident_navigation(size_t depth);
         std::shared_ptr<leaf::parsing::instance::ident_navigation> lr_match_ident_navigation(size_t depth);
-        bool m_typenavigation_coloncolon_ident_templateusage_883(bool is_can, std::shared_ptr<leaf::parsing::instance::type_navigation>& actual, leaf::parsing::instance::type_navigation_state& state, size_t depth);
-        bool m_typenavigation_coloncolon_ident_884(bool is_can, std::shared_ptr<leaf::parsing::instance::type_navigation>& actual, leaf::parsing::instance::type_navigation_state& state, size_t depth);
-        bool m_typenavigation_templateusage_885(bool is_can, std::shared_ptr<leaf::parsing::instance::type_navigation>& actual, leaf::parsing::instance::type_navigation_state& state, size_t depth);
-        bool m_ident_886(bool is_can, std::shared_ptr<leaf::parsing::instance::type_navigation>& actual, leaf::parsing::instance::type_navigation_state& state, size_t depth);
+        bool m_typenavigation_coloncolon_ident_templateusage_887(bool is_can, std::shared_ptr<leaf::parsing::instance::type_navigation>& actual, leaf::parsing::instance::type_navigation_state& state, size_t depth);
+        bool m_typenavigation_coloncolon_ident_888(bool is_can, std::shared_ptr<leaf::parsing::instance::type_navigation>& actual, leaf::parsing::instance::type_navigation_state& state, size_t depth);
+        bool m_typenavigation_templateusage_889(bool is_can, std::shared_ptr<leaf::parsing::instance::type_navigation>& actual, leaf::parsing::instance::type_navigation_state& state, size_t depth);
+        bool m_ident_890(bool is_can, std::shared_ptr<leaf::parsing::instance::type_navigation>& actual, leaf::parsing::instance::type_navigation_state& state, size_t depth);
         bool lr_can_type_navigation(size_t depth);
         std::shared_ptr<leaf::parsing::instance::type_navigation> lr_match_type_navigation(size_t depth);
         void skip();
@@ -1317,12 +1329,12 @@ namespace leaf::parsing
             STRING,
             CHAR_UNESCAPED_ENDING,
             CHAR_,
-            _COLON,
+            _SQUARE_BRACKET_OPEN,
             _COMMA,
+            _SQUARE_BRACKET_CLOSE,
             _ROUND_BRACKET_OPEN,
             _ROUND_BRACKET_CLOSE,
-            _SQUARE_BRACKET_OPEN,
-            _SQUARE_BRACKET_CLOSE,
+            _EQUAL,
             _CONTRACT,
             _CURLY_BRACKET_OPEN,
             _CURLY_BRACKET_CLOSE,
@@ -1355,6 +1367,7 @@ namespace leaf::parsing
             _IF,
             _ELSE,
             _FOR,
+            _COLON,
             _CASE,
             _SWITCH,
             _DEFAULT,
@@ -1362,7 +1375,6 @@ namespace leaf::parsing
             _ASSEMBLY,
             _COPY,
             _TILDE_EQUAL,
-            _EQUAL,
             _PUBLIC,
             _LOCAL,
             _DERIVED,
@@ -1390,7 +1402,7 @@ namespace leaf::parsing
             _SIZEOF,
             _COLON_COLON,
             _RETURN,
-            _AUTO_841,
+            _AUTO_821,
             _EXCLAMATION_GREATER_THEN,
             _ALIGN,
             _SIZE,
@@ -1410,15 +1422,21 @@ namespace leaf::parsing
             size_t length;
         };
         leaf::parsing::instance::token create_token(size_t length, tok type);
+        class attribute
+        {
+        public:
+            std::vector<std::shared_ptr<attribute_item>> items;
+        };
+        class attribute_item
+        {
+        public:
+            std::shared_ptr<type_match_no_allocator> target_type;
+            std::shared_ptr<attribute_args_a> args_a;
+            std::shared_ptr<attribute_args_b> args_b;
+        };
         class attribute_arg_item_a
         {
         public:
-            std::shared_ptr<exp_or> value;
-        };
-        class attribute_arg_item_b
-        {
-        public:
-            token name;
             std::shared_ptr<exp_or> value;
         };
         class attribute_args_a
@@ -1431,16 +1449,11 @@ namespace leaf::parsing
         public:
             std::vector<std::shared_ptr<attribute_arg_item_b>> args;
         };
-        class attribute_item
+        class attribute_arg_item_b
         {
         public:
-            std::shared_ptr<type_match> target_type;
-            std::variant<std::shared_ptr<attribute_args_a>, std::shared_ptr<attribute_args_b>> args;
-        };
-        class attribute
-        {
-        public:
-            std::vector<std::shared_ptr<attribute_item>> items;
+            token name;
+            std::shared_ptr<exp_or> value;
         };
         class contract
         {
@@ -1944,13 +1957,6 @@ namespace leaf::parsing
         public:
             std::shared_ptr<type_match> type;
         };
-        class type_match
-        {
-        public:
-            std::optional<bool> is_array;
-            token allocator;
-            std::shared_ptr<type_navigation> base;
-        };
         class string_formatable
         {
         public:
@@ -2070,6 +2076,24 @@ namespace leaf::parsing
         public:
             std::vector<std::variant<std::shared_ptr<template_definition_item_identifier>, std::shared_ptr<template_definition_item_direct_type>>> items;
         };
+        class type_match
+        {
+        public:
+            std::variant<std::shared_ptr<type_match_no_allocator>, std::shared_ptr<type_match_with_allocator>> match;
+        };
+        class type_match_no_allocator
+        {
+        public:
+            std::optional<bool> is_array;
+            std::shared_ptr<type_navigation> base;
+        };
+        class type_match_with_allocator
+        {
+        public:
+            std::optional<bool> is_array;
+            token allocator;
+            std::shared_ptr<type_navigation> base;
+        };
         class main
         {
         public:
@@ -2178,10 +2202,13 @@ namespace leaf::parsing
             token right;
             std::shared_ptr<template_usage> template_;
         };
-        class attribute_arg_item_a_state
+        class attribute_state
         {
         };
-        class attribute_arg_item_b_state
+        class attribute_item_state
+        {
+        };
+        class attribute_arg_item_a_state
         {
         };
         class attribute_args_a_state
@@ -2190,10 +2217,7 @@ namespace leaf::parsing
         class attribute_args_b_state
         {
         };
-        class attribute_item_state
-        {
-        };
-        class attribute_state
+        class attribute_arg_item_b_state
         {
         };
         class contract_state
@@ -2402,9 +2426,6 @@ namespace leaf::parsing
         class sizeof__state
         {
         };
-        class type_match_state
-        {
-        };
         class string_formatable_state
         {
         };
@@ -2463,6 +2484,15 @@ namespace leaf::parsing
         {
         };
         class template_definition_state
+        {
+        };
+        class type_match_state
+        {
+        };
+        class type_match_no_allocator_state
+        {
+        };
+        class type_match_with_allocator_state
         {
         };
         class main_state

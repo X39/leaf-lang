@@ -54,23 +54,6 @@ production sizeof
 left-recursive ident-navigation
     match @[left]ident-navigation "::" @[right]ident
     match @[left]ident
-    
-left-recursive type-navigation
-    match @[left]type-navigation "::" @[right]ident @[template]template-usage
-    match @[left]type-navigation "::" @[right]ident
-    match @[left]type-navigation @[template]template-usage
-    match @[left]ident
-    
-production type-match
-    alternatives
-        match @[allocator]ident @[base]type-navigation "[" "]"
-            set capture is-array true
-        match @[allocator]ident @[base]type-navigation
-            set capture is-array false
-        match @[base]type-navigation "[" "]"
-            set capture is-array true
-        match @[base]type-navigation
-            set capture is-array false
 
 production string-formatable
     match @[parts]string-formatable-start

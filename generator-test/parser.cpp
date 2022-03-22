@@ -868,7 +868,7 @@ std::optional<size_t> leaf::parsing::instance::token_string_unescaped_ending(siz
     size_t local_offset3 = 0;
     while (current() != '\0' && count2 > 0)
     {
-        if (m_offset >= 1 && m_contents[m_offset - 1] == '\')
+        if (m_offset >= 1 && m_contents[m_offset - 1] == '\\')
         {
             break;
         }
@@ -960,7 +960,7 @@ std::optional<size_t> leaf::parsing::instance::token_char_unescaped_ending(size_
     size_t local_offset3 = 0;
     while (current() != '\0' && count2 > 0)
     {
-        if (m_offset >= 1 && m_contents[m_offset - 1] == '\')
+        if (m_offset >= 1 && m_contents[m_offset - 1] == '\\')
         {
             break;
         }
@@ -1045,13 +1045,13 @@ std::optional<size_t> leaf::parsing::instance::token_char_(size_t depth)
     resettable1.reset();
     return resultVariable23;
 }
-std::optional<size_t> leaf::parsing::instance::token__colon(size_t depth)
+std::optional<size_t> leaf::parsing::instance::token__square_bracket_open(size_t depth)
 {
     resettable resettable1(*this);
     size_t count2 = 0;
     while (current() != '\0' && count2 < 1)
     {
-        if (current() == ':')
+        if (current() == '[')
         {
             count2++;
             next();
@@ -1091,6 +1091,29 @@ std::optional<size_t> leaf::parsing::instance::token__comma(size_t depth)
     resettable1.reset();
     return resultVariable25;
 }
+std::optional<size_t> leaf::parsing::instance::token__square_bracket_close(size_t depth)
+{
+    resettable resettable1(*this);
+    size_t count2 = 0;
+    while (current() != '\0' && count2 < 1)
+    {
+        if (current() == ']')
+        {
+            count2++;
+            next();
+            continue;
+        }
+        break;
+    }
+    if (count2 < 1)
+    {
+        resettable1.reset();
+        return {};
+    }
+    auto resultVariable26 = m_offset - resettable1.m_offset;
+    resettable1.reset();
+    return resultVariable26;
+}
 std::optional<size_t> leaf::parsing::instance::token__round_bracket_open(size_t depth)
 {
     resettable resettable1(*this);
@@ -1110,9 +1133,9 @@ std::optional<size_t> leaf::parsing::instance::token__round_bracket_open(size_t 
         resettable1.reset();
         return {};
     }
-    auto resultVariable26 = m_offset - resettable1.m_offset;
+    auto resultVariable27 = m_offset - resettable1.m_offset;
     resettable1.reset();
-    return resultVariable26;
+    return resultVariable27;
 }
 std::optional<size_t> leaf::parsing::instance::token__round_bracket_close(size_t depth)
 {
@@ -1133,40 +1156,17 @@ std::optional<size_t> leaf::parsing::instance::token__round_bracket_close(size_t
         resettable1.reset();
         return {};
     }
-    auto resultVariable27 = m_offset - resettable1.m_offset;
-    resettable1.reset();
-    return resultVariable27;
-}
-std::optional<size_t> leaf::parsing::instance::token__square_bracket_open(size_t depth)
-{
-    resettable resettable1(*this);
-    size_t count2 = 0;
-    while (current() != '\0' && count2 < 1)
-    {
-        if (current() == '[')
-        {
-            count2++;
-            next();
-            continue;
-        }
-        break;
-    }
-    if (count2 < 1)
-    {
-        resettable1.reset();
-        return {};
-    }
     auto resultVariable28 = m_offset - resettable1.m_offset;
     resettable1.reset();
     return resultVariable28;
 }
-std::optional<size_t> leaf::parsing::instance::token__square_bracket_close(size_t depth)
+std::optional<size_t> leaf::parsing::instance::token__equal(size_t depth)
 {
     resettable resettable1(*this);
     size_t count2 = 0;
     while (current() != '\0' && count2 < 1)
     {
-        if (current() == ']')
+        if (current() == '=')
         {
             count2++;
             next();
@@ -2003,6 +2003,29 @@ std::optional<size_t> leaf::parsing::instance::token__for(size_t depth)
     resettable1.reset();
     return resultVariable61;
 }
+std::optional<size_t> leaf::parsing::instance::token__colon(size_t depth)
+{
+    resettable resettable1(*this);
+    size_t count2 = 0;
+    while (current() != '\0' && count2 < 1)
+    {
+        if (current() == ':')
+        {
+            count2++;
+            next();
+            continue;
+        }
+        break;
+    }
+    if (count2 < 1)
+    {
+        resettable1.reset();
+        return {};
+    }
+    auto resultVariable62 = m_offset - resettable1.m_offset;
+    resettable1.reset();
+    return resultVariable62;
+}
 std::optional<size_t> leaf::parsing::instance::token__case(size_t depth)
 {
     resettable resettable1(*this);
@@ -2026,9 +2049,9 @@ std::optional<size_t> leaf::parsing::instance::token__case(size_t depth)
         resettable1.reset();
         return {};
     }
-    auto resultVariable62 = m_offset - resettable1.m_offset;
+    auto resultVariable63 = m_offset - resettable1.m_offset;
     resettable1.reset();
-    return resultVariable62;
+    return resultVariable63;
 }
 std::optional<size_t> leaf::parsing::instance::token__switch(size_t depth)
 {
@@ -2053,9 +2076,9 @@ std::optional<size_t> leaf::parsing::instance::token__switch(size_t depth)
         resettable1.reset();
         return {};
     }
-    auto resultVariable63 = m_offset - resettable1.m_offset;
+    auto resultVariable64 = m_offset - resettable1.m_offset;
     resettable1.reset();
-    return resultVariable63;
+    return resultVariable64;
 }
 std::optional<size_t> leaf::parsing::instance::token__default(size_t depth)
 {
@@ -2080,9 +2103,9 @@ std::optional<size_t> leaf::parsing::instance::token__default(size_t depth)
         resettable1.reset();
         return {};
     }
-    auto resultVariable64 = m_offset - resettable1.m_offset;
+    auto resultVariable65 = m_offset - resettable1.m_offset;
     resettable1.reset();
-    return resultVariable64;
+    return resultVariable65;
 }
 std::optional<size_t> leaf::parsing::instance::token__eol(size_t depth)
 {
@@ -2103,9 +2126,9 @@ std::optional<size_t> leaf::parsing::instance::token__eol(size_t depth)
         resettable1.reset();
         return {};
     }
-    auto resultVariable65 = m_offset - resettable1.m_offset;
+    auto resultVariable66 = m_offset - resettable1.m_offset;
     resettable1.reset();
-    return resultVariable65;
+    return resultVariable66;
 }
 std::optional<size_t> leaf::parsing::instance::token__assembly(size_t depth)
 {
@@ -2130,9 +2153,9 @@ std::optional<size_t> leaf::parsing::instance::token__assembly(size_t depth)
         resettable1.reset();
         return {};
     }
-    auto resultVariable66 = m_offset - resettable1.m_offset;
+    auto resultVariable67 = m_offset - resettable1.m_offset;
     resettable1.reset();
-    return resultVariable66;
+    return resultVariable67;
 }
 std::optional<size_t> leaf::parsing::instance::token__copy(size_t depth)
 {
@@ -2157,9 +2180,9 @@ std::optional<size_t> leaf::parsing::instance::token__copy(size_t depth)
         resettable1.reset();
         return {};
     }
-    auto resultVariable67 = m_offset - resettable1.m_offset;
+    auto resultVariable68 = m_offset - resettable1.m_offset;
     resettable1.reset();
-    return resultVariable67;
+    return resultVariable68;
 }
 std::optional<size_t> leaf::parsing::instance::token__tilde_equal(size_t depth)
 {
@@ -2175,29 +2198,6 @@ std::optional<size_t> leaf::parsing::instance::token__tilde_equal(size_t depth)
             {
                 next();
             }
-            continue;
-        }
-        break;
-    }
-    if (count2 < 1)
-    {
-        resettable1.reset();
-        return {};
-    }
-    auto resultVariable68 = m_offset - resettable1.m_offset;
-    resettable1.reset();
-    return resultVariable68;
-}
-std::optional<size_t> leaf::parsing::instance::token__equal(size_t depth)
-{
-    resettable resettable1(*this);
-    size_t count2 = 0;
-    while (current() != '\0' && count2 < 1)
-    {
-        if (current() == '=')
-        {
-            count2++;
-            next();
             continue;
         }
         break;
@@ -2940,7 +2940,7 @@ std::optional<size_t> leaf::parsing::instance::token__return(size_t depth)
     resettable1.reset();
     return resultVariable96;
 }
-std::optional<size_t> leaf::parsing::instance::token__auto_841(size_t depth)
+std::optional<size_t> leaf::parsing::instance::token__auto_821(size_t depth)
 {
     resettable resettable1(*this);
     size_t count2 = 0;
@@ -3129,1336 +3129,7 @@ std::optional<size_t> leaf::parsing::instance::token__identifier(size_t depth)
     resettable1.reset();
     return resultVariable103;
 }
-bool leaf::parsing::instance::m_expor_104(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_arg_item_a>& actual, leaf::parsing::instance::attribute_arg_item_a_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (lr_can_exp_or(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val2 = lr_match_exp_or(depth + 1);
-    actual->value = val2;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::p_can_attribute_arg_item_a(size_t depth)
-{
-    resettable resettable1(*this);
-    std::shared_ptr<leaf::parsing::instance::attribute_arg_item_a> fake;
-    attribute_arg_item_a_state state;
-    if (!m_expor_104(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    return true;
-}
-std::shared_ptr<leaf::parsing::instance::attribute_arg_item_a> leaf::parsing::instance::p_match_attribute_arg_item_a(size_t depth)
-{
-    auto actual = std::make_shared<leaf::parsing::instance::attribute_arg_item_a>();
-    std::shared_ptr<leaf::parsing::instance::attribute_arg_item_a> fake;
-    attribute_arg_item_a_state state;
-    resettable resettable2(*this);
-    if (m_expor_104(true, fake, state, depth + 1))
-    {
-        resettable2.reset();
-        m_expor_104(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    return actual;
-}
-bool leaf::parsing::instance::m_ident_colon_expor_105(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_arg_item_b>& actual, leaf::parsing::instance::attribute_arg_item_b_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_ident(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token__colon(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (lr_can_exp_or(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val6 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->name = val6;
-    skip();
-    auto l8 = token__colon(depth + 1).value();
-    for (;l8 != 0; l8--)
-    {
-        next();
-    }
-    skip();
-    auto val9 = lr_match_exp_or(depth + 1);
-    actual->value = val9;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::p_can_attribute_arg_item_b(size_t depth)
-{
-    resettable resettable1(*this);
-    std::shared_ptr<leaf::parsing::instance::attribute_arg_item_b> fake;
-    attribute_arg_item_b_state state;
-    if (!m_ident_colon_expor_105(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    return true;
-}
-std::shared_ptr<leaf::parsing::instance::attribute_arg_item_b> leaf::parsing::instance::p_match_attribute_arg_item_b(size_t depth)
-{
-    auto actual = std::make_shared<leaf::parsing::instance::attribute_arg_item_b>();
-    std::shared_ptr<leaf::parsing::instance::attribute_arg_item_b> fake;
-    attribute_arg_item_b_state state;
-    resettable resettable2(*this);
-    if (m_ident_colon_expor_105(true, fake, state, depth + 1))
-    {
-        resettable2.reset();
-        m_ident_colon_expor_105(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    return actual;
-}
-bool leaf::parsing::instance::m_attributeargitema_106(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_a>& actual, leaf::parsing::instance::attribute_args_a_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_attribute_arg_item_a(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val2 = p_match_attribute_arg_item_a(depth + 1);
-    actual->args.push_back(val2);
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_attributeargitema_107(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_a>& actual, leaf::parsing::instance::attribute_args_a_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_attribute_arg_item_a(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    p_match_attribute_arg_item_a(depth + 1);
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_comma_attributeargitema_108(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_a>& actual, leaf::parsing::instance::attribute_args_a_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token__comma(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (p_can_attribute_arg_item_a(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto l5 = token__comma(depth + 1).value();
-    for (;l5 != 0; l5--)
-    {
-        next();
-    }
-    skip();
-    auto val6 = p_match_attribute_arg_item_a(depth + 1);
-    actual->args.push_back(val6);
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::while109_110(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_a>& actual, leaf::parsing::instance::attribute_args_a_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    bool cond3 = m_attributeargitema_107(true, actual, state, depth + 1);
-    resettable1.reset();
-    if (is_can)
-    {
-        while (cond3 && current() != '\0')
-        {
-            if (m_comma_attributeargitema_108(true, actual, state, depth + 1))
-            {
-                skip();
-            }
-            else if (is_can)
-            {
-                return false;
-            }
-            else
-            {
-                report("Failed to match { $ref: , ({ Token: , (,)}), $ref: attribute-arg-item-a (XCG.Parsing.Production) }", depth);
-                return false;
-            }
-            resettable resettable2(*this);
-            cond3 = m_attributeargitema_107(true, actual, state, depth + 1);
-            resettable2.reset();
-        }
-        return true;
-    }
-    else
-    {
-        while (cond3 && current() != '\0')
-        {
-            if (m_comma_attributeargitema_108(false, actual, state, depth + 1))
-            {
-                skip();
-            }
-            else if (is_can)
-            {
-                return false;
-            }
-            else
-            {
-                report("Failed to match { $ref: , ({ Token: , (,)}), $ref: attribute-arg-item-a (XCG.Parsing.Production) }", depth);
-                return false;
-            }
-            resettable resettable2(*this);
-            cond3 = m_attributeargitema_107(true, actual, state, depth + 1);
-            resettable2.reset();
-        }
-        return true;
-    }
-}
-bool leaf::parsing::instance::m_comma_111(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_a>& actual, leaf::parsing::instance::attribute_args_a_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token__comma(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto l5 = token__comma(depth + 1).value();
-    for (;l5 != 0; l5--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_comma_112(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_a>& actual, leaf::parsing::instance::attribute_args_a_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token__comma(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto l5 = token__comma(depth + 1).value();
-    for (;l5 != 0; l5--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::if113_114(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_a>& actual, leaf::parsing::instance::attribute_args_a_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    bool cond2 = m_comma_111(true, actual, state, depth + 1);
-    resettable1.reset();
-    if (is_can)
-    {
-        if (cond2)
-        {
-            if (m_comma_112(true, actual, state, depth + 1))
-            {
-                skip();
-            }
-            else if (is_can)
-            {
-                return false;
-            }
-            else
-            {
-                report("Failed to match { $ref: , ({ Token: , (,)}) }", depth);
-                return false;
-            }
-            return true;
-        }
-        return true;
-    }
-    else
-    {
-        if (cond2)
-        {
-            if (m_comma_112(false, actual, state, depth + 1))
-            {
-                skip();
-            }
-            else if (is_can)
-            {
-                return false;
-            }
-            else
-            {
-                report("Failed to match { $ref: , ({ Token: , (,)}) }", depth);
-                return false;
-            }
-            return true;
-        }
-        return true;
-    }
-}
-bool leaf::parsing::instance::p_can_attribute_args_a(size_t depth)
-{
-    resettable resettable1(*this);
-    std::shared_ptr<leaf::parsing::instance::attribute_args_a> fake;
-    attribute_args_a_state state;
-    if (!m_attributeargitema_106(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    else if (!while109_110(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    else if (!if113_114(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    return true;
-}
-std::shared_ptr<leaf::parsing::instance::attribute_args_a> leaf::parsing::instance::p_match_attribute_args_a(size_t depth)
-{
-    auto actual = std::make_shared<leaf::parsing::instance::attribute_args_a>();
-    std::shared_ptr<leaf::parsing::instance::attribute_args_a> fake;
-    attribute_args_a_state state;
-    resettable resettable2(*this);
-    if (m_attributeargitema_106(true, fake, state, depth + 1))
-    {
-        resettable2.reset();
-        m_attributeargitema_106(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    resettable resettable3(*this);
-    if (while109_110(true, fake, state, depth + 1))
-    {
-        resettable3.reset();
-        while109_110(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    resettable resettable4(*this);
-    if (if113_114(true, fake, state, depth + 1))
-    {
-        resettable4.reset();
-        if113_114(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    return actual;
-}
-bool leaf::parsing::instance::m_attributeargitemb_115(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_b>& actual, leaf::parsing::instance::attribute_args_b_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_attribute_arg_item_b(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val2 = p_match_attribute_arg_item_b(depth + 1);
-    actual->args.push_back(val2);
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_attributeargitemb_116(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_b>& actual, leaf::parsing::instance::attribute_args_b_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_attribute_arg_item_b(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    p_match_attribute_arg_item_b(depth + 1);
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_comma_attributeargitemb_117(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_b>& actual, leaf::parsing::instance::attribute_args_b_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token__comma(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (p_can_attribute_arg_item_b(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto l5 = token__comma(depth + 1).value();
-    for (;l5 != 0; l5--)
-    {
-        next();
-    }
-    skip();
-    auto val6 = p_match_attribute_arg_item_b(depth + 1);
-    actual->args.push_back(val6);
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::while118_119(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_b>& actual, leaf::parsing::instance::attribute_args_b_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    bool cond3 = m_attributeargitemb_116(true, actual, state, depth + 1);
-    resettable1.reset();
-    if (is_can)
-    {
-        while (cond3 && current() != '\0')
-        {
-            if (m_comma_attributeargitemb_117(true, actual, state, depth + 1))
-            {
-                skip();
-            }
-            else if (is_can)
-            {
-                return false;
-            }
-            else
-            {
-                report("Failed to match { $ref: , ({ Token: , (,)}), $ref: attribute-arg-item-b (XCG.Parsing.Production) }", depth);
-                return false;
-            }
-            resettable resettable2(*this);
-            cond3 = m_attributeargitemb_116(true, actual, state, depth + 1);
-            resettable2.reset();
-        }
-        return true;
-    }
-    else
-    {
-        while (cond3 && current() != '\0')
-        {
-            if (m_comma_attributeargitemb_117(false, actual, state, depth + 1))
-            {
-                skip();
-            }
-            else if (is_can)
-            {
-                return false;
-            }
-            else
-            {
-                report("Failed to match { $ref: , ({ Token: , (,)}), $ref: attribute-arg-item-b (XCG.Parsing.Production) }", depth);
-                return false;
-            }
-            resettable resettable2(*this);
-            cond3 = m_attributeargitemb_116(true, actual, state, depth + 1);
-            resettable2.reset();
-        }
-        return true;
-    }
-}
-bool leaf::parsing::instance::m_comma_120(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_b>& actual, leaf::parsing::instance::attribute_args_b_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token__comma(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto l5 = token__comma(depth + 1).value();
-    for (;l5 != 0; l5--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_comma_121(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_b>& actual, leaf::parsing::instance::attribute_args_b_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token__comma(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto l5 = token__comma(depth + 1).value();
-    for (;l5 != 0; l5--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::if122_123(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_b>& actual, leaf::parsing::instance::attribute_args_b_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    bool cond2 = m_comma_120(true, actual, state, depth + 1);
-    resettable1.reset();
-    if (is_can)
-    {
-        if (cond2)
-        {
-            if (m_comma_121(true, actual, state, depth + 1))
-            {
-                skip();
-            }
-            else if (is_can)
-            {
-                return false;
-            }
-            else
-            {
-                report("Failed to match { $ref: , ({ Token: , (,)}) }", depth);
-                return false;
-            }
-            return true;
-        }
-        return true;
-    }
-    else
-    {
-        if (cond2)
-        {
-            if (m_comma_121(false, actual, state, depth + 1))
-            {
-                skip();
-            }
-            else if (is_can)
-            {
-                return false;
-            }
-            else
-            {
-                report("Failed to match { $ref: , ({ Token: , (,)}) }", depth);
-                return false;
-            }
-            return true;
-        }
-        return true;
-    }
-}
-bool leaf::parsing::instance::p_can_attribute_args_b(size_t depth)
-{
-    resettable resettable1(*this);
-    std::shared_ptr<leaf::parsing::instance::attribute_args_b> fake;
-    attribute_args_b_state state;
-    if (!m_attributeargitemb_115(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    else if (!while118_119(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    else if (!if122_123(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    return true;
-}
-std::shared_ptr<leaf::parsing::instance::attribute_args_b> leaf::parsing::instance::p_match_attribute_args_b(size_t depth)
-{
-    auto actual = std::make_shared<leaf::parsing::instance::attribute_args_b>();
-    std::shared_ptr<leaf::parsing::instance::attribute_args_b> fake;
-    attribute_args_b_state state;
-    resettable resettable2(*this);
-    if (m_attributeargitemb_115(true, fake, state, depth + 1))
-    {
-        resettable2.reset();
-        m_attributeargitemb_115(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    resettable resettable3(*this);
-    if (while118_119(true, fake, state, depth + 1))
-    {
-        resettable3.reset();
-        while118_119(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    resettable resettable4(*this);
-    if (if122_123(true, fake, state, depth + 1))
-    {
-        resettable4.reset();
-        if122_123(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    return actual;
-}
-bool leaf::parsing::instance::m_typematch_124(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_item>& actual, leaf::parsing::instance::attribute_item_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_type_match(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val2 = p_match_type_match(depth + 1);
-    actual->target_type = val2;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_typematch_roundbracketopen_roundbracketclose_125(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_item>& actual, leaf::parsing::instance::attribute_item_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_type_match(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l2 = token__round_bracket_open(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token__round_bracket_close(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val6 = p_match_type_match(depth + 1);
-    actual->target_type = val6;
-    skip();
-    auto l8 = token__round_bracket_open(depth + 1).value();
-    for (;l8 != 0; l8--)
-    {
-        next();
-    }
-    skip();
-    auto l10 = token__round_bracket_close(depth + 1).value();
-    for (;l10 != 0; l10--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_typematch_roundbracketopen_attributeargsa_attributeargsb_roundbracketclose_126(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_item>& actual, leaf::parsing::instance::attribute_item_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_type_match(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l2 = token__round_bracket_open(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (p_can_attribute_args_a(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (p_can_attribute_args_b(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token__round_bracket_close(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val6 = p_match_type_match(depth + 1);
-    actual->target_type = val6;
-    skip();
-    auto l8 = token__round_bracket_open(depth + 1).value();
-    for (;l8 != 0; l8--)
-    {
-        next();
-    }
-    skip();
-    auto val9 = p_match_attribute_args_a(depth + 1);
-    actual->args = val9;
-    skip();
-    p_match_attribute_args_b(depth + 1);
-    skip();
-    auto l12 = token__round_bracket_close(depth + 1).value();
-    for (;l12 != 0; l12--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_typematch_roundbracketopen_attributeargsa_roundbracketclose_127(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_item>& actual, leaf::parsing::instance::attribute_item_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_type_match(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l2 = token__round_bracket_open(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (p_can_attribute_args_a(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token__round_bracket_close(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val6 = p_match_type_match(depth + 1);
-    actual->target_type = val6;
-    skip();
-    auto l8 = token__round_bracket_open(depth + 1).value();
-    for (;l8 != 0; l8--)
-    {
-        next();
-    }
-    skip();
-    auto val9 = p_match_attribute_args_a(depth + 1);
-    actual->args = val9;
-    skip();
-    auto l11 = token__round_bracket_close(depth + 1).value();
-    for (;l11 != 0; l11--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_typematch_roundbracketopen_attributeargsb_roundbracketclose_128(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_item>& actual, leaf::parsing::instance::attribute_item_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_type_match(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l2 = token__round_bracket_open(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (p_can_attribute_args_b(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token__round_bracket_close(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val6 = p_match_type_match(depth + 1);
-    actual->target_type = val6;
-    skip();
-    auto l8 = token__round_bracket_open(depth + 1).value();
-    for (;l8 != 0; l8--)
-    {
-        next();
-    }
-    skip();
-    auto val9 = p_match_attribute_args_b(depth + 1);
-    actual->args = val9;
-    skip();
-    auto l11 = token__round_bracket_close(depth + 1).value();
-    for (;l11 != 0; l11--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::alternatives129(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_item>& actual, leaf::parsing::instance::attribute_item_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (m_typematch_124(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_typematch_124(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_typematch_roundbracketopen_roundbracketclose_125(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_typematch_roundbracketopen_roundbracketclose_125(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_typematch_roundbracketopen_attributeargsa_attributeargsb_roundbracketclose_126(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_typematch_roundbracketopen_attributeargsa_attributeargsb_roundbracketclose_126(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_typematch_roundbracketopen_attributeargsa_roundbracketclose_127(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_typematch_roundbracketopen_attributeargsa_roundbracketclose_127(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_typematch_roundbracketopen_attributeargsb_roundbracketclose_128(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_typematch_roundbracketopen_attributeargsb_roundbracketclose_128(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    resettable1.reset();
-    return false;
-}
-bool leaf::parsing::instance::p_can_attribute_item(size_t depth)
-{
-    resettable resettable1(*this);
-    std::shared_ptr<leaf::parsing::instance::attribute_item> fake;
-    attribute_item_state state;
-    if (!alternatives129(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    return true;
-}
-std::shared_ptr<leaf::parsing::instance::attribute_item> leaf::parsing::instance::p_match_attribute_item(size_t depth)
-{
-    auto actual = std::make_shared<leaf::parsing::instance::attribute_item>();
-    std::shared_ptr<leaf::parsing::instance::attribute_item> fake;
-    attribute_item_state state;
-    resettable resettable2(*this);
-    if (alternatives129(true, fake, state, depth + 1))
-    {
-        resettable2.reset();
-        alternatives129(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    return actual;
-}
-bool leaf::parsing::instance::m_squarebracketopen_130(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth)
+bool leaf::parsing::instance::m_squarebracketopen_104(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__square_bracket_open(depth + 1);
@@ -4493,7 +3164,7 @@ bool leaf::parsing::instance::m_squarebracketopen_130(bool is_can, std::shared_p
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_attributeitem_131(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth)
+bool leaf::parsing::instance::m_attributeitem_105(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth)
 {
     resettable resettable1(*this);
     if (p_can_attribute_item(depth + 1))
@@ -4519,7 +3190,7 @@ bool leaf::parsing::instance::m_attributeitem_131(bool is_can, std::shared_ptr<l
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_attributeitem_132(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth)
+bool leaf::parsing::instance::m_attributeitem_106(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth)
 {
     resettable resettable1(*this);
     if (p_can_attribute_item(depth + 1))
@@ -4546,7 +3217,7 @@ bool leaf::parsing::instance::m_attributeitem_132(bool is_can, std::shared_ptr<l
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_attributeitem_133(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth)
+bool leaf::parsing::instance::m_attributeitem_107(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth)
 {
     resettable resettable1(*this);
     if (p_can_attribute_item(depth + 1))
@@ -4572,7 +3243,7 @@ bool leaf::parsing::instance::m_attributeitem_133(bool is_can, std::shared_ptr<l
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_comma_attributeitem_134(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth)
+bool leaf::parsing::instance::m_comma_attributeitem_108(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__comma(depth + 1);
@@ -4624,16 +3295,16 @@ bool leaf::parsing::instance::m_comma_attributeitem_134(bool is_can, std::shared
     skip();
     return true;
 }
-bool leaf::parsing::instance::while135_136(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth)
+bool leaf::parsing::instance::while109_110(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth)
 {
     resettable resettable1(*this);
-    bool cond3 = m_attributeitem_133(true, actual, state, depth + 1);
+    bool cond3 = m_attributeitem_107(true, actual, state, depth + 1);
     resettable1.reset();
     if (is_can)
     {
         while (cond3 && current() != '\0')
         {
-            if (m_comma_attributeitem_134(true, actual, state, depth + 1))
+            if (m_comma_attributeitem_108(true, actual, state, depth + 1))
             {
                 skip();
             }
@@ -4647,7 +3318,7 @@ bool leaf::parsing::instance::while135_136(bool is_can, std::shared_ptr<leaf::pa
                 return false;
             }
             resettable resettable2(*this);
-            cond3 = m_attributeitem_133(true, actual, state, depth + 1);
+            cond3 = m_attributeitem_107(true, actual, state, depth + 1);
             resettable2.reset();
         }
         return true;
@@ -4656,7 +3327,7 @@ bool leaf::parsing::instance::while135_136(bool is_can, std::shared_ptr<leaf::pa
     {
         while (cond3 && current() != '\0')
         {
-            if (m_comma_attributeitem_134(false, actual, state, depth + 1))
+            if (m_comma_attributeitem_108(false, actual, state, depth + 1))
             {
                 skip();
             }
@@ -4670,13 +3341,13 @@ bool leaf::parsing::instance::while135_136(bool is_can, std::shared_ptr<leaf::pa
                 return false;
             }
             resettable resettable2(*this);
-            cond3 = m_attributeitem_133(true, actual, state, depth + 1);
+            cond3 = m_attributeitem_107(true, actual, state, depth + 1);
             resettable2.reset();
         }
         return true;
     }
 }
-bool leaf::parsing::instance::m_comma_137(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth)
+bool leaf::parsing::instance::m_comma_111(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__comma(depth + 1);
@@ -4711,7 +3382,7 @@ bool leaf::parsing::instance::m_comma_137(bool is_can, std::shared_ptr<leaf::par
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_comma_138(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth)
+bool leaf::parsing::instance::m_comma_112(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__comma(depth + 1);
@@ -4746,16 +3417,16 @@ bool leaf::parsing::instance::m_comma_138(bool is_can, std::shared_ptr<leaf::par
     skip();
     return true;
 }
-bool leaf::parsing::instance::if139_140(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth)
+bool leaf::parsing::instance::if113_114(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth)
 {
     resettable resettable1(*this);
-    bool cond2 = m_comma_137(true, actual, state, depth + 1);
+    bool cond2 = m_comma_111(true, actual, state, depth + 1);
     resettable1.reset();
     if (is_can)
     {
         if (cond2)
         {
-            if (m_comma_138(true, actual, state, depth + 1))
+            if (m_comma_112(true, actual, state, depth + 1))
             {
                 skip();
             }
@@ -4776,7 +3447,7 @@ bool leaf::parsing::instance::if139_140(bool is_can, std::shared_ptr<leaf::parsi
     {
         if (cond2)
         {
-            if (m_comma_138(false, actual, state, depth + 1))
+            if (m_comma_112(false, actual, state, depth + 1))
             {
                 skip();
             }
@@ -4794,16 +3465,16 @@ bool leaf::parsing::instance::if139_140(bool is_can, std::shared_ptr<leaf::parsi
         return true;
     }
 }
-bool leaf::parsing::instance::if141_142(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth)
+bool leaf::parsing::instance::if115_116(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth)
 {
     resettable resettable1(*this);
-    bool cond2 = m_attributeitem_131(true, actual, state, depth + 1);
+    bool cond2 = m_attributeitem_105(true, actual, state, depth + 1);
     resettable1.reset();
     if (is_can)
     {
         if (cond2)
         {
-            if (m_attributeitem_132(true, actual, state, depth + 1))
+            if (m_attributeitem_106(true, actual, state, depth + 1))
             {
                 skip();
             }
@@ -4816,8 +3487,8 @@ bool leaf::parsing::instance::if141_142(bool is_can, std::shared_ptr<leaf::parsi
                 report("Failed to match { $ref: attribute-item (XCG.Parsing.Production) }", depth);
                 return false;
             }
-            while135_136(true, actual, state, depth + 1);
-            if139_140(true, actual, state, depth + 1);
+            while109_110(true, actual, state, depth + 1);
+            if113_114(true, actual, state, depth + 1);
             return true;
         }
         return true;
@@ -4826,7 +3497,7 @@ bool leaf::parsing::instance::if141_142(bool is_can, std::shared_ptr<leaf::parsi
     {
         if (cond2)
         {
-            if (m_attributeitem_132(false, actual, state, depth + 1))
+            if (m_attributeitem_106(false, actual, state, depth + 1))
             {
                 skip();
             }
@@ -4839,14 +3510,14 @@ bool leaf::parsing::instance::if141_142(bool is_can, std::shared_ptr<leaf::parsi
                 report("Failed to match { $ref: attribute-item (XCG.Parsing.Production) }", depth);
                 return false;
             }
-            while135_136(false, actual, state, depth + 1);
-            if139_140(false, actual, state, depth + 1);
+            while109_110(false, actual, state, depth + 1);
+            if113_114(false, actual, state, depth + 1);
             return true;
         }
         return true;
     }
 }
-bool leaf::parsing::instance::m_squarebracketclose_143(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth)
+bool leaf::parsing::instance::m_squarebracketclose_117(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute>& actual, leaf::parsing::instance::attribute_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__square_bracket_close(depth + 1);
@@ -4886,17 +3557,17 @@ bool leaf::parsing::instance::p_can_attribute(size_t depth)
     resettable resettable1(*this);
     std::shared_ptr<leaf::parsing::instance::attribute> fake;
     attribute_state state;
-    if (!m_squarebracketopen_130(true, fake, state, depth + 1))
+    if (!m_squarebracketopen_104(true, fake, state, depth + 1))
     {
         resettable1.reset();
         return false;
     }
-    else if (!if141_142(true, fake, state, depth + 1))
+    else if (!if115_116(true, fake, state, depth + 1))
     {
         resettable1.reset();
         return false;
     }
-    else if (!m_squarebracketclose_143(true, fake, state, depth + 1))
+    else if (!m_squarebracketclose_117(true, fake, state, depth + 1))
     {
         resettable1.reset();
         return false;
@@ -4909,30 +3580,1360 @@ std::shared_ptr<leaf::parsing::instance::attribute> leaf::parsing::instance::p_m
     std::shared_ptr<leaf::parsing::instance::attribute> fake;
     attribute_state state;
     resettable resettable2(*this);
-    if (m_squarebracketopen_130(true, fake, state, depth + 1))
+    if (m_squarebracketopen_104(true, fake, state, depth + 1))
     {
         resettable2.reset();
-        m_squarebracketopen_130(false, actual, state, depth + 1);
+        m_squarebracketopen_104(false, actual, state, depth + 1);
     }
     else
     {
         report("Something moved wrong (todo: improve error messages)", depth);
     }
     resettable resettable3(*this);
-    if (if141_142(true, fake, state, depth + 1))
+    if (if115_116(true, fake, state, depth + 1))
     {
         resettable3.reset();
-        if141_142(false, actual, state, depth + 1);
+        if115_116(false, actual, state, depth + 1);
     }
     else
     {
         report("Something moved wrong (todo: improve error messages)", depth);
     }
     resettable resettable4(*this);
-    if (m_squarebracketclose_143(true, fake, state, depth + 1))
+    if (m_squarebracketclose_117(true, fake, state, depth + 1))
     {
         resettable4.reset();
-        m_squarebracketclose_143(false, actual, state, depth + 1);
+        m_squarebracketclose_117(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    return actual;
+}
+bool leaf::parsing::instance::m_typematchnoallocator_118(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_item>& actual, leaf::parsing::instance::attribute_item_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_type_match_no_allocator(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val2 = p_match_type_match_no_allocator(depth + 1);
+    actual->target_type = val2;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_typematchnoallocator_roundbracketopen_roundbracketclose_119(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_item>& actual, leaf::parsing::instance::attribute_item_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_type_match_no_allocator(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l2 = token__round_bracket_open(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token__round_bracket_close(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val6 = p_match_type_match_no_allocator(depth + 1);
+    actual->target_type = val6;
+    skip();
+    auto l8 = token__round_bracket_open(depth + 1).value();
+    for (;l8 != 0; l8--)
+    {
+        next();
+    }
+    skip();
+    auto l10 = token__round_bracket_close(depth + 1).value();
+    for (;l10 != 0; l10--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_typematchnoallocator_roundbracketopen_attributeargsa_attributeargsb_roundbracketclose_120(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_item>& actual, leaf::parsing::instance::attribute_item_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_type_match_no_allocator(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l2 = token__round_bracket_open(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (p_can_attribute_args_a(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (p_can_attribute_args_b(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token__round_bracket_close(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val6 = p_match_type_match_no_allocator(depth + 1);
+    actual->target_type = val6;
+    skip();
+    auto l8 = token__round_bracket_open(depth + 1).value();
+    for (;l8 != 0; l8--)
+    {
+        next();
+    }
+    skip();
+    auto val9 = p_match_attribute_args_a(depth + 1);
+    actual->args_a = val9;
+    skip();
+    auto val10 = p_match_attribute_args_b(depth + 1);
+    actual->args_b = val10;
+    skip();
+    auto l12 = token__round_bracket_close(depth + 1).value();
+    for (;l12 != 0; l12--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_typematchnoallocator_roundbracketopen_attributeargsa_roundbracketclose_121(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_item>& actual, leaf::parsing::instance::attribute_item_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_type_match_no_allocator(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l2 = token__round_bracket_open(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (p_can_attribute_args_a(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token__round_bracket_close(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val6 = p_match_type_match_no_allocator(depth + 1);
+    actual->target_type = val6;
+    skip();
+    auto l8 = token__round_bracket_open(depth + 1).value();
+    for (;l8 != 0; l8--)
+    {
+        next();
+    }
+    skip();
+    auto val9 = p_match_attribute_args_a(depth + 1);
+    actual->args_a = val9;
+    skip();
+    auto l11 = token__round_bracket_close(depth + 1).value();
+    for (;l11 != 0; l11--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_typematchnoallocator_roundbracketopen_attributeargsb_roundbracketclose_122(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_item>& actual, leaf::parsing::instance::attribute_item_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_type_match_no_allocator(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l2 = token__round_bracket_open(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (p_can_attribute_args_b(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token__round_bracket_close(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val6 = p_match_type_match_no_allocator(depth + 1);
+    actual->target_type = val6;
+    skip();
+    auto l8 = token__round_bracket_open(depth + 1).value();
+    for (;l8 != 0; l8--)
+    {
+        next();
+    }
+    skip();
+    auto val9 = p_match_attribute_args_b(depth + 1);
+    actual->args_b = val9;
+    skip();
+    auto l11 = token__round_bracket_close(depth + 1).value();
+    for (;l11 != 0; l11--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::alternatives123(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_item>& actual, leaf::parsing::instance::attribute_item_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (m_typematchnoallocator_118(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_typematchnoallocator_118(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_typematchnoallocator_roundbracketopen_roundbracketclose_119(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_typematchnoallocator_roundbracketopen_roundbracketclose_119(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_typematchnoallocator_roundbracketopen_attributeargsa_attributeargsb_roundbracketclose_120(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_typematchnoallocator_roundbracketopen_attributeargsa_attributeargsb_roundbracketclose_120(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_typematchnoallocator_roundbracketopen_attributeargsa_roundbracketclose_121(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_typematchnoallocator_roundbracketopen_attributeargsa_roundbracketclose_121(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_typematchnoallocator_roundbracketopen_attributeargsb_roundbracketclose_122(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_typematchnoallocator_roundbracketopen_attributeargsb_roundbracketclose_122(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    resettable1.reset();
+    return false;
+}
+bool leaf::parsing::instance::p_can_attribute_item(size_t depth)
+{
+    resettable resettable1(*this);
+    std::shared_ptr<leaf::parsing::instance::attribute_item> fake;
+    attribute_item_state state;
+    if (!alternatives123(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    return true;
+}
+std::shared_ptr<leaf::parsing::instance::attribute_item> leaf::parsing::instance::p_match_attribute_item(size_t depth)
+{
+    auto actual = std::make_shared<leaf::parsing::instance::attribute_item>();
+    std::shared_ptr<leaf::parsing::instance::attribute_item> fake;
+    attribute_item_state state;
+    resettable resettable2(*this);
+    if (alternatives123(true, fake, state, depth + 1))
+    {
+        resettable2.reset();
+        alternatives123(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    return actual;
+}
+bool leaf::parsing::instance::m_expor_124(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_arg_item_a>& actual, leaf::parsing::instance::attribute_arg_item_a_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (lr_can_exp_or(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val2 = lr_match_exp_or(depth + 1);
+    actual->value = val2;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::p_can_attribute_arg_item_a(size_t depth)
+{
+    resettable resettable1(*this);
+    std::shared_ptr<leaf::parsing::instance::attribute_arg_item_a> fake;
+    attribute_arg_item_a_state state;
+    if (!m_expor_124(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    return true;
+}
+std::shared_ptr<leaf::parsing::instance::attribute_arg_item_a> leaf::parsing::instance::p_match_attribute_arg_item_a(size_t depth)
+{
+    auto actual = std::make_shared<leaf::parsing::instance::attribute_arg_item_a>();
+    std::shared_ptr<leaf::parsing::instance::attribute_arg_item_a> fake;
+    attribute_arg_item_a_state state;
+    resettable resettable2(*this);
+    if (m_expor_124(true, fake, state, depth + 1))
+    {
+        resettable2.reset();
+        m_expor_124(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    return actual;
+}
+bool leaf::parsing::instance::m_attributeargitema_125(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_a>& actual, leaf::parsing::instance::attribute_args_a_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_attribute_arg_item_a(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val2 = p_match_attribute_arg_item_a(depth + 1);
+    actual->args.push_back(val2);
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_attributeargitema_126(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_a>& actual, leaf::parsing::instance::attribute_args_a_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_attribute_arg_item_a(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    p_match_attribute_arg_item_a(depth + 1);
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_comma_attributeargitema_127(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_a>& actual, leaf::parsing::instance::attribute_args_a_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token__comma(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (p_can_attribute_arg_item_a(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto l5 = token__comma(depth + 1).value();
+    for (;l5 != 0; l5--)
+    {
+        next();
+    }
+    skip();
+    auto val6 = p_match_attribute_arg_item_a(depth + 1);
+    actual->args.push_back(val6);
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::while128_129(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_a>& actual, leaf::parsing::instance::attribute_args_a_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    bool cond3 = m_attributeargitema_126(true, actual, state, depth + 1);
+    resettable1.reset();
+    if (is_can)
+    {
+        while (cond3 && current() != '\0')
+        {
+            if (m_comma_attributeargitema_127(true, actual, state, depth + 1))
+            {
+                skip();
+            }
+            else if (is_can)
+            {
+                return false;
+            }
+            else
+            {
+                report("Failed to match { $ref: , ({ Token: , (,)}), $ref: attribute-arg-item-a (XCG.Parsing.Production) }", depth);
+                return false;
+            }
+            resettable resettable2(*this);
+            cond3 = m_attributeargitema_126(true, actual, state, depth + 1);
+            resettable2.reset();
+        }
+        return true;
+    }
+    else
+    {
+        while (cond3 && current() != '\0')
+        {
+            if (m_comma_attributeargitema_127(false, actual, state, depth + 1))
+            {
+                skip();
+            }
+            else if (is_can)
+            {
+                return false;
+            }
+            else
+            {
+                report("Failed to match { $ref: , ({ Token: , (,)}), $ref: attribute-arg-item-a (XCG.Parsing.Production) }", depth);
+                return false;
+            }
+            resettable resettable2(*this);
+            cond3 = m_attributeargitema_126(true, actual, state, depth + 1);
+            resettable2.reset();
+        }
+        return true;
+    }
+}
+bool leaf::parsing::instance::m_comma_130(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_a>& actual, leaf::parsing::instance::attribute_args_a_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token__comma(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto l5 = token__comma(depth + 1).value();
+    for (;l5 != 0; l5--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_comma_131(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_a>& actual, leaf::parsing::instance::attribute_args_a_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token__comma(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto l5 = token__comma(depth + 1).value();
+    for (;l5 != 0; l5--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::if132_133(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_a>& actual, leaf::parsing::instance::attribute_args_a_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    bool cond2 = m_comma_130(true, actual, state, depth + 1);
+    resettable1.reset();
+    if (is_can)
+    {
+        if (cond2)
+        {
+            if (m_comma_131(true, actual, state, depth + 1))
+            {
+                skip();
+            }
+            else if (is_can)
+            {
+                return false;
+            }
+            else
+            {
+                report("Failed to match { $ref: , ({ Token: , (,)}) }", depth);
+                return false;
+            }
+            return true;
+        }
+        return true;
+    }
+    else
+    {
+        if (cond2)
+        {
+            if (m_comma_131(false, actual, state, depth + 1))
+            {
+                skip();
+            }
+            else if (is_can)
+            {
+                return false;
+            }
+            else
+            {
+                report("Failed to match { $ref: , ({ Token: , (,)}) }", depth);
+                return false;
+            }
+            return true;
+        }
+        return true;
+    }
+}
+bool leaf::parsing::instance::p_can_attribute_args_a(size_t depth)
+{
+    resettable resettable1(*this);
+    std::shared_ptr<leaf::parsing::instance::attribute_args_a> fake;
+    attribute_args_a_state state;
+    if (!m_attributeargitema_125(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    else if (!while128_129(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    else if (!if132_133(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    return true;
+}
+std::shared_ptr<leaf::parsing::instance::attribute_args_a> leaf::parsing::instance::p_match_attribute_args_a(size_t depth)
+{
+    auto actual = std::make_shared<leaf::parsing::instance::attribute_args_a>();
+    std::shared_ptr<leaf::parsing::instance::attribute_args_a> fake;
+    attribute_args_a_state state;
+    resettable resettable2(*this);
+    if (m_attributeargitema_125(true, fake, state, depth + 1))
+    {
+        resettable2.reset();
+        m_attributeargitema_125(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    resettable resettable3(*this);
+    if (while128_129(true, fake, state, depth + 1))
+    {
+        resettable3.reset();
+        while128_129(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    resettable resettable4(*this);
+    if (if132_133(true, fake, state, depth + 1))
+    {
+        resettable4.reset();
+        if132_133(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    return actual;
+}
+bool leaf::parsing::instance::m_attributeargitemb_134(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_b>& actual, leaf::parsing::instance::attribute_args_b_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_attribute_arg_item_b(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val2 = p_match_attribute_arg_item_b(depth + 1);
+    actual->args.push_back(val2);
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_attributeargitemb_135(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_b>& actual, leaf::parsing::instance::attribute_args_b_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_attribute_arg_item_b(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    p_match_attribute_arg_item_b(depth + 1);
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_comma_attributeargitemb_136(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_b>& actual, leaf::parsing::instance::attribute_args_b_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token__comma(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (p_can_attribute_arg_item_b(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto l5 = token__comma(depth + 1).value();
+    for (;l5 != 0; l5--)
+    {
+        next();
+    }
+    skip();
+    auto val6 = p_match_attribute_arg_item_b(depth + 1);
+    actual->args.push_back(val6);
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::while137_138(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_b>& actual, leaf::parsing::instance::attribute_args_b_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    bool cond3 = m_attributeargitemb_135(true, actual, state, depth + 1);
+    resettable1.reset();
+    if (is_can)
+    {
+        while (cond3 && current() != '\0')
+        {
+            if (m_comma_attributeargitemb_136(true, actual, state, depth + 1))
+            {
+                skip();
+            }
+            else if (is_can)
+            {
+                return false;
+            }
+            else
+            {
+                report("Failed to match { $ref: , ({ Token: , (,)}), $ref: attribute-arg-item-b (XCG.Parsing.Production) }", depth);
+                return false;
+            }
+            resettable resettable2(*this);
+            cond3 = m_attributeargitemb_135(true, actual, state, depth + 1);
+            resettable2.reset();
+        }
+        return true;
+    }
+    else
+    {
+        while (cond3 && current() != '\0')
+        {
+            if (m_comma_attributeargitemb_136(false, actual, state, depth + 1))
+            {
+                skip();
+            }
+            else if (is_can)
+            {
+                return false;
+            }
+            else
+            {
+                report("Failed to match { $ref: , ({ Token: , (,)}), $ref: attribute-arg-item-b (XCG.Parsing.Production) }", depth);
+                return false;
+            }
+            resettable resettable2(*this);
+            cond3 = m_attributeargitemb_135(true, actual, state, depth + 1);
+            resettable2.reset();
+        }
+        return true;
+    }
+}
+bool leaf::parsing::instance::m_comma_139(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_b>& actual, leaf::parsing::instance::attribute_args_b_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token__comma(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto l5 = token__comma(depth + 1).value();
+    for (;l5 != 0; l5--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_comma_140(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_b>& actual, leaf::parsing::instance::attribute_args_b_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token__comma(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto l5 = token__comma(depth + 1).value();
+    for (;l5 != 0; l5--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::if141_142(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_args_b>& actual, leaf::parsing::instance::attribute_args_b_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    bool cond2 = m_comma_139(true, actual, state, depth + 1);
+    resettable1.reset();
+    if (is_can)
+    {
+        if (cond2)
+        {
+            if (m_comma_140(true, actual, state, depth + 1))
+            {
+                skip();
+            }
+            else if (is_can)
+            {
+                return false;
+            }
+            else
+            {
+                report("Failed to match { $ref: , ({ Token: , (,)}) }", depth);
+                return false;
+            }
+            return true;
+        }
+        return true;
+    }
+    else
+    {
+        if (cond2)
+        {
+            if (m_comma_140(false, actual, state, depth + 1))
+            {
+                skip();
+            }
+            else if (is_can)
+            {
+                return false;
+            }
+            else
+            {
+                report("Failed to match { $ref: , ({ Token: , (,)}) }", depth);
+                return false;
+            }
+            return true;
+        }
+        return true;
+    }
+}
+bool leaf::parsing::instance::p_can_attribute_args_b(size_t depth)
+{
+    resettable resettable1(*this);
+    std::shared_ptr<leaf::parsing::instance::attribute_args_b> fake;
+    attribute_args_b_state state;
+    if (!m_attributeargitemb_134(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    else if (!while137_138(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    else if (!if141_142(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    return true;
+}
+std::shared_ptr<leaf::parsing::instance::attribute_args_b> leaf::parsing::instance::p_match_attribute_args_b(size_t depth)
+{
+    auto actual = std::make_shared<leaf::parsing::instance::attribute_args_b>();
+    std::shared_ptr<leaf::parsing::instance::attribute_args_b> fake;
+    attribute_args_b_state state;
+    resettable resettable2(*this);
+    if (m_attributeargitemb_134(true, fake, state, depth + 1))
+    {
+        resettable2.reset();
+        m_attributeargitemb_134(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    resettable resettable3(*this);
+    if (while137_138(true, fake, state, depth + 1))
+    {
+        resettable3.reset();
+        while137_138(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    resettable resettable4(*this);
+    if (if141_142(true, fake, state, depth + 1))
+    {
+        resettable4.reset();
+        if141_142(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    return actual;
+}
+bool leaf::parsing::instance::m_ident_equal_expor_143(bool is_can, std::shared_ptr<leaf::parsing::instance::attribute_arg_item_b>& actual, leaf::parsing::instance::attribute_arg_item_b_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_ident(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token__equal(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (lr_can_exp_or(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val6 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->name = val6;
+    skip();
+    auto l8 = token__equal(depth + 1).value();
+    for (;l8 != 0; l8--)
+    {
+        next();
+    }
+    skip();
+    auto val9 = lr_match_exp_or(depth + 1);
+    actual->value = val9;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::p_can_attribute_arg_item_b(size_t depth)
+{
+    resettable resettable1(*this);
+    std::shared_ptr<leaf::parsing::instance::attribute_arg_item_b> fake;
+    attribute_arg_item_b_state state;
+    if (!m_ident_equal_expor_143(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    return true;
+}
+std::shared_ptr<leaf::parsing::instance::attribute_arg_item_b> leaf::parsing::instance::p_match_attribute_arg_item_b(size_t depth)
+{
+    auto actual = std::make_shared<leaf::parsing::instance::attribute_arg_item_b>();
+    std::shared_ptr<leaf::parsing::instance::attribute_arg_item_b> fake;
+    attribute_arg_item_b_state state;
+    resettable resettable2(*this);
+    if (m_ident_equal_expor_143(true, fake, state, depth + 1))
+    {
+        resettable2.reset();
+        m_ident_equal_expor_143(false, actual, state, depth + 1);
     }
     else
     {
@@ -13004,7 +13005,7 @@ bool leaf::parsing::instance::if303_304(bool is_can, std::shared_ptr<leaf::parsi
     {
         if (cond2)
         {
-            report(" Multiple default cases found", depth);
+            report("Multiple default cases found", depth);
             return true;
         }
         else
@@ -13020,7 +13021,7 @@ bool leaf::parsing::instance::if303_304(bool is_can, std::shared_ptr<leaf::parsi
     {
         if (cond2)
         {
-            report(" Multiple default cases found", depth);
+            report("Multiple default cases found", depth);
             return true;
         }
         else
@@ -30687,7 +30688,5888 @@ std::shared_ptr<leaf::parsing::instance::sizeof_> leaf::parsing::instance::p_mat
     }
     return actual;
 }
-bool leaf::parsing::instance::m_ident_typenavigation_squarebracketopen_squarebracketclose_715(bool is_can, std::shared_ptr<leaf::parsing::instance::type_match>& actual, leaf::parsing::instance::type_match_state& state, size_t depth)
+bool leaf::parsing::instance::m_stringformatablestart_715(bool is_can, std::shared_ptr<leaf::parsing::instance::string_formatable>& actual, leaf::parsing::instance::string_formatable_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_string_formatable_start(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val4 = create_token(token_string_formatable_start(depth + 1).value(), tok::STRING_FORMATABLE_START);
+    actual->parts.push_back(val4);
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_expression_716(bool is_can, std::shared_ptr<leaf::parsing::instance::string_formatable>& actual, leaf::parsing::instance::string_formatable_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_expression(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    p_match_expression(depth + 1);
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_stringformatableend_717(bool is_can, std::shared_ptr<leaf::parsing::instance::string_formatable>& actual, leaf::parsing::instance::string_formatable_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_string_formatable_end(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto l5 = token_string_formatable_end(depth + 1).value();
+    for (;l5 != 0; l5--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_stringformatablecontinuation_718(bool is_can, std::shared_ptr<leaf::parsing::instance::string_formatable>& actual, leaf::parsing::instance::string_formatable_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_string_formatable_continuation(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val4 = create_token(token_string_formatable_continuation(depth + 1).value(), tok::STRING_FORMATABLE_CONTINUATION);
+    actual->parts.push_back(val4);
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_expression_719(bool is_can, std::shared_ptr<leaf::parsing::instance::string_formatable>& actual, leaf::parsing::instance::string_formatable_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_expression(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val2 = p_match_expression(depth + 1);
+    actual->parts.push_back(val2);
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::while720_721(bool is_can, std::shared_ptr<leaf::parsing::instance::string_formatable>& actual, leaf::parsing::instance::string_formatable_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    bool cond3 = m_stringformatableend_717(true, actual, state, depth + 1);
+    resettable1.reset();
+    if (is_can)
+    {
+        while (!cond3 && current() != '\0')
+        {
+            if (m_stringformatablecontinuation_718(true, actual, state, depth + 1))
+            {
+                skip();
+            }
+            else if (is_can)
+            {
+                return false;
+            }
+            else
+            {
+                report("Failed to match { $ref: string-formatable-continuation ({ Token: string-formatable-continuation}) }", depth);
+                return false;
+            }
+            if (m_expression_719(true, actual, state, depth + 1))
+            {
+                skip();
+            }
+            else if (is_can)
+            {
+                return false;
+            }
+            else
+            {
+                report("Failed to match { $ref: expression (XCG.Parsing.Production) }", depth);
+                return false;
+            }
+            resettable resettable2(*this);
+            cond3 = m_stringformatableend_717(true, actual, state, depth + 1);
+            resettable2.reset();
+        }
+        return true;
+    }
+    else
+    {
+        while (!cond3 && current() != '\0')
+        {
+            if (m_stringformatablecontinuation_718(false, actual, state, depth + 1))
+            {
+                skip();
+            }
+            else if (is_can)
+            {
+                return false;
+            }
+            else
+            {
+                report("Failed to match { $ref: string-formatable-continuation ({ Token: string-formatable-continuation}) }", depth);
+                return false;
+            }
+            if (m_expression_719(false, actual, state, depth + 1))
+            {
+                skip();
+            }
+            else if (is_can)
+            {
+                return false;
+            }
+            else
+            {
+                report("Failed to match { $ref: expression (XCG.Parsing.Production) }", depth);
+                return false;
+            }
+            resettable resettable2(*this);
+            cond3 = m_stringformatableend_717(true, actual, state, depth + 1);
+            resettable2.reset();
+        }
+        return true;
+    }
+}
+bool leaf::parsing::instance::m_stringformatableend_722(bool is_can, std::shared_ptr<leaf::parsing::instance::string_formatable>& actual, leaf::parsing::instance::string_formatable_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_string_formatable_end(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val4 = create_token(token_string_formatable_end(depth + 1).value(), tok::STRING_FORMATABLE_END);
+    actual->parts.push_back(val4);
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::p_can_string_formatable(size_t depth)
+{
+    resettable resettable1(*this);
+    std::shared_ptr<leaf::parsing::instance::string_formatable> fake;
+    string_formatable_state state;
+    if (!m_stringformatablestart_715(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    else if (!m_expression_716(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    else if (!while720_721(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    else if (!m_stringformatableend_722(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    return true;
+}
+std::shared_ptr<leaf::parsing::instance::string_formatable> leaf::parsing::instance::p_match_string_formatable(size_t depth)
+{
+    auto actual = std::make_shared<leaf::parsing::instance::string_formatable>();
+    std::shared_ptr<leaf::parsing::instance::string_formatable> fake;
+    string_formatable_state state;
+    resettable resettable2(*this);
+    if (m_stringformatablestart_715(true, fake, state, depth + 1))
+    {
+        resettable2.reset();
+        m_stringformatablestart_715(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    resettable resettable3(*this);
+    if (m_expression_716(true, fake, state, depth + 1))
+    {
+        resettable3.reset();
+        m_expression_716(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    resettable resettable4(*this);
+    if (while720_721(true, fake, state, depth + 1))
+    {
+        resettable4.reset();
+        while720_721(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    resettable resettable5(*this);
+    if (m_stringformatableend_722(true, fake, state, depth + 1))
+    {
+        resettable5.reset();
+        m_stringformatableend_722(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    return actual;
+}
+bool leaf::parsing::instance::m_ident_stringformatable_ident_723(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_ident(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (p_can_string_formatable(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token_ident(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val6 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->prefix = val6;
+    skip();
+    auto val7 = p_match_string_formatable(depth + 1);
+    actual->value = val7;
+    skip();
+    auto val8 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->postfix = val8;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_stringformatable_ident_724(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_string_formatable(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l2 = token_ident(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val4 = p_match_string_formatable(depth + 1);
+    actual->value = val4;
+    skip();
+    auto val5 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->postfix = val5;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_ident_stringformatable_725(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_ident(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (p_can_string_formatable(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val4 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->prefix = val4;
+    skip();
+    auto val5 = p_match_string_formatable(depth + 1);
+    actual->value = val5;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_stringformatable_726(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_string_formatable(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val2 = p_match_string_formatable(depth + 1);
+    actual->value = val2;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_ident_stringformatablefake_ident_727(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_ident(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token_string_formatable_fake(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l6 = token_ident(depth + 1);
+    if (l6.has_value())
+    {
+        for (auto i7 = l6.value(); i7 != 0; i7--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val8 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->prefix = val8;
+    skip();
+    auto val9 = create_token(token_string_formatable_fake(depth + 1).value(), tok::STRING_FORMATABLE_FAKE);
+    actual->value = val9;
+    skip();
+    auto val10 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->postfix = val10;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_stringformatablefake_ident_728(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_string_formatable_fake(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token_ident(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val6 = create_token(token_string_formatable_fake(depth + 1).value(), tok::STRING_FORMATABLE_FAKE);
+    actual->value = val6;
+    skip();
+    auto val7 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->postfix = val7;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_ident_stringformatablefake_729(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_ident(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token_string_formatable_fake(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val6 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->prefix = val6;
+    skip();
+    auto val7 = create_token(token_string_formatable_fake(depth + 1).value(), tok::STRING_FORMATABLE_FAKE);
+    actual->value = val7;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_stringformatablefake_730(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_string_formatable_fake(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val4 = create_token(token_string_formatable_fake(depth + 1).value(), tok::STRING_FORMATABLE_FAKE);
+    actual->value = val4;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_ident_string_ident_731(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_ident(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token_string(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l6 = token_ident(depth + 1);
+    if (l6.has_value())
+    {
+        for (auto i7 = l6.value(); i7 != 0; i7--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val8 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->prefix = val8;
+    skip();
+    auto val9 = create_token(token_string(depth + 1).value(), tok::STRING);
+    actual->value = val9;
+    skip();
+    auto val10 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->postfix = val10;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_string_ident_732(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_string(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token_ident(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val6 = create_token(token_string(depth + 1).value(), tok::STRING);
+    actual->value = val6;
+    skip();
+    auto val7 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->postfix = val7;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_ident_string_733(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_ident(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token_string(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val6 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->prefix = val6;
+    skip();
+    auto val7 = create_token(token_string(depth + 1).value(), tok::STRING);
+    actual->value = val7;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_string_734(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_string(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val4 = create_token(token_string(depth + 1).value(), tok::STRING);
+    actual->value = val4;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::alternatives735(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (m_ident_stringformatable_ident_723(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_ident_stringformatable_ident_723(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_stringformatable_ident_724(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_stringformatable_ident_724(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_ident_stringformatable_725(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_ident_stringformatable_725(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_stringformatable_726(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_stringformatable_726(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_ident_stringformatablefake_ident_727(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_ident_stringformatablefake_ident_727(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_stringformatablefake_ident_728(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_stringformatablefake_ident_728(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_ident_stringformatablefake_729(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_ident_stringformatablefake_729(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_stringformatablefake_730(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_stringformatablefake_730(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_ident_string_ident_731(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_ident_string_ident_731(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_string_ident_732(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_string_ident_732(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_ident_string_733(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_ident_string_733(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_string_734(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_string_734(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    resettable1.reset();
+    return false;
+}
+bool leaf::parsing::instance::p_can_string_literal(size_t depth)
+{
+    resettable resettable1(*this);
+    std::shared_ptr<leaf::parsing::instance::string_literal> fake;
+    string_literal_state state;
+    if (!alternatives735(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    return true;
+}
+std::shared_ptr<leaf::parsing::instance::string_literal> leaf::parsing::instance::p_match_string_literal(size_t depth)
+{
+    auto actual = std::make_shared<leaf::parsing::instance::string_literal>();
+    std::shared_ptr<leaf::parsing::instance::string_literal> fake;
+    string_literal_state state;
+    resettable resettable2(*this);
+    if (alternatives735(true, fake, state, depth + 1))
+    {
+        resettable2.reset();
+        alternatives735(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    return actual;
+}
+bool leaf::parsing::instance::m_ident_scalar_ident_736(bool is_can, std::shared_ptr<leaf::parsing::instance::scalar_literal>& actual, leaf::parsing::instance::scalar_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_ident(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token_scalar(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l6 = token_ident(depth + 1);
+    if (l6.has_value())
+    {
+        for (auto i7 = l6.value(); i7 != 0; i7--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val8 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->prefix = val8;
+    skip();
+    auto val9 = create_token(token_scalar(depth + 1).value(), tok::SCALAR);
+    actual->value = val9;
+    skip();
+    auto val10 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->postfix = val10;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_scalar_ident_737(bool is_can, std::shared_ptr<leaf::parsing::instance::scalar_literal>& actual, leaf::parsing::instance::scalar_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_scalar(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token_ident(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val6 = create_token(token_scalar(depth + 1).value(), tok::SCALAR);
+    actual->value = val6;
+    skip();
+    auto val7 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->postfix = val7;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_ident_scalar_738(bool is_can, std::shared_ptr<leaf::parsing::instance::scalar_literal>& actual, leaf::parsing::instance::scalar_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_ident(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token_scalar(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val6 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->prefix = val6;
+    skip();
+    auto val7 = create_token(token_scalar(depth + 1).value(), tok::SCALAR);
+    actual->value = val7;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_scalar_739(bool is_can, std::shared_ptr<leaf::parsing::instance::scalar_literal>& actual, leaf::parsing::instance::scalar_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_scalar(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val4 = create_token(token_scalar(depth + 1).value(), tok::SCALAR);
+    actual->value = val4;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::alternatives740(bool is_can, std::shared_ptr<leaf::parsing::instance::scalar_literal>& actual, leaf::parsing::instance::scalar_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (m_ident_scalar_ident_736(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_ident_scalar_ident_736(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_scalar_ident_737(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_scalar_ident_737(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_ident_scalar_738(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_ident_scalar_738(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_scalar_739(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_scalar_739(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    resettable1.reset();
+    return false;
+}
+bool leaf::parsing::instance::p_can_scalar_literal(size_t depth)
+{
+    resettable resettable1(*this);
+    std::shared_ptr<leaf::parsing::instance::scalar_literal> fake;
+    scalar_literal_state state;
+    if (!alternatives740(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    return true;
+}
+std::shared_ptr<leaf::parsing::instance::scalar_literal> leaf::parsing::instance::p_match_scalar_literal(size_t depth)
+{
+    auto actual = std::make_shared<leaf::parsing::instance::scalar_literal>();
+    std::shared_ptr<leaf::parsing::instance::scalar_literal> fake;
+    scalar_literal_state state;
+    resettable resettable2(*this);
+    if (alternatives740(true, fake, state, depth + 1))
+    {
+        resettable2.reset();
+        alternatives740(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    return actual;
+}
+bool leaf::parsing::instance::m_ident_integerhex_ident_741(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_hex_literal>& actual, leaf::parsing::instance::integer_hex_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_ident(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token_integer_hex(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l6 = token_ident(depth + 1);
+    if (l6.has_value())
+    {
+        for (auto i7 = l6.value(); i7 != 0; i7--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val8 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->prefix = val8;
+    skip();
+    auto val9 = create_token(token_integer_hex(depth + 1).value(), tok::INTEGER_HEX);
+    actual->value = val9;
+    skip();
+    auto val10 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->postfix = val10;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_integerhex_ident_742(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_hex_literal>& actual, leaf::parsing::instance::integer_hex_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_integer_hex(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token_ident(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val6 = create_token(token_integer_hex(depth + 1).value(), tok::INTEGER_HEX);
+    actual->value = val6;
+    skip();
+    auto val7 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->postfix = val7;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_ident_integerhex_743(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_hex_literal>& actual, leaf::parsing::instance::integer_hex_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_ident(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token_integer_hex(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val6 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->prefix = val6;
+    skip();
+    auto val7 = create_token(token_integer_hex(depth + 1).value(), tok::INTEGER_HEX);
+    actual->value = val7;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_integerhex_744(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_hex_literal>& actual, leaf::parsing::instance::integer_hex_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_integer_hex(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val4 = create_token(token_integer_hex(depth + 1).value(), tok::INTEGER_HEX);
+    actual->value = val4;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::alternatives745(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_hex_literal>& actual, leaf::parsing::instance::integer_hex_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (m_ident_integerhex_ident_741(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_ident_integerhex_ident_741(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_integerhex_ident_742(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_integerhex_ident_742(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_ident_integerhex_743(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_ident_integerhex_743(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_integerhex_744(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_integerhex_744(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    resettable1.reset();
+    return false;
+}
+bool leaf::parsing::instance::p_can_integer_hex_literal(size_t depth)
+{
+    resettable resettable1(*this);
+    std::shared_ptr<leaf::parsing::instance::integer_hex_literal> fake;
+    integer_hex_literal_state state;
+    if (!alternatives745(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    return true;
+}
+std::shared_ptr<leaf::parsing::instance::integer_hex_literal> leaf::parsing::instance::p_match_integer_hex_literal(size_t depth)
+{
+    auto actual = std::make_shared<leaf::parsing::instance::integer_hex_literal>();
+    std::shared_ptr<leaf::parsing::instance::integer_hex_literal> fake;
+    integer_hex_literal_state state;
+    resettable resettable2(*this);
+    if (alternatives745(true, fake, state, depth + 1))
+    {
+        resettable2.reset();
+        alternatives745(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    return actual;
+}
+bool leaf::parsing::instance::m_ident_integerbinary_ident_746(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_binary_literal>& actual, leaf::parsing::instance::integer_binary_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_ident(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token_integer_binary(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l6 = token_ident(depth + 1);
+    if (l6.has_value())
+    {
+        for (auto i7 = l6.value(); i7 != 0; i7--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val8 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->prefix = val8;
+    skip();
+    auto val9 = create_token(token_integer_binary(depth + 1).value(), tok::INTEGER_BINARY);
+    actual->value = val9;
+    skip();
+    auto val10 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->postfix = val10;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_integerbinary_ident_747(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_binary_literal>& actual, leaf::parsing::instance::integer_binary_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_integer_binary(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token_ident(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val6 = create_token(token_integer_binary(depth + 1).value(), tok::INTEGER_BINARY);
+    actual->value = val6;
+    skip();
+    auto val7 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->postfix = val7;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_ident_integerbinary_748(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_binary_literal>& actual, leaf::parsing::instance::integer_binary_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_ident(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token_integer_binary(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val6 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->prefix = val6;
+    skip();
+    auto val7 = create_token(token_integer_binary(depth + 1).value(), tok::INTEGER_BINARY);
+    actual->value = val7;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_integerbinary_749(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_binary_literal>& actual, leaf::parsing::instance::integer_binary_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_integer_binary(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val4 = create_token(token_integer_binary(depth + 1).value(), tok::INTEGER_BINARY);
+    actual->value = val4;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::alternatives750(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_binary_literal>& actual, leaf::parsing::instance::integer_binary_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (m_ident_integerbinary_ident_746(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_ident_integerbinary_ident_746(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_integerbinary_ident_747(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_integerbinary_ident_747(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_ident_integerbinary_748(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_ident_integerbinary_748(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_integerbinary_749(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_integerbinary_749(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    resettable1.reset();
+    return false;
+}
+bool leaf::parsing::instance::p_can_integer_binary_literal(size_t depth)
+{
+    resettable resettable1(*this);
+    std::shared_ptr<leaf::parsing::instance::integer_binary_literal> fake;
+    integer_binary_literal_state state;
+    if (!alternatives750(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    return true;
+}
+std::shared_ptr<leaf::parsing::instance::integer_binary_literal> leaf::parsing::instance::p_match_integer_binary_literal(size_t depth)
+{
+    auto actual = std::make_shared<leaf::parsing::instance::integer_binary_literal>();
+    std::shared_ptr<leaf::parsing::instance::integer_binary_literal> fake;
+    integer_binary_literal_state state;
+    resettable resettable2(*this);
+    if (alternatives750(true, fake, state, depth + 1))
+    {
+        resettable2.reset();
+        alternatives750(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    return actual;
+}
+bool leaf::parsing::instance::m_ident_integer_ident_751(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_literal>& actual, leaf::parsing::instance::integer_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_ident(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token_integer(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l6 = token_ident(depth + 1);
+    if (l6.has_value())
+    {
+        for (auto i7 = l6.value(); i7 != 0; i7--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val8 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->prefix = val8;
+    skip();
+    auto val9 = create_token(token_integer(depth + 1).value(), tok::INTEGER);
+    actual->value = val9;
+    skip();
+    auto val10 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->postfix = val10;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_integer_ident_752(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_literal>& actual, leaf::parsing::instance::integer_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_integer(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token_ident(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val6 = create_token(token_integer(depth + 1).value(), tok::INTEGER);
+    actual->value = val6;
+    skip();
+    auto val7 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->postfix = val7;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_ident_integer_753(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_literal>& actual, leaf::parsing::instance::integer_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_ident(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token_integer(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val6 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->prefix = val6;
+    skip();
+    auto val7 = create_token(token_integer(depth + 1).value(), tok::INTEGER);
+    actual->value = val7;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_integer_754(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_literal>& actual, leaf::parsing::instance::integer_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_integer(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val4 = create_token(token_integer(depth + 1).value(), tok::INTEGER);
+    actual->value = val4;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::alternatives755(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_literal>& actual, leaf::parsing::instance::integer_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (m_ident_integer_ident_751(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_ident_integer_ident_751(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_integer_ident_752(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_integer_ident_752(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_ident_integer_753(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_ident_integer_753(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_integer_754(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_integer_754(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    resettable1.reset();
+    return false;
+}
+bool leaf::parsing::instance::p_can_integer_literal(size_t depth)
+{
+    resettable resettable1(*this);
+    std::shared_ptr<leaf::parsing::instance::integer_literal> fake;
+    integer_literal_state state;
+    if (!alternatives755(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    return true;
+}
+std::shared_ptr<leaf::parsing::instance::integer_literal> leaf::parsing::instance::p_match_integer_literal(size_t depth)
+{
+    auto actual = std::make_shared<leaf::parsing::instance::integer_literal>();
+    std::shared_ptr<leaf::parsing::instance::integer_literal> fake;
+    integer_literal_state state;
+    resettable resettable2(*this);
+    if (alternatives755(true, fake, state, depth + 1))
+    {
+        resettable2.reset();
+        alternatives755(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    return actual;
+}
+bool leaf::parsing::instance::m_ident_char_ident_756(bool is_can, std::shared_ptr<leaf::parsing::instance::char_literal>& actual, leaf::parsing::instance::char_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_ident(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token_char_(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l6 = token_ident(depth + 1);
+    if (l6.has_value())
+    {
+        for (auto i7 = l6.value(); i7 != 0; i7--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val8 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->prefix = val8;
+    skip();
+    auto val9 = create_token(token_char_(depth + 1).value(), tok::CHAR_);
+    actual->value = val9;
+    skip();
+    auto val10 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->postfix = val10;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_char_ident_757(bool is_can, std::shared_ptr<leaf::parsing::instance::char_literal>& actual, leaf::parsing::instance::char_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_char_(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token_ident(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val6 = create_token(token_char_(depth + 1).value(), tok::CHAR_);
+    actual->value = val6;
+    skip();
+    auto val7 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->postfix = val7;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_ident_char_758(bool is_can, std::shared_ptr<leaf::parsing::instance::char_literal>& actual, leaf::parsing::instance::char_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_ident(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token_char_(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val6 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->prefix = val6;
+    skip();
+    auto val7 = create_token(token_char_(depth + 1).value(), tok::CHAR_);
+    actual->value = val7;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_char_759(bool is_can, std::shared_ptr<leaf::parsing::instance::char_literal>& actual, leaf::parsing::instance::char_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_char_(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val4 = create_token(token_char_(depth + 1).value(), tok::CHAR_);
+    actual->value = val4;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::alternatives760(bool is_can, std::shared_ptr<leaf::parsing::instance::char_literal>& actual, leaf::parsing::instance::char_literal_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (m_ident_char_ident_756(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_ident_char_ident_756(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_char_ident_757(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_char_ident_757(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_ident_char_758(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_ident_char_758(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_char_759(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_char_759(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    resettable1.reset();
+    return false;
+}
+bool leaf::parsing::instance::p_can_char_literal(size_t depth)
+{
+    resettable resettable1(*this);
+    std::shared_ptr<leaf::parsing::instance::char_literal> fake;
+    char_literal_state state;
+    if (!alternatives760(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    return true;
+}
+std::shared_ptr<leaf::parsing::instance::char_literal> leaf::parsing::instance::p_match_char_literal(size_t depth)
+{
+    auto actual = std::make_shared<leaf::parsing::instance::char_literal>();
+    std::shared_ptr<leaf::parsing::instance::char_literal> fake;
+    char_literal_state state;
+    resettable resettable2(*this);
+    if (alternatives760(true, fake, state, depth + 1))
+    {
+        resettable2.reset();
+        alternatives760(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    return actual;
+}
+bool leaf::parsing::instance::m_typematch_ident_761(bool is_can, std::shared_ptr<leaf::parsing::instance::declaration>& actual, leaf::parsing::instance::declaration_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_type_match(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l2 = token_ident(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val4 = p_match_type_match(depth + 1);
+    actual->type = val4;
+    skip();
+    auto val5 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->name = val5;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::p_can_declaration(size_t depth)
+{
+    resettable resettable1(*this);
+    std::shared_ptr<leaf::parsing::instance::declaration> fake;
+    declaration_state state;
+    if (!m_typematch_ident_761(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    return true;
+}
+std::shared_ptr<leaf::parsing::instance::declaration> leaf::parsing::instance::p_match_declaration(size_t depth)
+{
+    auto actual = std::make_shared<leaf::parsing::instance::declaration>();
+    std::shared_ptr<leaf::parsing::instance::declaration> fake;
+    declaration_state state;
+    resettable resettable2(*this);
+    if (m_typematch_ident_761(true, fake, state, depth + 1))
+    {
+        resettable2.reset();
+        m_typematch_ident_761(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    return actual;
+}
+bool leaf::parsing::instance::m_return_semicolon_762(bool is_can, std::shared_ptr<leaf::parsing::instance::return_statement>& actual, leaf::parsing::instance::return_statement_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token__return(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token__semicolon(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto l7 = token__return(depth + 1).value();
+    for (;l7 != 0; l7--)
+    {
+        next();
+    }
+    skip();
+    auto l9 = token__semicolon(depth + 1).value();
+    for (;l9 != 0; l9--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_return_expression_semicolon_763(bool is_can, std::shared_ptr<leaf::parsing::instance::return_statement>& actual, leaf::parsing::instance::return_statement_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token__return(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (p_can_expression(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token__semicolon(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto l7 = token__return(depth + 1).value();
+    for (;l7 != 0; l7--)
+    {
+        next();
+    }
+    skip();
+    auto val8 = p_match_expression(depth + 1);
+    actual->exp = val8;
+    skip();
+    auto l10 = token__semicolon(depth + 1).value();
+    for (;l10 != 0; l10--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::alternatives764(bool is_can, std::shared_ptr<leaf::parsing::instance::return_statement>& actual, leaf::parsing::instance::return_statement_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (m_return_semicolon_762(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_return_semicolon_762(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_return_expression_semicolon_763(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_return_expression_semicolon_763(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    resettable1.reset();
+    return false;
+}
+bool leaf::parsing::instance::p_can_return_statement(size_t depth)
+{
+    resettable resettable1(*this);
+    std::shared_ptr<leaf::parsing::instance::return_statement> fake;
+    return_statement_state state;
+    if (!alternatives764(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    return true;
+}
+std::shared_ptr<leaf::parsing::instance::return_statement> leaf::parsing::instance::p_match_return_statement(size_t depth)
+{
+    auto actual = std::make_shared<leaf::parsing::instance::return_statement>();
+    std::shared_ptr<leaf::parsing::instance::return_statement> fake;
+    return_statement_state state;
+    resettable resettable2(*this);
+    if (alternatives764(true, fake, state, depth + 1))
+    {
+        resettable2.reset();
+        alternatives764(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    return actual;
+}
+bool leaf::parsing::instance::m_alias_765(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_alias(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val2 = p_match_alias(depth + 1);
+    actual->aliases = val2;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_constant_766(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_constant(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val2 = p_match_constant(depth + 1);
+    actual->constants = val2;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_returnstatement_767(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_return_statement(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val2 = p_match_return_statement(depth + 1);
+    actual->ret = val2;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_declaration_equal_expression_semicolon_768(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_declaration(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l2 = token__equal(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (p_can_expression(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token__semicolon(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val6 = p_match_declaration(depth + 1);
+    actual->fwrd_decl = val6;
+    skip();
+    auto l8 = token__equal(depth + 1).value();
+    for (;l8 != 0; l8--)
+    {
+        next();
+    }
+    skip();
+    auto val9 = p_match_expression(depth + 1);
+    actual->exp = val9;
+    skip();
+    auto l11 = token__semicolon(depth + 1).value();
+    for (;l11 != 0; l11--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_declaration_semicolon_769(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_declaration(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l2 = token__semicolon(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val4 = p_match_declaration(depth + 1);
+    actual->fwrd_decl = val4;
+    skip();
+    auto l6 = token__semicolon(depth + 1).value();
+    for (;l6 != 0; l6--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_expression_semicolon_770(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_expression(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l2 = token__semicolon(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val4 = p_match_expression(depth + 1);
+    actual->exp = val4;
+    skip();
+    auto l6 = token__semicolon(depth + 1).value();
+    for (;l6 != 0; l6--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_semicolon_771(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token__semicolon(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto l5 = token__semicolon(depth + 1).value();
+    for (;l5 != 0; l5--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_pragma_772(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_pragma(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val2 = p_match_pragma(depth + 1);
+    actual->pragma = val2;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::alternatives773(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (m_alias_765(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_alias_765(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_constant_766(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_constant_766(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_returnstatement_767(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_returnstatement_767(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_declaration_equal_expression_semicolon_768(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_declaration_equal_expression_semicolon_768(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_declaration_semicolon_769(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_declaration_semicolon_769(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_expression_semicolon_770(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_expression_semicolon_770(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_semicolon_771(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_semicolon_771(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_pragma_772(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_pragma_772(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    resettable1.reset();
+    return false;
+}
+bool leaf::parsing::instance::p_can_statement(size_t depth)
+{
+    resettable resettable1(*this);
+    std::shared_ptr<leaf::parsing::instance::statement> fake;
+    statement_state state;
+    if (!alternatives773(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    return true;
+}
+std::shared_ptr<leaf::parsing::instance::statement> leaf::parsing::instance::p_match_statement(size_t depth)
+{
+    auto actual = std::make_shared<leaf::parsing::instance::statement>();
+    std::shared_ptr<leaf::parsing::instance::statement> fake;
+    statement_state state;
+    resettable resettable2(*this);
+    if (alternatives773(true, fake, state, depth + 1))
+    {
+        resettable2.reset();
+        alternatives773(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    return actual;
+}
+bool leaf::parsing::instance::m_auto821_774(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token__auto_821(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto l5 = token__auto_821(depth + 1).value();
+    for (;l5 != 0; l5--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_exclamationgreaterthen_775(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token__exclamation_greater_then(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto l5 = token__exclamation_greater_then(depth + 1).value();
+    for (;l5 != 0; l5--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_pragmadisable_776(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_pragma_disable(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val2 = p_match_pragma_disable(depth + 1);
+    actual->contents.push_back(val2);
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_pragmaenable_777(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_pragma_enable(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val2 = p_match_pragma_enable(depth + 1);
+    actual->contents.push_back(val2);
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_pragmasize_778(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_pragma_size(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val2 = p_match_pragma_size(depth + 1);
+    actual->contents.push_back(val2);
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_pragmaalign_779(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_pragma_align(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val2 = p_match_pragma_align(depth + 1);
+    actual->contents.push_back(val2);
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::alternatives780(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (m_pragmadisable_776(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_pragmadisable_776(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_pragmaenable_777(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_pragmaenable_777(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_pragmasize_778(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_pragmasize_778(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_pragmaalign_779(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_pragmaalign_779(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (!is_can)
+    {
+        report("Failed to match one of the following: { pragma-disable, pragma-enable, pragma-size, pragma-align }", depth);
+    }
+    resettable1.reset();
+    return false;
+}
+bool leaf::parsing::instance::while781_782(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    bool cond3 = m_exclamationgreaterthen_775(true, actual, state, depth + 1);
+    resettable1.reset();
+    if (is_can)
+    {
+        while (!cond3 && current() != '\0')
+        {
+            while (!alternatives780(true, actual, state, depth + 1) && current() != '\0')
+            {
+                next();
+            }
+            resettable resettable2(*this);
+            cond3 = m_exclamationgreaterthen_775(true, actual, state, depth + 1);
+            resettable2.reset();
+        }
+        return true;
+    }
+    else
+    {
+        while (!cond3 && current() != '\0')
+        {
+            if (!alternatives780(false, actual, state, depth + 1))
+            {
+                while (current() != '\0')
+                {
+                    resettable resettable4(*this);
+                    if (alternatives780(true, actual, state, depth + 1))
+                    {
+                        resettable4.reset();
+                        break;
+                    }
+                    next();
+                }
+            }
+            resettable resettable2(*this);
+            cond3 = m_exclamationgreaterthen_775(true, actual, state, depth + 1);
+            resettable2.reset();
+        }
+        return true;
+    }
+}
+bool leaf::parsing::instance::m_exclamationgreaterthen_783(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token__exclamation_greater_then(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto l5 = token__exclamation_greater_then(depth + 1).value();
+    for (;l5 != 0; l5--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::p_can_pragma(size_t depth)
+{
+    resettable resettable1(*this);
+    std::shared_ptr<leaf::parsing::instance::pragma> fake;
+    pragma_state state;
+    if (!m_auto821_774(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    else if (!while781_782(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    else if (!m_exclamationgreaterthen_783(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    return true;
+}
+std::shared_ptr<leaf::parsing::instance::pragma> leaf::parsing::instance::p_match_pragma(size_t depth)
+{
+    auto actual = std::make_shared<leaf::parsing::instance::pragma>();
+    std::shared_ptr<leaf::parsing::instance::pragma> fake;
+    pragma_state state;
+    resettable resettable2(*this);
+    if (m_auto821_774(true, fake, state, depth + 1))
+    {
+        resettable2.reset();
+        m_auto821_774(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    resettable resettable3(*this);
+    if (while781_782(true, fake, state, depth + 1))
+    {
+        resettable3.reset();
+        while781_782(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    resettable resettable4(*this);
+    if (m_exclamationgreaterthen_783(true, fake, state, depth + 1))
+    {
+        resettable4.reset();
+        m_exclamationgreaterthen_783(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    return actual;
+}
+bool leaf::parsing::instance::m_align_784(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_align>& actual, leaf::parsing::instance::pragma_align_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token__align(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto l5 = token__align(depth + 1).value();
+    for (;l5 != 0; l5--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_integerbinary_785(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_align>& actual, leaf::parsing::instance::pragma_align_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_integer_binary(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val4 = create_token(token_integer_binary(depth + 1).value(), tok::INTEGER_BINARY);
+    actual->bytes = val4;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_integerhex_786(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_align>& actual, leaf::parsing::instance::pragma_align_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_integer_hex(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val4 = create_token(token_integer_hex(depth + 1).value(), tok::INTEGER_HEX);
+    actual->bytes = val4;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_integer_787(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_align>& actual, leaf::parsing::instance::pragma_align_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_integer(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val4 = create_token(token_integer(depth + 1).value(), tok::INTEGER);
+    actual->bytes = val4;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::alternatives788(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_align>& actual, leaf::parsing::instance::pragma_align_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (m_integerbinary_785(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_integerbinary_785(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_integerhex_786(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_integerhex_786(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_integer_787(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_integer_787(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    resettable1.reset();
+    return false;
+}
+bool leaf::parsing::instance::p_can_pragma_align(size_t depth)
+{
+    resettable resettable1(*this);
+    std::shared_ptr<leaf::parsing::instance::pragma_align> fake;
+    pragma_align_state state;
+    if (!m_align_784(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    else if (!alternatives788(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    return true;
+}
+std::shared_ptr<leaf::parsing::instance::pragma_align> leaf::parsing::instance::p_match_pragma_align(size_t depth)
+{
+    auto actual = std::make_shared<leaf::parsing::instance::pragma_align>();
+    std::shared_ptr<leaf::parsing::instance::pragma_align> fake;
+    pragma_align_state state;
+    resettable resettable2(*this);
+    if (m_align_784(true, fake, state, depth + 1))
+    {
+        resettable2.reset();
+        m_align_784(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    resettable resettable3(*this);
+    if (alternatives788(true, fake, state, depth + 1))
+    {
+        resettable3.reset();
+        alternatives788(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    return actual;
+}
+bool leaf::parsing::instance::m_size_789(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_size>& actual, leaf::parsing::instance::pragma_size_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token__size(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto l5 = token__size(depth + 1).value();
+    for (;l5 != 0; l5--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_integerbinary_790(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_size>& actual, leaf::parsing::instance::pragma_size_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_integer_binary(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val4 = create_token(token_integer_binary(depth + 1).value(), tok::INTEGER_BINARY);
+    actual->bytes = val4;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_integerhex_791(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_size>& actual, leaf::parsing::instance::pragma_size_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_integer_hex(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val4 = create_token(token_integer_hex(depth + 1).value(), tok::INTEGER_HEX);
+    actual->bytes = val4;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_integer_792(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_size>& actual, leaf::parsing::instance::pragma_size_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_integer(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val4 = create_token(token_integer(depth + 1).value(), tok::INTEGER);
+    actual->bytes = val4;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::alternatives793(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_size>& actual, leaf::parsing::instance::pragma_size_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (m_integerbinary_790(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_integerbinary_790(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_integerhex_791(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_integerhex_791(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_integer_792(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_integer_792(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    resettable1.reset();
+    return false;
+}
+bool leaf::parsing::instance::p_can_pragma_size(size_t depth)
+{
+    resettable resettable1(*this);
+    std::shared_ptr<leaf::parsing::instance::pragma_size> fake;
+    pragma_size_state state;
+    if (!m_size_789(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    else if (!alternatives793(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    return true;
+}
+std::shared_ptr<leaf::parsing::instance::pragma_size> leaf::parsing::instance::p_match_pragma_size(size_t depth)
+{
+    auto actual = std::make_shared<leaf::parsing::instance::pragma_size>();
+    std::shared_ptr<leaf::parsing::instance::pragma_size> fake;
+    pragma_size_state state;
+    resettable resettable2(*this);
+    if (m_size_789(true, fake, state, depth + 1))
+    {
+        resettable2.reset();
+        m_size_789(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    resettable resettable3(*this);
+    if (alternatives793(true, fake, state, depth + 1))
+    {
+        resettable3.reset();
+        alternatives793(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    return actual;
+}
+bool leaf::parsing::instance::m_disable_794(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_disable>& actual, leaf::parsing::instance::pragma_disable_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token__disable(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto l5 = token__disable(depth + 1).value();
+    for (;l5 != 0; l5--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_ident_795(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_disable>& actual, leaf::parsing::instance::pragma_disable_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_ident(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val4 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->code = val4;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::p_can_pragma_disable(size_t depth)
+{
+    resettable resettable1(*this);
+    std::shared_ptr<leaf::parsing::instance::pragma_disable> fake;
+    pragma_disable_state state;
+    if (!m_disable_794(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    else if (!m_ident_795(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    return true;
+}
+std::shared_ptr<leaf::parsing::instance::pragma_disable> leaf::parsing::instance::p_match_pragma_disable(size_t depth)
+{
+    auto actual = std::make_shared<leaf::parsing::instance::pragma_disable>();
+    std::shared_ptr<leaf::parsing::instance::pragma_disable> fake;
+    pragma_disable_state state;
+    resettable resettable2(*this);
+    if (m_disable_794(true, fake, state, depth + 1))
+    {
+        resettable2.reset();
+        m_disable_794(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    resettable resettable3(*this);
+    if (m_ident_795(true, fake, state, depth + 1))
+    {
+        resettable3.reset();
+        m_ident_795(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    return actual;
+}
+bool leaf::parsing::instance::m_enable_796(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_enable>& actual, leaf::parsing::instance::pragma_enable_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token__enable(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto l5 = token__enable(depth + 1).value();
+    for (;l5 != 0; l5--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_ident_797(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_enable>& actual, leaf::parsing::instance::pragma_enable_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_ident(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val4 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->code = val4;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::p_can_pragma_enable(size_t depth)
+{
+    resettable resettable1(*this);
+    std::shared_ptr<leaf::parsing::instance::pragma_enable> fake;
+    pragma_enable_state state;
+    if (!m_enable_796(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    else if (!m_ident_797(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    return true;
+}
+std::shared_ptr<leaf::parsing::instance::pragma_enable> leaf::parsing::instance::p_match_pragma_enable(size_t depth)
+{
+    auto actual = std::make_shared<leaf::parsing::instance::pragma_enable>();
+    std::shared_ptr<leaf::parsing::instance::pragma_enable> fake;
+    pragma_enable_state state;
+    resettable resettable2(*this);
+    if (m_enable_796(true, fake, state, depth + 1))
+    {
+        resettable2.reset();
+        m_enable_796(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    resettable resettable3(*this);
+    if (m_ident_797(true, fake, state, depth + 1))
+    {
+        resettable3.reset();
+        m_ident_797(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    return actual;
+}
+bool leaf::parsing::instance::m_ident_798(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage_item>& actual, leaf::parsing::instance::template_usage_item_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_ident(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val4 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->key = val4;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::p_can_template_usage_item(size_t depth)
+{
+    resettable resettable1(*this);
+    std::shared_ptr<leaf::parsing::instance::template_usage_item> fake;
+    template_usage_item_state state;
+    if (!m_ident_798(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    return true;
+}
+std::shared_ptr<leaf::parsing::instance::template_usage_item> leaf::parsing::instance::p_match_template_usage_item(size_t depth)
+{
+    auto actual = std::make_shared<leaf::parsing::instance::template_usage_item>();
+    std::shared_ptr<leaf::parsing::instance::template_usage_item> fake;
+    template_usage_item_state state;
+    resettable resettable2(*this);
+    if (m_ident_798(true, fake, state, depth + 1))
+    {
+        resettable2.reset();
+        m_ident_798(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    return actual;
+}
+bool leaf::parsing::instance::m_lessthen_799(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage>& actual, leaf::parsing::instance::template_usage_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token__less_then(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto l5 = token__less_then(depth + 1).value();
+    for (;l5 != 0; l5--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_templateusageitem_800(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage>& actual, leaf::parsing::instance::template_usage_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_template_usage_item(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val2 = p_match_template_usage_item(depth + 1);
+    actual->items.push_back(val2);
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_comma_801(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage>& actual, leaf::parsing::instance::template_usage_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token__comma(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto l5 = token__comma(depth + 1).value();
+    for (;l5 != 0; l5--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_comma_templateusageitem_802(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage>& actual, leaf::parsing::instance::template_usage_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token__comma(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (p_can_template_usage_item(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto l5 = token__comma(depth + 1).value();
+    for (;l5 != 0; l5--)
+    {
+        next();
+    }
+    skip();
+    auto val6 = p_match_template_usage_item(depth + 1);
+    actual->items.push_back(val6);
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::alternatives803(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage>& actual, leaf::parsing::instance::template_usage_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (m_comma_templateusageitem_802(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_comma_templateusageitem_802(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (!is_can)
+    {
+        report("Failed to match one of the following: { ,, template-usage-item }", depth);
+    }
+    resettable1.reset();
+    return false;
+}
+bool leaf::parsing::instance::while804_805(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage>& actual, leaf::parsing::instance::template_usage_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    bool cond3 = m_comma_801(true, actual, state, depth + 1);
+    resettable1.reset();
+    if (is_can)
+    {
+        while (cond3 && current() != '\0')
+        {
+            while (!alternatives803(true, actual, state, depth + 1) && current() != '\0')
+            {
+                next();
+            }
+            resettable resettable2(*this);
+            cond3 = m_comma_801(true, actual, state, depth + 1);
+            resettable2.reset();
+        }
+        return true;
+    }
+    else
+    {
+        while (cond3 && current() != '\0')
+        {
+            if (!alternatives803(false, actual, state, depth + 1))
+            {
+                while (current() != '\0')
+                {
+                    resettable resettable4(*this);
+                    if (alternatives803(true, actual, state, depth + 1))
+                    {
+                        resettable4.reset();
+                        break;
+                    }
+                    next();
+                }
+            }
+            resettable resettable2(*this);
+            cond3 = m_comma_801(true, actual, state, depth + 1);
+            resettable2.reset();
+        }
+        return true;
+    }
+}
+bool leaf::parsing::instance::m_greaterthen_806(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage>& actual, leaf::parsing::instance::template_usage_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token__greater_then(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto l5 = token__greater_then(depth + 1).value();
+    for (;l5 != 0; l5--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::p_can_template_usage(size_t depth)
+{
+    resettable resettable1(*this);
+    std::shared_ptr<leaf::parsing::instance::template_usage> fake;
+    template_usage_state state;
+    if (!m_lessthen_799(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    else if (!m_templateusageitem_800(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    else if (!while804_805(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    else if (!m_greaterthen_806(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    return true;
+}
+std::shared_ptr<leaf::parsing::instance::template_usage> leaf::parsing::instance::p_match_template_usage(size_t depth)
+{
+    auto actual = std::make_shared<leaf::parsing::instance::template_usage>();
+    std::shared_ptr<leaf::parsing::instance::template_usage> fake;
+    template_usage_state state;
+    resettable resettable2(*this);
+    if (m_lessthen_799(true, fake, state, depth + 1))
+    {
+        resettable2.reset();
+        m_lessthen_799(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    resettable resettable3(*this);
+    if (m_templateusageitem_800(true, fake, state, depth + 1))
+    {
+        resettable3.reset();
+        m_templateusageitem_800(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    resettable resettable4(*this);
+    if (while804_805(true, fake, state, depth + 1))
+    {
+        resettable4.reset();
+        while804_805(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    resettable resettable5(*this);
+    if (m_greaterthen_806(true, fake, state, depth + 1))
+    {
+        resettable5.reset();
+        m_greaterthen_806(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    return actual;
+}
+bool leaf::parsing::instance::m_ident_807(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition_item_direct_type>& actual, leaf::parsing::instance::template_definition_item_direct_type_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token_ident(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val4 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->key = val4;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_equal_808(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition_item_direct_type>& actual, leaf::parsing::instance::template_definition_item_direct_type_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token__equal(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto l5 = token__equal(depth + 1).value();
+    for (;l5 != 0; l5--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_equal_expvalue_809(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition_item_direct_type>& actual, leaf::parsing::instance::template_definition_item_direct_type_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token__equal(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (p_can_exp_value(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto l5 = token__equal(depth + 1).value();
+    for (;l5 != 0; l5--)
+    {
+        next();
+    }
+    skip();
+    auto val6 = p_match_exp_value(depth + 1);
+    actual->value = val6;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::if810_811(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition_item_direct_type>& actual, leaf::parsing::instance::template_definition_item_direct_type_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    bool cond2 = m_equal_808(true, actual, state, depth + 1);
+    resettable1.reset();
+    if (is_can)
+    {
+        if (cond2)
+        {
+            if (m_equal_expvalue_809(true, actual, state, depth + 1))
+            {
+                skip();
+            }
+            else if (is_can)
+            {
+                return false;
+            }
+            else
+            {
+                report("Failed to match { $ref: = ({ Token: = (=)}), $ref: exp-value (XCG.Parsing.Production) }", depth);
+                return false;
+            }
+            return true;
+        }
+        return true;
+    }
+    else
+    {
+        if (cond2)
+        {
+            if (m_equal_expvalue_809(false, actual, state, depth + 1))
+            {
+                skip();
+            }
+            else if (is_can)
+            {
+                return false;
+            }
+            else
+            {
+                report("Failed to match { $ref: = ({ Token: = (=)}), $ref: exp-value (XCG.Parsing.Production) }", depth);
+                return false;
+            }
+            return true;
+        }
+        return true;
+    }
+}
+bool leaf::parsing::instance::p_can_template_definition_item_direct_type(size_t depth)
+{
+    resettable resettable1(*this);
+    std::shared_ptr<leaf::parsing::instance::template_definition_item_direct_type> fake;
+    template_definition_item_direct_type_state state;
+    if (!m_ident_807(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    else if (!if810_811(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    return true;
+}
+std::shared_ptr<leaf::parsing::instance::template_definition_item_direct_type> leaf::parsing::instance::p_match_template_definition_item_direct_type(size_t depth)
+{
+    auto actual = std::make_shared<leaf::parsing::instance::template_definition_item_direct_type>();
+    std::shared_ptr<leaf::parsing::instance::template_definition_item_direct_type> fake;
+    template_definition_item_direct_type_state state;
+    resettable resettable2(*this);
+    if (m_ident_807(true, fake, state, depth + 1))
+    {
+        resettable2.reset();
+        m_ident_807(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    resettable resettable3(*this);
+    if (if810_811(true, fake, state, depth + 1))
+    {
+        resettable3.reset();
+        if810_811(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    return actual;
+}
+bool leaf::parsing::instance::m_identifier_ident_812(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition_item_identifier>& actual, leaf::parsing::instance::template_definition_item_identifier_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token__identifier(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token_ident(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto l7 = token__identifier(depth + 1).value();
+    for (;l7 != 0; l7--)
+    {
+        next();
+    }
+    skip();
+    auto val8 = create_token(token_ident(depth + 1).value(), tok::IDENT);
+    actual->key = val8;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::p_can_template_definition_item_identifier(size_t depth)
+{
+    resettable resettable1(*this);
+    std::shared_ptr<leaf::parsing::instance::template_definition_item_identifier> fake;
+    template_definition_item_identifier_state state;
+    if (!m_identifier_ident_812(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    return true;
+}
+std::shared_ptr<leaf::parsing::instance::template_definition_item_identifier> leaf::parsing::instance::p_match_template_definition_item_identifier(size_t depth)
+{
+    auto actual = std::make_shared<leaf::parsing::instance::template_definition_item_identifier>();
+    std::shared_ptr<leaf::parsing::instance::template_definition_item_identifier> fake;
+    template_definition_item_identifier_state state;
+    resettable resettable2(*this);
+    if (m_identifier_ident_812(true, fake, state, depth + 1))
+    {
+        resettable2.reset();
+        m_identifier_ident_812(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    return actual;
+}
+bool leaf::parsing::instance::m_lessthen_813(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token__less_then(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto l5 = token__less_then(depth + 1).value();
+    for (;l5 != 0; l5--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_templatedefinitionitemidentifier_814(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_template_definition_item_identifier(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val2 = p_match_template_definition_item_identifier(depth + 1);
+    actual->items.push_back(val2);
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_templatedefinitionitemdirecttype_815(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_template_definition_item_direct_type(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val2 = p_match_template_definition_item_direct_type(depth + 1);
+    actual->items.push_back(val2);
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::alternatives816(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (m_templatedefinitionitemidentifier_814(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_templatedefinitionitemidentifier_814(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_templatedefinitionitemdirecttype_815(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_templatedefinitionitemdirecttype_815(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    resettable1.reset();
+    return false;
+}
+bool leaf::parsing::instance::m_comma_817(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token__comma(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto l5 = token__comma(depth + 1).value();
+    for (;l5 != 0; l5--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_templatedefinitionitemidentifier_818(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_template_definition_item_identifier(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val2 = p_match_template_definition_item_identifier(depth + 1);
+    actual->items.push_back(val2);
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_templatedefinitionitemdirecttype_819(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_template_definition_item_direct_type(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val2 = p_match_template_definition_item_direct_type(depth + 1);
+    actual->items.push_back(val2);
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_comma_820(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token__comma(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto l5 = token__comma(depth + 1).value();
+    for (;l5 != 0; l5--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::alternatives821(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (m_templatedefinitionitemidentifier_818(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_templatedefinitionitemidentifier_818(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_templatedefinitionitemdirecttype_819(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_templatedefinitionitemdirecttype_819(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_comma_820(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_comma_820(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (!is_can)
+    {
+        report("Failed to match one of the following: { template-definition-item-identifier, template-definition-item-direct-type, , }", depth);
+    }
+    resettable1.reset();
+    return false;
+}
+bool leaf::parsing::instance::while822_823(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    bool cond3 = m_comma_817(true, actual, state, depth + 1);
+    resettable1.reset();
+    if (is_can)
+    {
+        while (cond3 && current() != '\0')
+        {
+            while (!alternatives821(true, actual, state, depth + 1) && current() != '\0')
+            {
+                next();
+            }
+            resettable resettable2(*this);
+            cond3 = m_comma_817(true, actual, state, depth + 1);
+            resettable2.reset();
+        }
+        return true;
+    }
+    else
+    {
+        while (cond3 && current() != '\0')
+        {
+            if (!alternatives821(false, actual, state, depth + 1))
+            {
+                while (current() != '\0')
+                {
+                    resettable resettable4(*this);
+                    if (alternatives821(true, actual, state, depth + 1))
+                    {
+                        resettable4.reset();
+                        break;
+                    }
+                    next();
+                }
+            }
+            resettable resettable2(*this);
+            cond3 = m_comma_817(true, actual, state, depth + 1);
+            resettable2.reset();
+        }
+        return true;
+    }
+}
+bool leaf::parsing::instance::m_greaterthen_824(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    auto l2 = token__greater_then(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto l5 = token__greater_then(depth + 1).value();
+    for (;l5 != 0; l5--)
+    {
+        next();
+    }
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::p_can_template_definition(size_t depth)
+{
+    resettable resettable1(*this);
+    std::shared_ptr<leaf::parsing::instance::template_definition> fake;
+    template_definition_state state;
+    if (!m_lessthen_813(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    else if (!alternatives816(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    else if (!while822_823(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    else if (!m_greaterthen_824(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    return true;
+}
+std::shared_ptr<leaf::parsing::instance::template_definition> leaf::parsing::instance::p_match_template_definition(size_t depth)
+{
+    auto actual = std::make_shared<leaf::parsing::instance::template_definition>();
+    std::shared_ptr<leaf::parsing::instance::template_definition> fake;
+    template_definition_state state;
+    resettable resettable2(*this);
+    if (m_lessthen_813(true, fake, state, depth + 1))
+    {
+        resettable2.reset();
+        m_lessthen_813(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    resettable resettable3(*this);
+    if (alternatives816(true, fake, state, depth + 1))
+    {
+        resettable3.reset();
+        alternatives816(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    resettable resettable4(*this);
+    if (while822_823(true, fake, state, depth + 1))
+    {
+        resettable4.reset();
+        while822_823(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    resettable resettable5(*this);
+    if (m_greaterthen_824(true, fake, state, depth + 1))
+    {
+        resettable5.reset();
+        m_greaterthen_824(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    return actual;
+}
+bool leaf::parsing::instance::m_typematchnoallocator_825(bool is_can, std::shared_ptr<leaf::parsing::instance::type_match>& actual, leaf::parsing::instance::type_match_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_type_match_no_allocator(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val2 = p_match_type_match_no_allocator(depth + 1);
+    actual->match = val2;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::m_typematchwithallocator_826(bool is_can, std::shared_ptr<leaf::parsing::instance::type_match>& actual, leaf::parsing::instance::type_match_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (p_can_type_match_with_allocator(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val2 = p_match_type_match_with_allocator(depth + 1);
+    actual->match = val2;
+    skip();
+    return true;
+}
+bool leaf::parsing::instance::alternatives827(bool is_can, std::shared_ptr<leaf::parsing::instance::type_match>& actual, leaf::parsing::instance::type_match_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (m_typematchnoallocator_825(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_typematchnoallocator_825(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_typematchwithallocator_826(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_typematchwithallocator_826(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    resettable1.reset();
+    return false;
+}
+bool leaf::parsing::instance::p_can_type_match(size_t depth)
+{
+    resettable resettable1(*this);
+    std::shared_ptr<leaf::parsing::instance::type_match> fake;
+    type_match_state state;
+    if (!alternatives827(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    return true;
+}
+std::shared_ptr<leaf::parsing::instance::type_match> leaf::parsing::instance::p_match_type_match(size_t depth)
+{
+    auto actual = std::make_shared<leaf::parsing::instance::type_match>();
+    std::shared_ptr<leaf::parsing::instance::type_match> fake;
+    type_match_state state;
+    resettable resettable2(*this);
+    if (alternatives827(true, fake, state, depth + 1))
+    {
+        resettable2.reset();
+        alternatives827(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    return actual;
+}
+bool leaf::parsing::instance::m_typenavigation_squarebracketopen_squarebracketclose_828(bool is_can, std::shared_ptr<leaf::parsing::instance::type_match_no_allocator>& actual, leaf::parsing::instance::type_match_no_allocator_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (lr_can_type_navigation(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l2 = token__square_bracket_open(depth + 1);
+    if (l2.has_value())
+    {
+        for (auto i3 = l2.value(); i3 != 0; i3--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    auto l4 = token__square_bracket_close(depth + 1);
+    if (l4.has_value())
+    {
+        for (auto i5 = l4.value(); i5 != 0; i5--)
+        {
+            next();
+        }
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val6 = lr_match_type_navigation(depth + 1);
+    actual->base = val6;
+    skip();
+    auto l8 = token__square_bracket_open(depth + 1).value();
+    for (;l8 != 0; l8--)
+    {
+        next();
+    }
+    skip();
+    auto l10 = token__square_bracket_close(depth + 1).value();
+    for (;l10 != 0; l10--)
+    {
+        next();
+    }
+    skip();
+    if (!is_can)
+    {
+        actual->is_array = true;
+    }
+    return true;
+}
+bool leaf::parsing::instance::m_typenavigation_829(bool is_can, std::shared_ptr<leaf::parsing::instance::type_match_no_allocator>& actual, leaf::parsing::instance::type_match_no_allocator_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (lr_can_type_navigation(depth + 1))
+    {
+        skip();
+    }
+    else if (is_can)
+    {
+        resettable1.reset();
+        return false;
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+        return false;
+    }
+    if (is_can)
+    {
+        return true;
+    }
+    resettable1.reset();
+    auto val2 = lr_match_type_navigation(depth + 1);
+    actual->base = val2;
+    skip();
+    if (!is_can)
+    {
+        actual->is_array = false;
+    }
+    return true;
+}
+bool leaf::parsing::instance::alternatives830(bool is_can, std::shared_ptr<leaf::parsing::instance::type_match_no_allocator>& actual, leaf::parsing::instance::type_match_no_allocator_state& state, size_t depth)
+{
+    resettable resettable1(*this);
+    if (m_typenavigation_squarebracketopen_squarebracketclose_828(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_typenavigation_squarebracketopen_squarebracketclose_828(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    else if (m_typenavigation_829(true, actual, state, depth + 1))
+    {
+        if (is_can)
+        {
+            return true;
+        }
+        else
+        {
+            resettable1.reset();
+            m_typenavigation_829(false, actual, state, depth + 1);
+            return true;
+        }
+    }
+    resettable1.reset();
+    return false;
+}
+bool leaf::parsing::instance::p_can_type_match_no_allocator(size_t depth)
+{
+    resettable resettable1(*this);
+    std::shared_ptr<leaf::parsing::instance::type_match_no_allocator> fake;
+    type_match_no_allocator_state state;
+    if (!alternatives830(true, fake, state, depth + 1))
+    {
+        resettable1.reset();
+        return false;
+    }
+    return true;
+}
+std::shared_ptr<leaf::parsing::instance::type_match_no_allocator> leaf::parsing::instance::p_match_type_match_no_allocator(size_t depth)
+{
+    auto actual = std::make_shared<leaf::parsing::instance::type_match_no_allocator>();
+    std::shared_ptr<leaf::parsing::instance::type_match_no_allocator> fake;
+    type_match_no_allocator_state state;
+    resettable resettable2(*this);
+    if (alternatives830(true, fake, state, depth + 1))
+    {
+        resettable2.reset();
+        alternatives830(false, actual, state, depth + 1);
+    }
+    else
+    {
+        report("Something moved wrong (todo: improve error messages)", depth);
+    }
+    return actual;
+}
+bool leaf::parsing::instance::m_ident_typenavigation_squarebracketopen_squarebracketclose_831(bool is_can, std::shared_ptr<leaf::parsing::instance::type_match_with_allocator>& actual, leaf::parsing::instance::type_match_with_allocator_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token_ident(depth + 1);
@@ -30790,7 +36672,7 @@ bool leaf::parsing::instance::m_ident_typenavigation_squarebracketopen_squarebra
     }
     return true;
 }
-bool leaf::parsing::instance::m_ident_typenavigation_716(bool is_can, std::shared_ptr<leaf::parsing::instance::type_match>& actual, leaf::parsing::instance::type_match_state& state, size_t depth)
+bool leaf::parsing::instance::m_ident_typenavigation_832(bool is_can, std::shared_ptr<leaf::parsing::instance::type_match_with_allocator>& actual, leaf::parsing::instance::type_match_with_allocator_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token_ident(depth + 1);
@@ -30843,122 +36725,10 @@ bool leaf::parsing::instance::m_ident_typenavigation_716(bool is_can, std::share
     }
     return true;
 }
-bool leaf::parsing::instance::m_typenavigation_squarebracketopen_squarebracketclose_717(bool is_can, std::shared_ptr<leaf::parsing::instance::type_match>& actual, leaf::parsing::instance::type_match_state& state, size_t depth)
+bool leaf::parsing::instance::alternatives833(bool is_can, std::shared_ptr<leaf::parsing::instance::type_match_with_allocator>& actual, leaf::parsing::instance::type_match_with_allocator_state& state, size_t depth)
 {
     resettable resettable1(*this);
-    if (lr_can_type_navigation(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l2 = token__square_bracket_open(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token__square_bracket_close(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val6 = lr_match_type_navigation(depth + 1);
-    actual->base = val6;
-    skip();
-    auto l8 = token__square_bracket_open(depth + 1).value();
-    for (;l8 != 0; l8--)
-    {
-        next();
-    }
-    skip();
-    auto l10 = token__square_bracket_close(depth + 1).value();
-    for (;l10 != 0; l10--)
-    {
-        next();
-    }
-    skip();
-    if (!is_can)
-    {
-        actual->is_array = true;
-    }
-    return true;
-}
-bool leaf::parsing::instance::m_typenavigation_718(bool is_can, std::shared_ptr<leaf::parsing::instance::type_match>& actual, leaf::parsing::instance::type_match_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (lr_can_type_navigation(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val2 = lr_match_type_navigation(depth + 1);
-    actual->base = val2;
-    skip();
-    if (!is_can)
-    {
-        actual->is_array = false;
-    }
-    return true;
-}
-bool leaf::parsing::instance::alternatives719(bool is_can, std::shared_ptr<leaf::parsing::instance::type_match>& actual, leaf::parsing::instance::type_match_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (m_ident_typenavigation_squarebracketopen_squarebracketclose_715(true, actual, state, depth + 1))
+    if (m_ident_typenavigation_squarebracketopen_squarebracketclose_831(true, actual, state, depth + 1))
     {
         if (is_can)
         {
@@ -30967,11 +36737,11 @@ bool leaf::parsing::instance::alternatives719(bool is_can, std::shared_ptr<leaf:
         else
         {
             resettable1.reset();
-            m_ident_typenavigation_squarebracketopen_squarebracketclose_715(false, actual, state, depth + 1);
+            m_ident_typenavigation_squarebracketopen_squarebracketclose_831(false, actual, state, depth + 1);
             return true;
         }
     }
-    else if (m_ident_typenavigation_716(true, actual, state, depth + 1))
+    else if (m_ident_typenavigation_832(true, actual, state, depth + 1))
     {
         if (is_can)
         {
@@ -30980,61 +36750,35 @@ bool leaf::parsing::instance::alternatives719(bool is_can, std::shared_ptr<leaf:
         else
         {
             resettable1.reset();
-            m_ident_typenavigation_716(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_typenavigation_squarebracketopen_squarebracketclose_717(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_typenavigation_squarebracketopen_squarebracketclose_717(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_typenavigation_718(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_typenavigation_718(false, actual, state, depth + 1);
+            m_ident_typenavigation_832(false, actual, state, depth + 1);
             return true;
         }
     }
     resettable1.reset();
     return false;
 }
-bool leaf::parsing::instance::p_can_type_match(size_t depth)
+bool leaf::parsing::instance::p_can_type_match_with_allocator(size_t depth)
 {
     resettable resettable1(*this);
-    std::shared_ptr<leaf::parsing::instance::type_match> fake;
-    type_match_state state;
-    if (!alternatives719(true, fake, state, depth + 1))
+    std::shared_ptr<leaf::parsing::instance::type_match_with_allocator> fake;
+    type_match_with_allocator_state state;
+    if (!alternatives833(true, fake, state, depth + 1))
     {
         resettable1.reset();
         return false;
     }
     return true;
 }
-std::shared_ptr<leaf::parsing::instance::type_match> leaf::parsing::instance::p_match_type_match(size_t depth)
+std::shared_ptr<leaf::parsing::instance::type_match_with_allocator> leaf::parsing::instance::p_match_type_match_with_allocator(size_t depth)
 {
-    auto actual = std::make_shared<leaf::parsing::instance::type_match>();
-    std::shared_ptr<leaf::parsing::instance::type_match> fake;
-    type_match_state state;
+    auto actual = std::make_shared<leaf::parsing::instance::type_match_with_allocator>();
+    std::shared_ptr<leaf::parsing::instance::type_match_with_allocator> fake;
+    type_match_with_allocator_state state;
     resettable resettable2(*this);
-    if (alternatives719(true, fake, state, depth + 1))
+    if (alternatives833(true, fake, state, depth + 1))
     {
         resettable2.reset();
-        alternatives719(false, actual, state, depth + 1);
+        alternatives833(false, actual, state, depth + 1);
     }
     else
     {
@@ -31042,5600 +36786,7 @@ std::shared_ptr<leaf::parsing::instance::type_match> leaf::parsing::instance::p_
     }
     return actual;
 }
-bool leaf::parsing::instance::m_stringformatablestart_720(bool is_can, std::shared_ptr<leaf::parsing::instance::string_formatable>& actual, leaf::parsing::instance::string_formatable_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_string_formatable_start(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val4 = create_token(token_string_formatable_start(depth + 1).value(), tok::STRING_FORMATABLE_START);
-    actual->parts.push_back(val4);
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_expression_721(bool is_can, std::shared_ptr<leaf::parsing::instance::string_formatable>& actual, leaf::parsing::instance::string_formatable_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_expression(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    p_match_expression(depth + 1);
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_stringformatableend_722(bool is_can, std::shared_ptr<leaf::parsing::instance::string_formatable>& actual, leaf::parsing::instance::string_formatable_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_string_formatable_end(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto l5 = token_string_formatable_end(depth + 1).value();
-    for (;l5 != 0; l5--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_stringformatablecontinuation_723(bool is_can, std::shared_ptr<leaf::parsing::instance::string_formatable>& actual, leaf::parsing::instance::string_formatable_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_string_formatable_continuation(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val4 = create_token(token_string_formatable_continuation(depth + 1).value(), tok::STRING_FORMATABLE_CONTINUATION);
-    actual->parts.push_back(val4);
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_expression_724(bool is_can, std::shared_ptr<leaf::parsing::instance::string_formatable>& actual, leaf::parsing::instance::string_formatable_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_expression(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val2 = p_match_expression(depth + 1);
-    actual->parts.push_back(val2);
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::while725_726(bool is_can, std::shared_ptr<leaf::parsing::instance::string_formatable>& actual, leaf::parsing::instance::string_formatable_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    bool cond3 = m_stringformatableend_722(true, actual, state, depth + 1);
-    resettable1.reset();
-    if (is_can)
-    {
-        while (!cond3 && current() != '\0')
-        {
-            if (m_stringformatablecontinuation_723(true, actual, state, depth + 1))
-            {
-                skip();
-            }
-            else if (is_can)
-            {
-                return false;
-            }
-            else
-            {
-                report("Failed to match { $ref: string-formatable-continuation ({ Token: string-formatable-continuation}) }", depth);
-                return false;
-            }
-            if (m_expression_724(true, actual, state, depth + 1))
-            {
-                skip();
-            }
-            else if (is_can)
-            {
-                return false;
-            }
-            else
-            {
-                report("Failed to match { $ref: expression (XCG.Parsing.Production) }", depth);
-                return false;
-            }
-            resettable resettable2(*this);
-            cond3 = m_stringformatableend_722(true, actual, state, depth + 1);
-            resettable2.reset();
-        }
-        return true;
-    }
-    else
-    {
-        while (!cond3 && current() != '\0')
-        {
-            if (m_stringformatablecontinuation_723(false, actual, state, depth + 1))
-            {
-                skip();
-            }
-            else if (is_can)
-            {
-                return false;
-            }
-            else
-            {
-                report("Failed to match { $ref: string-formatable-continuation ({ Token: string-formatable-continuation}) }", depth);
-                return false;
-            }
-            if (m_expression_724(false, actual, state, depth + 1))
-            {
-                skip();
-            }
-            else if (is_can)
-            {
-                return false;
-            }
-            else
-            {
-                report("Failed to match { $ref: expression (XCG.Parsing.Production) }", depth);
-                return false;
-            }
-            resettable resettable2(*this);
-            cond3 = m_stringformatableend_722(true, actual, state, depth + 1);
-            resettable2.reset();
-        }
-        return true;
-    }
-}
-bool leaf::parsing::instance::m_stringformatableend_727(bool is_can, std::shared_ptr<leaf::parsing::instance::string_formatable>& actual, leaf::parsing::instance::string_formatable_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_string_formatable_end(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val4 = create_token(token_string_formatable_end(depth + 1).value(), tok::STRING_FORMATABLE_END);
-    actual->parts.push_back(val4);
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::p_can_string_formatable(size_t depth)
-{
-    resettable resettable1(*this);
-    std::shared_ptr<leaf::parsing::instance::string_formatable> fake;
-    string_formatable_state state;
-    if (!m_stringformatablestart_720(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    else if (!m_expression_721(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    else if (!while725_726(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    else if (!m_stringformatableend_727(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    return true;
-}
-std::shared_ptr<leaf::parsing::instance::string_formatable> leaf::parsing::instance::p_match_string_formatable(size_t depth)
-{
-    auto actual = std::make_shared<leaf::parsing::instance::string_formatable>();
-    std::shared_ptr<leaf::parsing::instance::string_formatable> fake;
-    string_formatable_state state;
-    resettable resettable2(*this);
-    if (m_stringformatablestart_720(true, fake, state, depth + 1))
-    {
-        resettable2.reset();
-        m_stringformatablestart_720(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    resettable resettable3(*this);
-    if (m_expression_721(true, fake, state, depth + 1))
-    {
-        resettable3.reset();
-        m_expression_721(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    resettable resettable4(*this);
-    if (while725_726(true, fake, state, depth + 1))
-    {
-        resettable4.reset();
-        while725_726(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    resettable resettable5(*this);
-    if (m_stringformatableend_727(true, fake, state, depth + 1))
-    {
-        resettable5.reset();
-        m_stringformatableend_727(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    return actual;
-}
-bool leaf::parsing::instance::m_ident_stringformatable_ident_728(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_ident(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (p_can_string_formatable(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token_ident(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val6 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->prefix = val6;
-    skip();
-    auto val7 = p_match_string_formatable(depth + 1);
-    actual->value = val7;
-    skip();
-    auto val8 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->postfix = val8;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_stringformatable_ident_729(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_string_formatable(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l2 = token_ident(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val4 = p_match_string_formatable(depth + 1);
-    actual->value = val4;
-    skip();
-    auto val5 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->postfix = val5;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_ident_stringformatable_730(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_ident(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (p_can_string_formatable(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val4 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->prefix = val4;
-    skip();
-    auto val5 = p_match_string_formatable(depth + 1);
-    actual->value = val5;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_stringformatable_731(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_string_formatable(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val2 = p_match_string_formatable(depth + 1);
-    actual->value = val2;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_ident_stringformatablefake_ident_732(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_ident(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token_string_formatable_fake(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l6 = token_ident(depth + 1);
-    if (l6.has_value())
-    {
-        for (auto i7 = l6.value(); i7 != 0; i7--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val8 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->prefix = val8;
-    skip();
-    auto val9 = create_token(token_string_formatable_fake(depth + 1).value(), tok::STRING_FORMATABLE_FAKE);
-    actual->value = val9;
-    skip();
-    auto val10 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->postfix = val10;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_stringformatablefake_ident_733(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_string_formatable_fake(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token_ident(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val6 = create_token(token_string_formatable_fake(depth + 1).value(), tok::STRING_FORMATABLE_FAKE);
-    actual->value = val6;
-    skip();
-    auto val7 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->postfix = val7;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_ident_stringformatablefake_734(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_ident(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token_string_formatable_fake(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val6 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->prefix = val6;
-    skip();
-    auto val7 = create_token(token_string_formatable_fake(depth + 1).value(), tok::STRING_FORMATABLE_FAKE);
-    actual->value = val7;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_stringformatablefake_735(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_string_formatable_fake(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val4 = create_token(token_string_formatable_fake(depth + 1).value(), tok::STRING_FORMATABLE_FAKE);
-    actual->value = val4;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_ident_string_ident_736(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_ident(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token_string(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l6 = token_ident(depth + 1);
-    if (l6.has_value())
-    {
-        for (auto i7 = l6.value(); i7 != 0; i7--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val8 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->prefix = val8;
-    skip();
-    auto val9 = create_token(token_string(depth + 1).value(), tok::STRING);
-    actual->value = val9;
-    skip();
-    auto val10 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->postfix = val10;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_string_ident_737(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_string(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token_ident(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val6 = create_token(token_string(depth + 1).value(), tok::STRING);
-    actual->value = val6;
-    skip();
-    auto val7 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->postfix = val7;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_ident_string_738(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_ident(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token_string(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val6 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->prefix = val6;
-    skip();
-    auto val7 = create_token(token_string(depth + 1).value(), tok::STRING);
-    actual->value = val7;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_string_739(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_string(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val4 = create_token(token_string(depth + 1).value(), tok::STRING);
-    actual->value = val4;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::alternatives740(bool is_can, std::shared_ptr<leaf::parsing::instance::string_literal>& actual, leaf::parsing::instance::string_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (m_ident_stringformatable_ident_728(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_ident_stringformatable_ident_728(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_stringformatable_ident_729(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_stringformatable_ident_729(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_ident_stringformatable_730(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_ident_stringformatable_730(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_stringformatable_731(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_stringformatable_731(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_ident_stringformatablefake_ident_732(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_ident_stringformatablefake_ident_732(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_stringformatablefake_ident_733(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_stringformatablefake_ident_733(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_ident_stringformatablefake_734(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_ident_stringformatablefake_734(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_stringformatablefake_735(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_stringformatablefake_735(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_ident_string_ident_736(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_ident_string_ident_736(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_string_ident_737(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_string_ident_737(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_ident_string_738(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_ident_string_738(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_string_739(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_string_739(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    resettable1.reset();
-    return false;
-}
-bool leaf::parsing::instance::p_can_string_literal(size_t depth)
-{
-    resettable resettable1(*this);
-    std::shared_ptr<leaf::parsing::instance::string_literal> fake;
-    string_literal_state state;
-    if (!alternatives740(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    return true;
-}
-std::shared_ptr<leaf::parsing::instance::string_literal> leaf::parsing::instance::p_match_string_literal(size_t depth)
-{
-    auto actual = std::make_shared<leaf::parsing::instance::string_literal>();
-    std::shared_ptr<leaf::parsing::instance::string_literal> fake;
-    string_literal_state state;
-    resettable resettable2(*this);
-    if (alternatives740(true, fake, state, depth + 1))
-    {
-        resettable2.reset();
-        alternatives740(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    return actual;
-}
-bool leaf::parsing::instance::m_ident_scalar_ident_741(bool is_can, std::shared_ptr<leaf::parsing::instance::scalar_literal>& actual, leaf::parsing::instance::scalar_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_ident(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token_scalar(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l6 = token_ident(depth + 1);
-    if (l6.has_value())
-    {
-        for (auto i7 = l6.value(); i7 != 0; i7--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val8 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->prefix = val8;
-    skip();
-    auto val9 = create_token(token_scalar(depth + 1).value(), tok::SCALAR);
-    actual->value = val9;
-    skip();
-    auto val10 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->postfix = val10;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_scalar_ident_742(bool is_can, std::shared_ptr<leaf::parsing::instance::scalar_literal>& actual, leaf::parsing::instance::scalar_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_scalar(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token_ident(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val6 = create_token(token_scalar(depth + 1).value(), tok::SCALAR);
-    actual->value = val6;
-    skip();
-    auto val7 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->postfix = val7;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_ident_scalar_743(bool is_can, std::shared_ptr<leaf::parsing::instance::scalar_literal>& actual, leaf::parsing::instance::scalar_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_ident(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token_scalar(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val6 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->prefix = val6;
-    skip();
-    auto val7 = create_token(token_scalar(depth + 1).value(), tok::SCALAR);
-    actual->value = val7;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_scalar_744(bool is_can, std::shared_ptr<leaf::parsing::instance::scalar_literal>& actual, leaf::parsing::instance::scalar_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_scalar(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val4 = create_token(token_scalar(depth + 1).value(), tok::SCALAR);
-    actual->value = val4;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::alternatives745(bool is_can, std::shared_ptr<leaf::parsing::instance::scalar_literal>& actual, leaf::parsing::instance::scalar_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (m_ident_scalar_ident_741(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_ident_scalar_ident_741(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_scalar_ident_742(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_scalar_ident_742(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_ident_scalar_743(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_ident_scalar_743(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_scalar_744(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_scalar_744(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    resettable1.reset();
-    return false;
-}
-bool leaf::parsing::instance::p_can_scalar_literal(size_t depth)
-{
-    resettable resettable1(*this);
-    std::shared_ptr<leaf::parsing::instance::scalar_literal> fake;
-    scalar_literal_state state;
-    if (!alternatives745(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    return true;
-}
-std::shared_ptr<leaf::parsing::instance::scalar_literal> leaf::parsing::instance::p_match_scalar_literal(size_t depth)
-{
-    auto actual = std::make_shared<leaf::parsing::instance::scalar_literal>();
-    std::shared_ptr<leaf::parsing::instance::scalar_literal> fake;
-    scalar_literal_state state;
-    resettable resettable2(*this);
-    if (alternatives745(true, fake, state, depth + 1))
-    {
-        resettable2.reset();
-        alternatives745(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    return actual;
-}
-bool leaf::parsing::instance::m_ident_integerhex_ident_746(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_hex_literal>& actual, leaf::parsing::instance::integer_hex_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_ident(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token_integer_hex(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l6 = token_ident(depth + 1);
-    if (l6.has_value())
-    {
-        for (auto i7 = l6.value(); i7 != 0; i7--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val8 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->prefix = val8;
-    skip();
-    auto val9 = create_token(token_integer_hex(depth + 1).value(), tok::INTEGER_HEX);
-    actual->value = val9;
-    skip();
-    auto val10 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->postfix = val10;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_integerhex_ident_747(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_hex_literal>& actual, leaf::parsing::instance::integer_hex_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_integer_hex(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token_ident(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val6 = create_token(token_integer_hex(depth + 1).value(), tok::INTEGER_HEX);
-    actual->value = val6;
-    skip();
-    auto val7 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->postfix = val7;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_ident_integerhex_748(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_hex_literal>& actual, leaf::parsing::instance::integer_hex_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_ident(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token_integer_hex(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val6 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->prefix = val6;
-    skip();
-    auto val7 = create_token(token_integer_hex(depth + 1).value(), tok::INTEGER_HEX);
-    actual->value = val7;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_integerhex_749(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_hex_literal>& actual, leaf::parsing::instance::integer_hex_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_integer_hex(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val4 = create_token(token_integer_hex(depth + 1).value(), tok::INTEGER_HEX);
-    actual->value = val4;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::alternatives750(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_hex_literal>& actual, leaf::parsing::instance::integer_hex_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (m_ident_integerhex_ident_746(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_ident_integerhex_ident_746(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_integerhex_ident_747(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_integerhex_ident_747(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_ident_integerhex_748(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_ident_integerhex_748(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_integerhex_749(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_integerhex_749(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    resettable1.reset();
-    return false;
-}
-bool leaf::parsing::instance::p_can_integer_hex_literal(size_t depth)
-{
-    resettable resettable1(*this);
-    std::shared_ptr<leaf::parsing::instance::integer_hex_literal> fake;
-    integer_hex_literal_state state;
-    if (!alternatives750(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    return true;
-}
-std::shared_ptr<leaf::parsing::instance::integer_hex_literal> leaf::parsing::instance::p_match_integer_hex_literal(size_t depth)
-{
-    auto actual = std::make_shared<leaf::parsing::instance::integer_hex_literal>();
-    std::shared_ptr<leaf::parsing::instance::integer_hex_literal> fake;
-    integer_hex_literal_state state;
-    resettable resettable2(*this);
-    if (alternatives750(true, fake, state, depth + 1))
-    {
-        resettable2.reset();
-        alternatives750(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    return actual;
-}
-bool leaf::parsing::instance::m_ident_integerbinary_ident_751(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_binary_literal>& actual, leaf::parsing::instance::integer_binary_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_ident(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token_integer_binary(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l6 = token_ident(depth + 1);
-    if (l6.has_value())
-    {
-        for (auto i7 = l6.value(); i7 != 0; i7--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val8 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->prefix = val8;
-    skip();
-    auto val9 = create_token(token_integer_binary(depth + 1).value(), tok::INTEGER_BINARY);
-    actual->value = val9;
-    skip();
-    auto val10 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->postfix = val10;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_integerbinary_ident_752(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_binary_literal>& actual, leaf::parsing::instance::integer_binary_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_integer_binary(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token_ident(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val6 = create_token(token_integer_binary(depth + 1).value(), tok::INTEGER_BINARY);
-    actual->value = val6;
-    skip();
-    auto val7 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->postfix = val7;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_ident_integerbinary_753(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_binary_literal>& actual, leaf::parsing::instance::integer_binary_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_ident(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token_integer_binary(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val6 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->prefix = val6;
-    skip();
-    auto val7 = create_token(token_integer_binary(depth + 1).value(), tok::INTEGER_BINARY);
-    actual->value = val7;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_integerbinary_754(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_binary_literal>& actual, leaf::parsing::instance::integer_binary_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_integer_binary(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val4 = create_token(token_integer_binary(depth + 1).value(), tok::INTEGER_BINARY);
-    actual->value = val4;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::alternatives755(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_binary_literal>& actual, leaf::parsing::instance::integer_binary_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (m_ident_integerbinary_ident_751(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_ident_integerbinary_ident_751(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_integerbinary_ident_752(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_integerbinary_ident_752(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_ident_integerbinary_753(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_ident_integerbinary_753(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_integerbinary_754(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_integerbinary_754(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    resettable1.reset();
-    return false;
-}
-bool leaf::parsing::instance::p_can_integer_binary_literal(size_t depth)
-{
-    resettable resettable1(*this);
-    std::shared_ptr<leaf::parsing::instance::integer_binary_literal> fake;
-    integer_binary_literal_state state;
-    if (!alternatives755(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    return true;
-}
-std::shared_ptr<leaf::parsing::instance::integer_binary_literal> leaf::parsing::instance::p_match_integer_binary_literal(size_t depth)
-{
-    auto actual = std::make_shared<leaf::parsing::instance::integer_binary_literal>();
-    std::shared_ptr<leaf::parsing::instance::integer_binary_literal> fake;
-    integer_binary_literal_state state;
-    resettable resettable2(*this);
-    if (alternatives755(true, fake, state, depth + 1))
-    {
-        resettable2.reset();
-        alternatives755(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    return actual;
-}
-bool leaf::parsing::instance::m_ident_integer_ident_756(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_literal>& actual, leaf::parsing::instance::integer_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_ident(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token_integer(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l6 = token_ident(depth + 1);
-    if (l6.has_value())
-    {
-        for (auto i7 = l6.value(); i7 != 0; i7--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val8 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->prefix = val8;
-    skip();
-    auto val9 = create_token(token_integer(depth + 1).value(), tok::INTEGER);
-    actual->value = val9;
-    skip();
-    auto val10 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->postfix = val10;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_integer_ident_757(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_literal>& actual, leaf::parsing::instance::integer_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_integer(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token_ident(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val6 = create_token(token_integer(depth + 1).value(), tok::INTEGER);
-    actual->value = val6;
-    skip();
-    auto val7 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->postfix = val7;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_ident_integer_758(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_literal>& actual, leaf::parsing::instance::integer_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_ident(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token_integer(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val6 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->prefix = val6;
-    skip();
-    auto val7 = create_token(token_integer(depth + 1).value(), tok::INTEGER);
-    actual->value = val7;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_integer_759(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_literal>& actual, leaf::parsing::instance::integer_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_integer(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val4 = create_token(token_integer(depth + 1).value(), tok::INTEGER);
-    actual->value = val4;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::alternatives760(bool is_can, std::shared_ptr<leaf::parsing::instance::integer_literal>& actual, leaf::parsing::instance::integer_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (m_ident_integer_ident_756(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_ident_integer_ident_756(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_integer_ident_757(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_integer_ident_757(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_ident_integer_758(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_ident_integer_758(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_integer_759(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_integer_759(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    resettable1.reset();
-    return false;
-}
-bool leaf::parsing::instance::p_can_integer_literal(size_t depth)
-{
-    resettable resettable1(*this);
-    std::shared_ptr<leaf::parsing::instance::integer_literal> fake;
-    integer_literal_state state;
-    if (!alternatives760(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    return true;
-}
-std::shared_ptr<leaf::parsing::instance::integer_literal> leaf::parsing::instance::p_match_integer_literal(size_t depth)
-{
-    auto actual = std::make_shared<leaf::parsing::instance::integer_literal>();
-    std::shared_ptr<leaf::parsing::instance::integer_literal> fake;
-    integer_literal_state state;
-    resettable resettable2(*this);
-    if (alternatives760(true, fake, state, depth + 1))
-    {
-        resettable2.reset();
-        alternatives760(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    return actual;
-}
-bool leaf::parsing::instance::m_ident_char_ident_761(bool is_can, std::shared_ptr<leaf::parsing::instance::char_literal>& actual, leaf::parsing::instance::char_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_ident(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token_char_(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l6 = token_ident(depth + 1);
-    if (l6.has_value())
-    {
-        for (auto i7 = l6.value(); i7 != 0; i7--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val8 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->prefix = val8;
-    skip();
-    auto val9 = create_token(token_char_(depth + 1).value(), tok::CHAR_);
-    actual->value = val9;
-    skip();
-    auto val10 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->postfix = val10;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_char_ident_762(bool is_can, std::shared_ptr<leaf::parsing::instance::char_literal>& actual, leaf::parsing::instance::char_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_char_(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token_ident(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val6 = create_token(token_char_(depth + 1).value(), tok::CHAR_);
-    actual->value = val6;
-    skip();
-    auto val7 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->postfix = val7;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_ident_char_763(bool is_can, std::shared_ptr<leaf::parsing::instance::char_literal>& actual, leaf::parsing::instance::char_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_ident(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token_char_(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val6 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->prefix = val6;
-    skip();
-    auto val7 = create_token(token_char_(depth + 1).value(), tok::CHAR_);
-    actual->value = val7;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_char_764(bool is_can, std::shared_ptr<leaf::parsing::instance::char_literal>& actual, leaf::parsing::instance::char_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_char_(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val4 = create_token(token_char_(depth + 1).value(), tok::CHAR_);
-    actual->value = val4;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::alternatives765(bool is_can, std::shared_ptr<leaf::parsing::instance::char_literal>& actual, leaf::parsing::instance::char_literal_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (m_ident_char_ident_761(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_ident_char_ident_761(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_char_ident_762(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_char_ident_762(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_ident_char_763(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_ident_char_763(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_char_764(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_char_764(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    resettable1.reset();
-    return false;
-}
-bool leaf::parsing::instance::p_can_char_literal(size_t depth)
-{
-    resettable resettable1(*this);
-    std::shared_ptr<leaf::parsing::instance::char_literal> fake;
-    char_literal_state state;
-    if (!alternatives765(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    return true;
-}
-std::shared_ptr<leaf::parsing::instance::char_literal> leaf::parsing::instance::p_match_char_literal(size_t depth)
-{
-    auto actual = std::make_shared<leaf::parsing::instance::char_literal>();
-    std::shared_ptr<leaf::parsing::instance::char_literal> fake;
-    char_literal_state state;
-    resettable resettable2(*this);
-    if (alternatives765(true, fake, state, depth + 1))
-    {
-        resettable2.reset();
-        alternatives765(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    return actual;
-}
-bool leaf::parsing::instance::m_typematch_ident_766(bool is_can, std::shared_ptr<leaf::parsing::instance::declaration>& actual, leaf::parsing::instance::declaration_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_type_match(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l2 = token_ident(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val4 = p_match_type_match(depth + 1);
-    actual->type = val4;
-    skip();
-    auto val5 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->name = val5;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::p_can_declaration(size_t depth)
-{
-    resettable resettable1(*this);
-    std::shared_ptr<leaf::parsing::instance::declaration> fake;
-    declaration_state state;
-    if (!m_typematch_ident_766(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    return true;
-}
-std::shared_ptr<leaf::parsing::instance::declaration> leaf::parsing::instance::p_match_declaration(size_t depth)
-{
-    auto actual = std::make_shared<leaf::parsing::instance::declaration>();
-    std::shared_ptr<leaf::parsing::instance::declaration> fake;
-    declaration_state state;
-    resettable resettable2(*this);
-    if (m_typematch_ident_766(true, fake, state, depth + 1))
-    {
-        resettable2.reset();
-        m_typematch_ident_766(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    return actual;
-}
-bool leaf::parsing::instance::m_return_semicolon_767(bool is_can, std::shared_ptr<leaf::parsing::instance::return_statement>& actual, leaf::parsing::instance::return_statement_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token__return(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token__semicolon(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto l7 = token__return(depth + 1).value();
-    for (;l7 != 0; l7--)
-    {
-        next();
-    }
-    skip();
-    auto l9 = token__semicolon(depth + 1).value();
-    for (;l9 != 0; l9--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_return_expression_semicolon_768(bool is_can, std::shared_ptr<leaf::parsing::instance::return_statement>& actual, leaf::parsing::instance::return_statement_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token__return(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (p_can_expression(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token__semicolon(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto l7 = token__return(depth + 1).value();
-    for (;l7 != 0; l7--)
-    {
-        next();
-    }
-    skip();
-    auto val8 = p_match_expression(depth + 1);
-    actual->exp = val8;
-    skip();
-    auto l10 = token__semicolon(depth + 1).value();
-    for (;l10 != 0; l10--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::alternatives769(bool is_can, std::shared_ptr<leaf::parsing::instance::return_statement>& actual, leaf::parsing::instance::return_statement_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (m_return_semicolon_767(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_return_semicolon_767(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_return_expression_semicolon_768(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_return_expression_semicolon_768(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    resettable1.reset();
-    return false;
-}
-bool leaf::parsing::instance::p_can_return_statement(size_t depth)
-{
-    resettable resettable1(*this);
-    std::shared_ptr<leaf::parsing::instance::return_statement> fake;
-    return_statement_state state;
-    if (!alternatives769(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    return true;
-}
-std::shared_ptr<leaf::parsing::instance::return_statement> leaf::parsing::instance::p_match_return_statement(size_t depth)
-{
-    auto actual = std::make_shared<leaf::parsing::instance::return_statement>();
-    std::shared_ptr<leaf::parsing::instance::return_statement> fake;
-    return_statement_state state;
-    resettable resettable2(*this);
-    if (alternatives769(true, fake, state, depth + 1))
-    {
-        resettable2.reset();
-        alternatives769(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    return actual;
-}
-bool leaf::parsing::instance::m_alias_770(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_alias(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val2 = p_match_alias(depth + 1);
-    actual->aliases = val2;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_constant_771(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_constant(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val2 = p_match_constant(depth + 1);
-    actual->constants = val2;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_returnstatement_772(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_return_statement(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val2 = p_match_return_statement(depth + 1);
-    actual->ret = val2;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_declaration_equal_expression_semicolon_773(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_declaration(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l2 = token__equal(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (p_can_expression(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token__semicolon(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val6 = p_match_declaration(depth + 1);
-    actual->fwrd_decl = val6;
-    skip();
-    auto l8 = token__equal(depth + 1).value();
-    for (;l8 != 0; l8--)
-    {
-        next();
-    }
-    skip();
-    auto val9 = p_match_expression(depth + 1);
-    actual->exp = val9;
-    skip();
-    auto l11 = token__semicolon(depth + 1).value();
-    for (;l11 != 0; l11--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_declaration_semicolon_774(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_declaration(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l2 = token__semicolon(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val4 = p_match_declaration(depth + 1);
-    actual->fwrd_decl = val4;
-    skip();
-    auto l6 = token__semicolon(depth + 1).value();
-    for (;l6 != 0; l6--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_expression_semicolon_775(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_expression(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l2 = token__semicolon(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val4 = p_match_expression(depth + 1);
-    actual->exp = val4;
-    skip();
-    auto l6 = token__semicolon(depth + 1).value();
-    for (;l6 != 0; l6--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_semicolon_776(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token__semicolon(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto l5 = token__semicolon(depth + 1).value();
-    for (;l5 != 0; l5--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_pragma_777(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_pragma(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val2 = p_match_pragma(depth + 1);
-    actual->pragma = val2;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::alternatives778(bool is_can, std::shared_ptr<leaf::parsing::instance::statement>& actual, leaf::parsing::instance::statement_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (m_alias_770(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_alias_770(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_constant_771(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_constant_771(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_returnstatement_772(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_returnstatement_772(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_declaration_equal_expression_semicolon_773(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_declaration_equal_expression_semicolon_773(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_declaration_semicolon_774(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_declaration_semicolon_774(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_expression_semicolon_775(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_expression_semicolon_775(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_semicolon_776(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_semicolon_776(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_pragma_777(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_pragma_777(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    resettable1.reset();
-    return false;
-}
-bool leaf::parsing::instance::p_can_statement(size_t depth)
-{
-    resettable resettable1(*this);
-    std::shared_ptr<leaf::parsing::instance::statement> fake;
-    statement_state state;
-    if (!alternatives778(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    return true;
-}
-std::shared_ptr<leaf::parsing::instance::statement> leaf::parsing::instance::p_match_statement(size_t depth)
-{
-    auto actual = std::make_shared<leaf::parsing::instance::statement>();
-    std::shared_ptr<leaf::parsing::instance::statement> fake;
-    statement_state state;
-    resettable resettable2(*this);
-    if (alternatives778(true, fake, state, depth + 1))
-    {
-        resettable2.reset();
-        alternatives778(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    return actual;
-}
-bool leaf::parsing::instance::m_auto841_779(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token__auto_841(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto l5 = token__auto_841(depth + 1).value();
-    for (;l5 != 0; l5--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_exclamationgreaterthen_780(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token__exclamation_greater_then(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto l5 = token__exclamation_greater_then(depth + 1).value();
-    for (;l5 != 0; l5--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_pragmadisable_781(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_pragma_disable(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val2 = p_match_pragma_disable(depth + 1);
-    actual->contents.push_back(val2);
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_pragmaenable_782(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_pragma_enable(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val2 = p_match_pragma_enable(depth + 1);
-    actual->contents.push_back(val2);
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_pragmasize_783(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_pragma_size(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val2 = p_match_pragma_size(depth + 1);
-    actual->contents.push_back(val2);
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_pragmaalign_784(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_pragma_align(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val2 = p_match_pragma_align(depth + 1);
-    actual->contents.push_back(val2);
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::alternatives785(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (m_pragmadisable_781(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_pragmadisable_781(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_pragmaenable_782(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_pragmaenable_782(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_pragmasize_783(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_pragmasize_783(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_pragmaalign_784(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_pragmaalign_784(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (!is_can)
-    {
-        report("Failed to match one of the following: { pragma-disable, pragma-enable, pragma-size, pragma-align }", depth);
-    }
-    resettable1.reset();
-    return false;
-}
-bool leaf::parsing::instance::while786_787(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    bool cond3 = m_exclamationgreaterthen_780(true, actual, state, depth + 1);
-    resettable1.reset();
-    if (is_can)
-    {
-        while (!cond3 && current() != '\0')
-        {
-            while (!alternatives785(true, actual, state, depth + 1) && current() != '\0')
-            {
-                next();
-            }
-            resettable resettable2(*this);
-            cond3 = m_exclamationgreaterthen_780(true, actual, state, depth + 1);
-            resettable2.reset();
-        }
-        return true;
-    }
-    else
-    {
-        while (!cond3 && current() != '\0')
-        {
-            if (!alternatives785(false, actual, state, depth + 1))
-            {
-                while (current() != '\0')
-                {
-                    resettable resettable4(*this);
-                    if (alternatives785(true, actual, state, depth + 1))
-                    {
-                        resettable4.reset();
-                        break;
-                    }
-                    next();
-                }
-            }
-            resettable resettable2(*this);
-            cond3 = m_exclamationgreaterthen_780(true, actual, state, depth + 1);
-            resettable2.reset();
-        }
-        return true;
-    }
-}
-bool leaf::parsing::instance::m_exclamationgreaterthen_788(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma>& actual, leaf::parsing::instance::pragma_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token__exclamation_greater_then(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto l5 = token__exclamation_greater_then(depth + 1).value();
-    for (;l5 != 0; l5--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::p_can_pragma(size_t depth)
-{
-    resettable resettable1(*this);
-    std::shared_ptr<leaf::parsing::instance::pragma> fake;
-    pragma_state state;
-    if (!m_auto841_779(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    else if (!while786_787(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    else if (!m_exclamationgreaterthen_788(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    return true;
-}
-std::shared_ptr<leaf::parsing::instance::pragma> leaf::parsing::instance::p_match_pragma(size_t depth)
-{
-    auto actual = std::make_shared<leaf::parsing::instance::pragma>();
-    std::shared_ptr<leaf::parsing::instance::pragma> fake;
-    pragma_state state;
-    resettable resettable2(*this);
-    if (m_auto841_779(true, fake, state, depth + 1))
-    {
-        resettable2.reset();
-        m_auto841_779(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    resettable resettable3(*this);
-    if (while786_787(true, fake, state, depth + 1))
-    {
-        resettable3.reset();
-        while786_787(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    resettable resettable4(*this);
-    if (m_exclamationgreaterthen_788(true, fake, state, depth + 1))
-    {
-        resettable4.reset();
-        m_exclamationgreaterthen_788(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    return actual;
-}
-bool leaf::parsing::instance::m_align_789(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_align>& actual, leaf::parsing::instance::pragma_align_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token__align(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto l5 = token__align(depth + 1).value();
-    for (;l5 != 0; l5--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_integerbinary_790(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_align>& actual, leaf::parsing::instance::pragma_align_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_integer_binary(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val4 = create_token(token_integer_binary(depth + 1).value(), tok::INTEGER_BINARY);
-    actual->bytes = val4;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_integerhex_791(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_align>& actual, leaf::parsing::instance::pragma_align_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_integer_hex(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val4 = create_token(token_integer_hex(depth + 1).value(), tok::INTEGER_HEX);
-    actual->bytes = val4;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_integer_792(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_align>& actual, leaf::parsing::instance::pragma_align_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_integer(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val4 = create_token(token_integer(depth + 1).value(), tok::INTEGER);
-    actual->bytes = val4;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::alternatives793(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_align>& actual, leaf::parsing::instance::pragma_align_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (m_integerbinary_790(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_integerbinary_790(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_integerhex_791(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_integerhex_791(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_integer_792(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_integer_792(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    resettable1.reset();
-    return false;
-}
-bool leaf::parsing::instance::p_can_pragma_align(size_t depth)
-{
-    resettable resettable1(*this);
-    std::shared_ptr<leaf::parsing::instance::pragma_align> fake;
-    pragma_align_state state;
-    if (!m_align_789(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    else if (!alternatives793(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    return true;
-}
-std::shared_ptr<leaf::parsing::instance::pragma_align> leaf::parsing::instance::p_match_pragma_align(size_t depth)
-{
-    auto actual = std::make_shared<leaf::parsing::instance::pragma_align>();
-    std::shared_ptr<leaf::parsing::instance::pragma_align> fake;
-    pragma_align_state state;
-    resettable resettable2(*this);
-    if (m_align_789(true, fake, state, depth + 1))
-    {
-        resettable2.reset();
-        m_align_789(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    resettable resettable3(*this);
-    if (alternatives793(true, fake, state, depth + 1))
-    {
-        resettable3.reset();
-        alternatives793(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    return actual;
-}
-bool leaf::parsing::instance::m_size_794(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_size>& actual, leaf::parsing::instance::pragma_size_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token__size(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto l5 = token__size(depth + 1).value();
-    for (;l5 != 0; l5--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_integerbinary_795(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_size>& actual, leaf::parsing::instance::pragma_size_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_integer_binary(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val4 = create_token(token_integer_binary(depth + 1).value(), tok::INTEGER_BINARY);
-    actual->bytes = val4;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_integerhex_796(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_size>& actual, leaf::parsing::instance::pragma_size_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_integer_hex(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val4 = create_token(token_integer_hex(depth + 1).value(), tok::INTEGER_HEX);
-    actual->bytes = val4;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_integer_797(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_size>& actual, leaf::parsing::instance::pragma_size_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_integer(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val4 = create_token(token_integer(depth + 1).value(), tok::INTEGER);
-    actual->bytes = val4;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::alternatives798(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_size>& actual, leaf::parsing::instance::pragma_size_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (m_integerbinary_795(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_integerbinary_795(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_integerhex_796(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_integerhex_796(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_integer_797(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_integer_797(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    resettable1.reset();
-    return false;
-}
-bool leaf::parsing::instance::p_can_pragma_size(size_t depth)
-{
-    resettable resettable1(*this);
-    std::shared_ptr<leaf::parsing::instance::pragma_size> fake;
-    pragma_size_state state;
-    if (!m_size_794(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    else if (!alternatives798(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    return true;
-}
-std::shared_ptr<leaf::parsing::instance::pragma_size> leaf::parsing::instance::p_match_pragma_size(size_t depth)
-{
-    auto actual = std::make_shared<leaf::parsing::instance::pragma_size>();
-    std::shared_ptr<leaf::parsing::instance::pragma_size> fake;
-    pragma_size_state state;
-    resettable resettable2(*this);
-    if (m_size_794(true, fake, state, depth + 1))
-    {
-        resettable2.reset();
-        m_size_794(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    resettable resettable3(*this);
-    if (alternatives798(true, fake, state, depth + 1))
-    {
-        resettable3.reset();
-        alternatives798(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    return actual;
-}
-bool leaf::parsing::instance::m_disable_799(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_disable>& actual, leaf::parsing::instance::pragma_disable_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token__disable(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto l5 = token__disable(depth + 1).value();
-    for (;l5 != 0; l5--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_ident_800(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_disable>& actual, leaf::parsing::instance::pragma_disable_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_ident(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val4 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->code = val4;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::p_can_pragma_disable(size_t depth)
-{
-    resettable resettable1(*this);
-    std::shared_ptr<leaf::parsing::instance::pragma_disable> fake;
-    pragma_disable_state state;
-    if (!m_disable_799(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    else if (!m_ident_800(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    return true;
-}
-std::shared_ptr<leaf::parsing::instance::pragma_disable> leaf::parsing::instance::p_match_pragma_disable(size_t depth)
-{
-    auto actual = std::make_shared<leaf::parsing::instance::pragma_disable>();
-    std::shared_ptr<leaf::parsing::instance::pragma_disable> fake;
-    pragma_disable_state state;
-    resettable resettable2(*this);
-    if (m_disable_799(true, fake, state, depth + 1))
-    {
-        resettable2.reset();
-        m_disable_799(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    resettable resettable3(*this);
-    if (m_ident_800(true, fake, state, depth + 1))
-    {
-        resettable3.reset();
-        m_ident_800(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    return actual;
-}
-bool leaf::parsing::instance::m_enable_801(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_enable>& actual, leaf::parsing::instance::pragma_enable_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token__enable(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto l5 = token__enable(depth + 1).value();
-    for (;l5 != 0; l5--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_ident_802(bool is_can, std::shared_ptr<leaf::parsing::instance::pragma_enable>& actual, leaf::parsing::instance::pragma_enable_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_ident(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val4 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->code = val4;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::p_can_pragma_enable(size_t depth)
-{
-    resettable resettable1(*this);
-    std::shared_ptr<leaf::parsing::instance::pragma_enable> fake;
-    pragma_enable_state state;
-    if (!m_enable_801(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    else if (!m_ident_802(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    return true;
-}
-std::shared_ptr<leaf::parsing::instance::pragma_enable> leaf::parsing::instance::p_match_pragma_enable(size_t depth)
-{
-    auto actual = std::make_shared<leaf::parsing::instance::pragma_enable>();
-    std::shared_ptr<leaf::parsing::instance::pragma_enable> fake;
-    pragma_enable_state state;
-    resettable resettable2(*this);
-    if (m_enable_801(true, fake, state, depth + 1))
-    {
-        resettable2.reset();
-        m_enable_801(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    resettable resettable3(*this);
-    if (m_ident_802(true, fake, state, depth + 1))
-    {
-        resettable3.reset();
-        m_ident_802(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    return actual;
-}
-bool leaf::parsing::instance::m_ident_803(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage_item>& actual, leaf::parsing::instance::template_usage_item_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_ident(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val4 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->key = val4;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::p_can_template_usage_item(size_t depth)
-{
-    resettable resettable1(*this);
-    std::shared_ptr<leaf::parsing::instance::template_usage_item> fake;
-    template_usage_item_state state;
-    if (!m_ident_803(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    return true;
-}
-std::shared_ptr<leaf::parsing::instance::template_usage_item> leaf::parsing::instance::p_match_template_usage_item(size_t depth)
-{
-    auto actual = std::make_shared<leaf::parsing::instance::template_usage_item>();
-    std::shared_ptr<leaf::parsing::instance::template_usage_item> fake;
-    template_usage_item_state state;
-    resettable resettable2(*this);
-    if (m_ident_803(true, fake, state, depth + 1))
-    {
-        resettable2.reset();
-        m_ident_803(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    return actual;
-}
-bool leaf::parsing::instance::m_lessthen_804(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage>& actual, leaf::parsing::instance::template_usage_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token__less_then(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto l5 = token__less_then(depth + 1).value();
-    for (;l5 != 0; l5--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_templateusageitem_805(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage>& actual, leaf::parsing::instance::template_usage_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_template_usage_item(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val2 = p_match_template_usage_item(depth + 1);
-    actual->items.push_back(val2);
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_comma_806(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage>& actual, leaf::parsing::instance::template_usage_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token__comma(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto l5 = token__comma(depth + 1).value();
-    for (;l5 != 0; l5--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_comma_templateusageitem_807(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage>& actual, leaf::parsing::instance::template_usage_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token__comma(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (p_can_template_usage_item(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto l5 = token__comma(depth + 1).value();
-    for (;l5 != 0; l5--)
-    {
-        next();
-    }
-    skip();
-    auto val6 = p_match_template_usage_item(depth + 1);
-    actual->items.push_back(val6);
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::alternatives808(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage>& actual, leaf::parsing::instance::template_usage_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (m_comma_templateusageitem_807(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_comma_templateusageitem_807(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (!is_can)
-    {
-        report("Failed to match one of the following: { ,, template-usage-item }", depth);
-    }
-    resettable1.reset();
-    return false;
-}
-bool leaf::parsing::instance::while809_810(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage>& actual, leaf::parsing::instance::template_usage_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    bool cond3 = m_comma_806(true, actual, state, depth + 1);
-    resettable1.reset();
-    if (is_can)
-    {
-        while (cond3 && current() != '\0')
-        {
-            while (!alternatives808(true, actual, state, depth + 1) && current() != '\0')
-            {
-                next();
-            }
-            resettable resettable2(*this);
-            cond3 = m_comma_806(true, actual, state, depth + 1);
-            resettable2.reset();
-        }
-        return true;
-    }
-    else
-    {
-        while (cond3 && current() != '\0')
-        {
-            if (!alternatives808(false, actual, state, depth + 1))
-            {
-                while (current() != '\0')
-                {
-                    resettable resettable4(*this);
-                    if (alternatives808(true, actual, state, depth + 1))
-                    {
-                        resettable4.reset();
-                        break;
-                    }
-                    next();
-                }
-            }
-            resettable resettable2(*this);
-            cond3 = m_comma_806(true, actual, state, depth + 1);
-            resettable2.reset();
-        }
-        return true;
-    }
-}
-bool leaf::parsing::instance::m_greaterthen_811(bool is_can, std::shared_ptr<leaf::parsing::instance::template_usage>& actual, leaf::parsing::instance::template_usage_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token__greater_then(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto l5 = token__greater_then(depth + 1).value();
-    for (;l5 != 0; l5--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::p_can_template_usage(size_t depth)
-{
-    resettable resettable1(*this);
-    std::shared_ptr<leaf::parsing::instance::template_usage> fake;
-    template_usage_state state;
-    if (!m_lessthen_804(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    else if (!m_templateusageitem_805(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    else if (!while809_810(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    else if (!m_greaterthen_811(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    return true;
-}
-std::shared_ptr<leaf::parsing::instance::template_usage> leaf::parsing::instance::p_match_template_usage(size_t depth)
-{
-    auto actual = std::make_shared<leaf::parsing::instance::template_usage>();
-    std::shared_ptr<leaf::parsing::instance::template_usage> fake;
-    template_usage_state state;
-    resettable resettable2(*this);
-    if (m_lessthen_804(true, fake, state, depth + 1))
-    {
-        resettable2.reset();
-        m_lessthen_804(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    resettable resettable3(*this);
-    if (m_templateusageitem_805(true, fake, state, depth + 1))
-    {
-        resettable3.reset();
-        m_templateusageitem_805(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    resettable resettable4(*this);
-    if (while809_810(true, fake, state, depth + 1))
-    {
-        resettable4.reset();
-        while809_810(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    resettable resettable5(*this);
-    if (m_greaterthen_811(true, fake, state, depth + 1))
-    {
-        resettable5.reset();
-        m_greaterthen_811(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    return actual;
-}
-bool leaf::parsing::instance::m_ident_812(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition_item_direct_type>& actual, leaf::parsing::instance::template_definition_item_direct_type_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token_ident(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val4 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->key = val4;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_equal_813(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition_item_direct_type>& actual, leaf::parsing::instance::template_definition_item_direct_type_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token__equal(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto l5 = token__equal(depth + 1).value();
-    for (;l5 != 0; l5--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_equal_expvalue_814(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition_item_direct_type>& actual, leaf::parsing::instance::template_definition_item_direct_type_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token__equal(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (p_can_exp_value(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto l5 = token__equal(depth + 1).value();
-    for (;l5 != 0; l5--)
-    {
-        next();
-    }
-    skip();
-    auto val6 = p_match_exp_value(depth + 1);
-    actual->value = val6;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::if815_816(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition_item_direct_type>& actual, leaf::parsing::instance::template_definition_item_direct_type_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    bool cond2 = m_equal_813(true, actual, state, depth + 1);
-    resettable1.reset();
-    if (is_can)
-    {
-        if (cond2)
-        {
-            if (m_equal_expvalue_814(true, actual, state, depth + 1))
-            {
-                skip();
-            }
-            else if (is_can)
-            {
-                return false;
-            }
-            else
-            {
-                report("Failed to match { $ref: = ({ Token: = (=)}), $ref: exp-value (XCG.Parsing.Production) }", depth);
-                return false;
-            }
-            return true;
-        }
-        return true;
-    }
-    else
-    {
-        if (cond2)
-        {
-            if (m_equal_expvalue_814(false, actual, state, depth + 1))
-            {
-                skip();
-            }
-            else if (is_can)
-            {
-                return false;
-            }
-            else
-            {
-                report("Failed to match { $ref: = ({ Token: = (=)}), $ref: exp-value (XCG.Parsing.Production) }", depth);
-                return false;
-            }
-            return true;
-        }
-        return true;
-    }
-}
-bool leaf::parsing::instance::p_can_template_definition_item_direct_type(size_t depth)
-{
-    resettable resettable1(*this);
-    std::shared_ptr<leaf::parsing::instance::template_definition_item_direct_type> fake;
-    template_definition_item_direct_type_state state;
-    if (!m_ident_812(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    else if (!if815_816(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    return true;
-}
-std::shared_ptr<leaf::parsing::instance::template_definition_item_direct_type> leaf::parsing::instance::p_match_template_definition_item_direct_type(size_t depth)
-{
-    auto actual = std::make_shared<leaf::parsing::instance::template_definition_item_direct_type>();
-    std::shared_ptr<leaf::parsing::instance::template_definition_item_direct_type> fake;
-    template_definition_item_direct_type_state state;
-    resettable resettable2(*this);
-    if (m_ident_812(true, fake, state, depth + 1))
-    {
-        resettable2.reset();
-        m_ident_812(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    resettable resettable3(*this);
-    if (if815_816(true, fake, state, depth + 1))
-    {
-        resettable3.reset();
-        if815_816(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    return actual;
-}
-bool leaf::parsing::instance::m_identifier_ident_817(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition_item_identifier>& actual, leaf::parsing::instance::template_definition_item_identifier_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token__identifier(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    auto l4 = token_ident(depth + 1);
-    if (l4.has_value())
-    {
-        for (auto i5 = l4.value(); i5 != 0; i5--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto l7 = token__identifier(depth + 1).value();
-    for (;l7 != 0; l7--)
-    {
-        next();
-    }
-    skip();
-    auto val8 = create_token(token_ident(depth + 1).value(), tok::IDENT);
-    actual->key = val8;
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::p_can_template_definition_item_identifier(size_t depth)
-{
-    resettable resettable1(*this);
-    std::shared_ptr<leaf::parsing::instance::template_definition_item_identifier> fake;
-    template_definition_item_identifier_state state;
-    if (!m_identifier_ident_817(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    return true;
-}
-std::shared_ptr<leaf::parsing::instance::template_definition_item_identifier> leaf::parsing::instance::p_match_template_definition_item_identifier(size_t depth)
-{
-    auto actual = std::make_shared<leaf::parsing::instance::template_definition_item_identifier>();
-    std::shared_ptr<leaf::parsing::instance::template_definition_item_identifier> fake;
-    template_definition_item_identifier_state state;
-    resettable resettable2(*this);
-    if (m_identifier_ident_817(true, fake, state, depth + 1))
-    {
-        resettable2.reset();
-        m_identifier_ident_817(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    return actual;
-}
-bool leaf::parsing::instance::m_lessthen_818(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token__less_then(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto l5 = token__less_then(depth + 1).value();
-    for (;l5 != 0; l5--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_templatedefinitionitemidentifier_819(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_template_definition_item_identifier(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val2 = p_match_template_definition_item_identifier(depth + 1);
-    actual->items.push_back(val2);
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_templatedefinitionitemdirecttype_820(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_template_definition_item_direct_type(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val2 = p_match_template_definition_item_direct_type(depth + 1);
-    actual->items.push_back(val2);
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::alternatives821(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (m_templatedefinitionitemidentifier_819(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_templatedefinitionitemidentifier_819(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_templatedefinitionitemdirecttype_820(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_templatedefinitionitemdirecttype_820(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    resettable1.reset();
-    return false;
-}
-bool leaf::parsing::instance::m_comma_822(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token__comma(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto l5 = token__comma(depth + 1).value();
-    for (;l5 != 0; l5--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_templatedefinitionitemidentifier_823(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_template_definition_item_identifier(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val2 = p_match_template_definition_item_identifier(depth + 1);
-    actual->items.push_back(val2);
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_templatedefinitionitemdirecttype_824(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (p_can_template_definition_item_direct_type(depth + 1))
-    {
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto val2 = p_match_template_definition_item_direct_type(depth + 1);
-    actual->items.push_back(val2);
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::m_comma_825(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token__comma(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto l5 = token__comma(depth + 1).value();
-    for (;l5 != 0; l5--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::alternatives826(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    if (m_templatedefinitionitemidentifier_823(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_templatedefinitionitemidentifier_823(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_templatedefinitionitemdirecttype_824(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_templatedefinitionitemdirecttype_824(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (m_comma_825(true, actual, state, depth + 1))
-    {
-        if (is_can)
-        {
-            return true;
-        }
-        else
-        {
-            resettable1.reset();
-            m_comma_825(false, actual, state, depth + 1);
-            return true;
-        }
-    }
-    else if (!is_can)
-    {
-        report("Failed to match one of the following: { template-definition-item-identifier, template-definition-item-direct-type, , }", depth);
-    }
-    resettable1.reset();
-    return false;
-}
-bool leaf::parsing::instance::while827_828(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    bool cond3 = m_comma_822(true, actual, state, depth + 1);
-    resettable1.reset();
-    if (is_can)
-    {
-        while (cond3 && current() != '\0')
-        {
-            while (!alternatives826(true, actual, state, depth + 1) && current() != '\0')
-            {
-                next();
-            }
-            resettable resettable2(*this);
-            cond3 = m_comma_822(true, actual, state, depth + 1);
-            resettable2.reset();
-        }
-        return true;
-    }
-    else
-    {
-        while (cond3 && current() != '\0')
-        {
-            if (!alternatives826(false, actual, state, depth + 1))
-            {
-                while (current() != '\0')
-                {
-                    resettable resettable4(*this);
-                    if (alternatives826(true, actual, state, depth + 1))
-                    {
-                        resettable4.reset();
-                        break;
-                    }
-                    next();
-                }
-            }
-            resettable resettable2(*this);
-            cond3 = m_comma_822(true, actual, state, depth + 1);
-            resettable2.reset();
-        }
-        return true;
-    }
-}
-bool leaf::parsing::instance::m_greaterthen_829(bool is_can, std::shared_ptr<leaf::parsing::instance::template_definition>& actual, leaf::parsing::instance::template_definition_state& state, size_t depth)
-{
-    resettable resettable1(*this);
-    auto l2 = token__greater_then(depth + 1);
-    if (l2.has_value())
-    {
-        for (auto i3 = l2.value(); i3 != 0; i3--)
-        {
-            next();
-        }
-        skip();
-    }
-    else if (is_can)
-    {
-        resettable1.reset();
-        return false;
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-        return false;
-    }
-    if (is_can)
-    {
-        return true;
-    }
-    resettable1.reset();
-    auto l5 = token__greater_then(depth + 1).value();
-    for (;l5 != 0; l5--)
-    {
-        next();
-    }
-    skip();
-    return true;
-}
-bool leaf::parsing::instance::p_can_template_definition(size_t depth)
-{
-    resettable resettable1(*this);
-    std::shared_ptr<leaf::parsing::instance::template_definition> fake;
-    template_definition_state state;
-    if (!m_lessthen_818(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    else if (!alternatives821(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    else if (!while827_828(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    else if (!m_greaterthen_829(true, fake, state, depth + 1))
-    {
-        resettable1.reset();
-        return false;
-    }
-    return true;
-}
-std::shared_ptr<leaf::parsing::instance::template_definition> leaf::parsing::instance::p_match_template_definition(size_t depth)
-{
-    auto actual = std::make_shared<leaf::parsing::instance::template_definition>();
-    std::shared_ptr<leaf::parsing::instance::template_definition> fake;
-    template_definition_state state;
-    resettable resettable2(*this);
-    if (m_lessthen_818(true, fake, state, depth + 1))
-    {
-        resettable2.reset();
-        m_lessthen_818(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    resettable resettable3(*this);
-    if (alternatives821(true, fake, state, depth + 1))
-    {
-        resettable3.reset();
-        alternatives821(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    resettable resettable4(*this);
-    if (while827_828(true, fake, state, depth + 1))
-    {
-        resettable4.reset();
-        while827_828(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    resettable resettable5(*this);
-    if (m_greaterthen_829(true, fake, state, depth + 1))
-    {
-        resettable5.reset();
-        m_greaterthen_829(false, actual, state, depth + 1);
-    }
-    else
-    {
-        report("Something moved wrong (todo: improve error messages)", depth);
-    }
-    return actual;
-}
-bool leaf::parsing::instance::m_using_830(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth)
+bool leaf::parsing::instance::m_using_834(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth)
 {
     resettable resettable1(*this);
     if (p_can_using_(depth + 1))
@@ -36662,7 +36813,7 @@ bool leaf::parsing::instance::m_using_830(bool is_can, std::shared_ptr<leaf::par
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_pragma_831(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth)
+bool leaf::parsing::instance::m_pragma_835(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth)
 {
     resettable resettable1(*this);
     if (p_can_pragma(depth + 1))
@@ -36689,7 +36840,7 @@ bool leaf::parsing::instance::m_pragma_831(bool is_can, std::shared_ptr<leaf::pa
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_alias_832(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth)
+bool leaf::parsing::instance::m_alias_836(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth)
 {
     resettable resettable1(*this);
     if (p_can_alias(depth + 1))
@@ -36716,7 +36867,7 @@ bool leaf::parsing::instance::m_alias_832(bool is_can, std::shared_ptr<leaf::par
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_class_833(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth)
+bool leaf::parsing::instance::m_class_837(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth)
 {
     resettable resettable1(*this);
     if (p_can_class_(depth + 1))
@@ -36743,7 +36894,7 @@ bool leaf::parsing::instance::m_class_833(bool is_can, std::shared_ptr<leaf::par
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_contract_834(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth)
+bool leaf::parsing::instance::m_contract_838(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth)
 {
     resettable resettable1(*this);
     if (p_can_contract(depth + 1))
@@ -36770,7 +36921,7 @@ bool leaf::parsing::instance::m_contract_834(bool is_can, std::shared_ptr<leaf::
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_conversion_835(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth)
+bool leaf::parsing::instance::m_conversion_839(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth)
 {
     resettable resettable1(*this);
     if (p_can_conversion(depth + 1))
@@ -36797,7 +36948,7 @@ bool leaf::parsing::instance::m_conversion_835(bool is_can, std::shared_ptr<leaf
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_field_836(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth)
+bool leaf::parsing::instance::m_field_840(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth)
 {
     resettable resettable1(*this);
     if (p_can_field(depth + 1))
@@ -36824,7 +36975,7 @@ bool leaf::parsing::instance::m_field_836(bool is_can, std::shared_ptr<leaf::par
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_method_837(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth)
+bool leaf::parsing::instance::m_method_841(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth)
 {
     resettable resettable1(*this);
     if (p_can_method(depth + 1))
@@ -36851,7 +37002,7 @@ bool leaf::parsing::instance::m_method_837(bool is_can, std::shared_ptr<leaf::pa
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_namespace_838(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth)
+bool leaf::parsing::instance::m_namespace_842(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth)
 {
     resettable resettable1(*this);
     if (p_can_namespace_(depth + 1))
@@ -36878,7 +37029,7 @@ bool leaf::parsing::instance::m_namespace_838(bool is_can, std::shared_ptr<leaf:
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_property_839(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth)
+bool leaf::parsing::instance::m_property_843(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth)
 {
     resettable resettable1(*this);
     if (p_can_property(depth + 1))
@@ -36905,10 +37056,10 @@ bool leaf::parsing::instance::m_property_839(bool is_can, std::shared_ptr<leaf::
     skip();
     return true;
 }
-bool leaf::parsing::instance::alternatives840(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth)
+bool leaf::parsing::instance::alternatives844(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth)
 {
     resettable resettable1(*this);
-    if (m_using_830(true, actual, state, depth + 1))
+    if (m_using_834(true, actual, state, depth + 1))
     {
         if (is_can)
         {
@@ -36917,11 +37068,11 @@ bool leaf::parsing::instance::alternatives840(bool is_can, std::shared_ptr<leaf:
         else
         {
             resettable1.reset();
-            m_using_830(false, actual, state, depth + 1);
+            m_using_834(false, actual, state, depth + 1);
             return true;
         }
     }
-    else if (m_pragma_831(true, actual, state, depth + 1))
+    else if (m_pragma_835(true, actual, state, depth + 1))
     {
         if (is_can)
         {
@@ -36930,11 +37081,11 @@ bool leaf::parsing::instance::alternatives840(bool is_can, std::shared_ptr<leaf:
         else
         {
             resettable1.reset();
-            m_pragma_831(false, actual, state, depth + 1);
+            m_pragma_835(false, actual, state, depth + 1);
             return true;
         }
     }
-    else if (m_alias_832(true, actual, state, depth + 1))
+    else if (m_alias_836(true, actual, state, depth + 1))
     {
         if (is_can)
         {
@@ -36943,11 +37094,11 @@ bool leaf::parsing::instance::alternatives840(bool is_can, std::shared_ptr<leaf:
         else
         {
             resettable1.reset();
-            m_alias_832(false, actual, state, depth + 1);
+            m_alias_836(false, actual, state, depth + 1);
             return true;
         }
     }
-    else if (m_class_833(true, actual, state, depth + 1))
+    else if (m_class_837(true, actual, state, depth + 1))
     {
         if (is_can)
         {
@@ -36956,11 +37107,11 @@ bool leaf::parsing::instance::alternatives840(bool is_can, std::shared_ptr<leaf:
         else
         {
             resettable1.reset();
-            m_class_833(false, actual, state, depth + 1);
+            m_class_837(false, actual, state, depth + 1);
             return true;
         }
     }
-    else if (m_contract_834(true, actual, state, depth + 1))
+    else if (m_contract_838(true, actual, state, depth + 1))
     {
         if (is_can)
         {
@@ -36969,11 +37120,11 @@ bool leaf::parsing::instance::alternatives840(bool is_can, std::shared_ptr<leaf:
         else
         {
             resettable1.reset();
-            m_contract_834(false, actual, state, depth + 1);
+            m_contract_838(false, actual, state, depth + 1);
             return true;
         }
     }
-    else if (m_conversion_835(true, actual, state, depth + 1))
+    else if (m_conversion_839(true, actual, state, depth + 1))
     {
         if (is_can)
         {
@@ -36982,11 +37133,11 @@ bool leaf::parsing::instance::alternatives840(bool is_can, std::shared_ptr<leaf:
         else
         {
             resettable1.reset();
-            m_conversion_835(false, actual, state, depth + 1);
+            m_conversion_839(false, actual, state, depth + 1);
             return true;
         }
     }
-    else if (m_field_836(true, actual, state, depth + 1))
+    else if (m_field_840(true, actual, state, depth + 1))
     {
         if (is_can)
         {
@@ -36995,11 +37146,11 @@ bool leaf::parsing::instance::alternatives840(bool is_can, std::shared_ptr<leaf:
         else
         {
             resettable1.reset();
-            m_field_836(false, actual, state, depth + 1);
+            m_field_840(false, actual, state, depth + 1);
             return true;
         }
     }
-    else if (m_method_837(true, actual, state, depth + 1))
+    else if (m_method_841(true, actual, state, depth + 1))
     {
         if (is_can)
         {
@@ -37008,11 +37159,11 @@ bool leaf::parsing::instance::alternatives840(bool is_can, std::shared_ptr<leaf:
         else
         {
             resettable1.reset();
-            m_method_837(false, actual, state, depth + 1);
+            m_method_841(false, actual, state, depth + 1);
             return true;
         }
     }
-    else if (m_namespace_838(true, actual, state, depth + 1))
+    else if (m_namespace_842(true, actual, state, depth + 1))
     {
         if (is_can)
         {
@@ -37021,11 +37172,11 @@ bool leaf::parsing::instance::alternatives840(bool is_can, std::shared_ptr<leaf:
         else
         {
             resettable1.reset();
-            m_namespace_838(false, actual, state, depth + 1);
+            m_namespace_842(false, actual, state, depth + 1);
             return true;
         }
     }
-    else if (m_property_839(true, actual, state, depth + 1))
+    else if (m_property_843(true, actual, state, depth + 1))
     {
         if (is_can)
         {
@@ -37034,7 +37185,7 @@ bool leaf::parsing::instance::alternatives840(bool is_can, std::shared_ptr<leaf:
         else
         {
             resettable1.reset();
-            m_property_839(false, actual, state, depth + 1);
+            m_property_843(false, actual, state, depth + 1);
             return true;
         }
     }
@@ -37045,7 +37196,7 @@ bool leaf::parsing::instance::alternatives840(bool is_can, std::shared_ptr<leaf:
     resettable1.reset();
     return false;
 }
-bool leaf::parsing::instance::while841_842(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth)
+bool leaf::parsing::instance::while845_846(bool is_can, std::shared_ptr<leaf::parsing::instance::main>& actual, leaf::parsing::instance::main_state& state, size_t depth)
 {
     resettable resettable1(*this);
     bool cond3 = current() == '\0';
@@ -37054,7 +37205,7 @@ bool leaf::parsing::instance::while841_842(bool is_can, std::shared_ptr<leaf::pa
     {
         while (!cond3 && current() != '\0')
         {
-            while (!alternatives840(true, actual, state, depth + 1) && current() != '\0')
+            while (!alternatives844(true, actual, state, depth + 1) && current() != '\0')
             {
                 next();
             }
@@ -37068,12 +37219,12 @@ bool leaf::parsing::instance::while841_842(bool is_can, std::shared_ptr<leaf::pa
     {
         while (!cond3 && current() != '\0')
         {
-            if (!alternatives840(false, actual, state, depth + 1))
+            if (!alternatives844(false, actual, state, depth + 1))
             {
                 while (current() != '\0')
                 {
                     resettable resettable4(*this);
-                    if (alternatives840(true, actual, state, depth + 1))
+                    if (alternatives844(true, actual, state, depth + 1))
                     {
                         resettable4.reset();
                         break;
@@ -37093,7 +37244,7 @@ bool leaf::parsing::instance::p_can_main(size_t depth)
     resettable resettable1(*this);
     std::shared_ptr<leaf::parsing::instance::main> fake;
     main_state state;
-    if (!while841_842(true, fake, state, depth + 1))
+    if (!while845_846(true, fake, state, depth + 1))
     {
         resettable1.reset();
         return false;
@@ -37106,10 +37257,10 @@ std::shared_ptr<leaf::parsing::instance::main> leaf::parsing::instance::p_match_
     std::shared_ptr<leaf::parsing::instance::main> fake;
     main_state state;
     resettable resettable2(*this);
-    if (while841_842(true, fake, state, depth + 1))
+    if (while845_846(true, fake, state, depth + 1))
     {
         resettable2.reset();
-        while841_842(false, actual, state, depth + 1);
+        while845_846(false, actual, state, depth + 1);
     }
     else
     {
@@ -37117,7 +37268,7 @@ std::shared_ptr<leaf::parsing::instance::main> leaf::parsing::instance::p_match_
     }
     return actual;
 }
-bool leaf::parsing::instance::m_expchain_dot_call_843(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_chain>& actual, leaf::parsing::instance::exp_chain_state& state, size_t depth)
+bool leaf::parsing::instance::m_expchain_dot_call_847(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_chain>& actual, leaf::parsing::instance::exp_chain_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__dot(depth + 1);
@@ -37169,7 +37320,7 @@ bool leaf::parsing::instance::m_expchain_dot_call_843(bool is_can, std::shared_p
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_expchain_dot_ident_844(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_chain>& actual, leaf::parsing::instance::exp_chain_state& state, size_t depth)
+bool leaf::parsing::instance::m_expchain_dot_ident_848(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_chain>& actual, leaf::parsing::instance::exp_chain_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__dot(depth + 1);
@@ -37226,7 +37377,7 @@ bool leaf::parsing::instance::m_expchain_dot_ident_844(bool is_can, std::shared_
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_expchain_minusgreaterthen_call_845(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_chain>& actual, leaf::parsing::instance::exp_chain_state& state, size_t depth)
+bool leaf::parsing::instance::m_expchain_minusgreaterthen_call_849(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_chain>& actual, leaf::parsing::instance::exp_chain_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__minus_greater_then(depth + 1);
@@ -37278,7 +37429,7 @@ bool leaf::parsing::instance::m_expchain_minusgreaterthen_call_845(bool is_can, 
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_expchain_minusgreaterthen_ident_846(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_chain>& actual, leaf::parsing::instance::exp_chain_state& state, size_t depth)
+bool leaf::parsing::instance::m_expchain_minusgreaterthen_ident_850(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_chain>& actual, leaf::parsing::instance::exp_chain_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__minus_greater_then(depth + 1);
@@ -37335,7 +37486,7 @@ bool leaf::parsing::instance::m_expchain_minusgreaterthen_ident_846(bool is_can,
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_expchain_squarebracketopen_expression_squarebracketclose_847(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_chain>& actual, leaf::parsing::instance::exp_chain_state& state, size_t depth)
+bool leaf::parsing::instance::m_expchain_squarebracketopen_expression_squarebracketclose_851(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_chain>& actual, leaf::parsing::instance::exp_chain_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__square_bracket_open(depth + 1);
@@ -37412,7 +37563,7 @@ bool leaf::parsing::instance::m_expchain_squarebracketopen_expression_squarebrac
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_expchain_templateusage_848(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_chain>& actual, leaf::parsing::instance::exp_chain_state& state, size_t depth)
+bool leaf::parsing::instance::m_expchain_templateusage_852(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_chain>& actual, leaf::parsing::instance::exp_chain_state& state, size_t depth)
 {
     resettable resettable1(*this);
     if (p_can_template_usage(depth + 1))
@@ -37439,7 +37590,7 @@ bool leaf::parsing::instance::m_expchain_templateusage_848(bool is_can, std::sha
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_expchainstart_849(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_chain>& actual, leaf::parsing::instance::exp_chain_state& state, size_t depth)
+bool leaf::parsing::instance::m_expchainstart_853(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_chain>& actual, leaf::parsing::instance::exp_chain_state& state, size_t depth)
 {
     resettable resettable1(*this);
     if (p_can_exp_chain_start(depth + 1))
@@ -37471,7 +37622,7 @@ bool leaf::parsing::instance::lr_can_exp_chain(size_t depth)
     resettable resettable1(*this);
     std::shared_ptr<leaf::parsing::instance::exp_chain> fake;
     exp_chain_state state;
-    if (!m_expchainstart_849(true, fake, state, depth + 1))
+    if (!m_expchainstart_853(true, fake, state, depth + 1))
     {
         return false;
     }
@@ -37479,22 +37630,22 @@ bool leaf::parsing::instance::lr_can_exp_chain(size_t depth)
     {
         skip();
         resettable resettable1(*this);
-        if (m_expchain_dot_call_843(true, fake, state, depth + 1))
+        if (m_expchain_dot_call_847(true, fake, state, depth + 1))
         {
         }
-        else if (m_expchain_dot_ident_844(true, fake, state, depth + 1))
+        else if (m_expchain_dot_ident_848(true, fake, state, depth + 1))
         {
         }
-        else if (m_expchain_minusgreaterthen_call_845(true, fake, state, depth + 1))
+        else if (m_expchain_minusgreaterthen_call_849(true, fake, state, depth + 1))
         {
         }
-        else if (m_expchain_minusgreaterthen_ident_846(true, fake, state, depth + 1))
+        else if (m_expchain_minusgreaterthen_ident_850(true, fake, state, depth + 1))
         {
         }
-        else if (m_expchain_squarebracketopen_expression_squarebracketclose_847(true, fake, state, depth + 1))
+        else if (m_expchain_squarebracketopen_expression_squarebracketclose_851(true, fake, state, depth + 1))
         {
         }
-        else if (m_expchain_templateusage_848(true, fake, state, depth + 1))
+        else if (m_expchain_templateusage_852(true, fake, state, depth + 1))
         {
         }
         else
@@ -37508,7 +37659,7 @@ std::shared_ptr<leaf::parsing::instance::exp_chain> leaf::parsing::instance::lr_
     auto actual = std::make_shared<leaf::parsing::instance::exp_chain>();
     std::shared_ptr<leaf::parsing::instance::exp_chain> fake;
     exp_chain_state state;
-    if (!m_expchainstart_849(false, actual, state, depth + 1))
+    if (!m_expchainstart_853(false, actual, state, depth + 1))
     {
         report("Something moved wrong (todo: improve error messages)", depth);
         return {};
@@ -37518,7 +37669,7 @@ std::shared_ptr<leaf::parsing::instance::exp_chain> leaf::parsing::instance::lr_
     {
         skip();
         resettable resettable1(*this);
-        if (m_expchain_dot_call_843(true, fake, state, depth + 1))
+        if (m_expchain_dot_call_847(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -37528,9 +37679,9 @@ std::shared_ptr<leaf::parsing::instance::exp_chain> leaf::parsing::instance::lr_
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_expchain_dot_call_843(false, actual, state, depth + 1);
+            m_expchain_dot_call_847(false, actual, state, depth + 1);
         }
-        else if (m_expchain_dot_ident_844(true, fake, state, depth + 1))
+        else if (m_expchain_dot_ident_848(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -37540,9 +37691,9 @@ std::shared_ptr<leaf::parsing::instance::exp_chain> leaf::parsing::instance::lr_
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_expchain_dot_ident_844(false, actual, state, depth + 1);
+            m_expchain_dot_ident_848(false, actual, state, depth + 1);
         }
-        else if (m_expchain_minusgreaterthen_call_845(true, fake, state, depth + 1))
+        else if (m_expchain_minusgreaterthen_call_849(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -37552,9 +37703,9 @@ std::shared_ptr<leaf::parsing::instance::exp_chain> leaf::parsing::instance::lr_
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_expchain_minusgreaterthen_call_845(false, actual, state, depth + 1);
+            m_expchain_minusgreaterthen_call_849(false, actual, state, depth + 1);
         }
-        else if (m_expchain_minusgreaterthen_ident_846(true, fake, state, depth + 1))
+        else if (m_expchain_minusgreaterthen_ident_850(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -37564,9 +37715,9 @@ std::shared_ptr<leaf::parsing::instance::exp_chain> leaf::parsing::instance::lr_
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_expchain_minusgreaterthen_ident_846(false, actual, state, depth + 1);
+            m_expchain_minusgreaterthen_ident_850(false, actual, state, depth + 1);
         }
-        else if (m_expchain_squarebracketopen_expression_squarebracketclose_847(true, fake, state, depth + 1))
+        else if (m_expchain_squarebracketopen_expression_squarebracketclose_851(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -37576,9 +37727,9 @@ std::shared_ptr<leaf::parsing::instance::exp_chain> leaf::parsing::instance::lr_
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_expchain_squarebracketopen_expression_squarebracketclose_847(false, actual, state, depth + 1);
+            m_expchain_squarebracketopen_expression_squarebracketclose_851(false, actual, state, depth + 1);
         }
-        else if (m_expchain_templateusage_848(true, fake, state, depth + 1))
+        else if (m_expchain_templateusage_852(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -37588,7 +37739,7 @@ std::shared_ptr<leaf::parsing::instance::exp_chain> leaf::parsing::instance::lr_
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_expchain_templateusage_848(false, actual, state, depth + 1);
+            m_expchain_templateusage_852(false, actual, state, depth + 1);
         }
         else
         {
@@ -37598,7 +37749,7 @@ std::shared_ptr<leaf::parsing::instance::exp_chain> leaf::parsing::instance::lr_
     }
     return actual;
 }
-bool leaf::parsing::instance::m_expbinary4_lessthenlessthen_expunary_850(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_4>& actual, leaf::parsing::instance::exp_binary_4_state& state, size_t depth)
+bool leaf::parsing::instance::m_expbinary4_lessthenlessthen_expunary_854(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_4>& actual, leaf::parsing::instance::exp_binary_4_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__less_then_less_then(depth + 1);
@@ -37647,7 +37798,7 @@ bool leaf::parsing::instance::m_expbinary4_lessthenlessthen_expunary_850(bool is
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_expbinary4_greaterthengreaterthen_expunary_851(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_4>& actual, leaf::parsing::instance::exp_binary_4_state& state, size_t depth)
+bool leaf::parsing::instance::m_expbinary4_greaterthengreaterthen_expunary_855(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_4>& actual, leaf::parsing::instance::exp_binary_4_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__greater_then_greater_then(depth + 1);
@@ -37696,7 +37847,7 @@ bool leaf::parsing::instance::m_expbinary4_greaterthengreaterthen_expunary_851(b
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_expbinary4_lessthenlessthenlessthen_expunary_852(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_4>& actual, leaf::parsing::instance::exp_binary_4_state& state, size_t depth)
+bool leaf::parsing::instance::m_expbinary4_lessthenlessthenlessthen_expunary_856(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_4>& actual, leaf::parsing::instance::exp_binary_4_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__less_then_less_then_less_then(depth + 1);
@@ -37745,7 +37896,7 @@ bool leaf::parsing::instance::m_expbinary4_lessthenlessthenlessthen_expunary_852
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_expbinary4_greaterthengreaterthengreaterthen_expunary_853(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_4>& actual, leaf::parsing::instance::exp_binary_4_state& state, size_t depth)
+bool leaf::parsing::instance::m_expbinary4_greaterthengreaterthengreaterthen_expunary_857(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_4>& actual, leaf::parsing::instance::exp_binary_4_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__greater_then_greater_then_greater_then(depth + 1);
@@ -37794,7 +37945,7 @@ bool leaf::parsing::instance::m_expbinary4_greaterthengreaterthengreaterthen_exp
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_expunary_854(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_4>& actual, leaf::parsing::instance::exp_binary_4_state& state, size_t depth)
+bool leaf::parsing::instance::m_expunary_858(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_4>& actual, leaf::parsing::instance::exp_binary_4_state& state, size_t depth)
 {
     resettable resettable1(*this);
     if (p_can_exp_unary(depth + 1))
@@ -37826,7 +37977,7 @@ bool leaf::parsing::instance::lr_can_exp_binary_4(size_t depth)
     resettable resettable1(*this);
     std::shared_ptr<leaf::parsing::instance::exp_binary_4> fake;
     exp_binary_4_state state;
-    if (!m_expunary_854(true, fake, state, depth + 1))
+    if (!m_expunary_858(true, fake, state, depth + 1))
     {
         return false;
     }
@@ -37834,16 +37985,16 @@ bool leaf::parsing::instance::lr_can_exp_binary_4(size_t depth)
     {
         skip();
         resettable resettable1(*this);
-        if (m_expbinary4_lessthenlessthen_expunary_850(true, fake, state, depth + 1))
+        if (m_expbinary4_lessthenlessthen_expunary_854(true, fake, state, depth + 1))
         {
         }
-        else if (m_expbinary4_greaterthengreaterthen_expunary_851(true, fake, state, depth + 1))
+        else if (m_expbinary4_greaterthengreaterthen_expunary_855(true, fake, state, depth + 1))
         {
         }
-        else if (m_expbinary4_lessthenlessthenlessthen_expunary_852(true, fake, state, depth + 1))
+        else if (m_expbinary4_lessthenlessthenlessthen_expunary_856(true, fake, state, depth + 1))
         {
         }
-        else if (m_expbinary4_greaterthengreaterthengreaterthen_expunary_853(true, fake, state, depth + 1))
+        else if (m_expbinary4_greaterthengreaterthengreaterthen_expunary_857(true, fake, state, depth + 1))
         {
         }
         else
@@ -37857,7 +38008,7 @@ std::shared_ptr<leaf::parsing::instance::exp_binary_4> leaf::parsing::instance::
     auto actual = std::make_shared<leaf::parsing::instance::exp_binary_4>();
     std::shared_ptr<leaf::parsing::instance::exp_binary_4> fake;
     exp_binary_4_state state;
-    if (!m_expunary_854(false, actual, state, depth + 1))
+    if (!m_expunary_858(false, actual, state, depth + 1))
     {
         report("Something moved wrong (todo: improve error messages)", depth);
         return {};
@@ -37867,7 +38018,7 @@ std::shared_ptr<leaf::parsing::instance::exp_binary_4> leaf::parsing::instance::
     {
         skip();
         resettable resettable1(*this);
-        if (m_expbinary4_lessthenlessthen_expunary_850(true, fake, state, depth + 1))
+        if (m_expbinary4_lessthenlessthen_expunary_854(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -37877,9 +38028,9 @@ std::shared_ptr<leaf::parsing::instance::exp_binary_4> leaf::parsing::instance::
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_expbinary4_lessthenlessthen_expunary_850(false, actual, state, depth + 1);
+            m_expbinary4_lessthenlessthen_expunary_854(false, actual, state, depth + 1);
         }
-        else if (m_expbinary4_greaterthengreaterthen_expunary_851(true, fake, state, depth + 1))
+        else if (m_expbinary4_greaterthengreaterthen_expunary_855(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -37889,9 +38040,9 @@ std::shared_ptr<leaf::parsing::instance::exp_binary_4> leaf::parsing::instance::
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_expbinary4_greaterthengreaterthen_expunary_851(false, actual, state, depth + 1);
+            m_expbinary4_greaterthengreaterthen_expunary_855(false, actual, state, depth + 1);
         }
-        else if (m_expbinary4_lessthenlessthenlessthen_expunary_852(true, fake, state, depth + 1))
+        else if (m_expbinary4_lessthenlessthenlessthen_expunary_856(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -37901,9 +38052,9 @@ std::shared_ptr<leaf::parsing::instance::exp_binary_4> leaf::parsing::instance::
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_expbinary4_lessthenlessthenlessthen_expunary_852(false, actual, state, depth + 1);
+            m_expbinary4_lessthenlessthenlessthen_expunary_856(false, actual, state, depth + 1);
         }
-        else if (m_expbinary4_greaterthengreaterthengreaterthen_expunary_853(true, fake, state, depth + 1))
+        else if (m_expbinary4_greaterthengreaterthengreaterthen_expunary_857(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -37913,7 +38064,7 @@ std::shared_ptr<leaf::parsing::instance::exp_binary_4> leaf::parsing::instance::
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_expbinary4_greaterthengreaterthengreaterthen_expunary_853(false, actual, state, depth + 1);
+            m_expbinary4_greaterthengreaterthengreaterthen_expunary_857(false, actual, state, depth + 1);
         }
         else
         {
@@ -37923,7 +38074,7 @@ std::shared_ptr<leaf::parsing::instance::exp_binary_4> leaf::parsing::instance::
     }
     return actual;
 }
-bool leaf::parsing::instance::m_expbinary3_ampersand_expbinary4_855(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_3>& actual, leaf::parsing::instance::exp_binary_3_state& state, size_t depth)
+bool leaf::parsing::instance::m_expbinary3_ampersand_expbinary4_859(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_3>& actual, leaf::parsing::instance::exp_binary_3_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__ampersand(depth + 1);
@@ -37972,7 +38123,7 @@ bool leaf::parsing::instance::m_expbinary3_ampersand_expbinary4_855(bool is_can,
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_expbinary4_856(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_3>& actual, leaf::parsing::instance::exp_binary_3_state& state, size_t depth)
+bool leaf::parsing::instance::m_expbinary4_860(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_3>& actual, leaf::parsing::instance::exp_binary_3_state& state, size_t depth)
 {
     resettable resettable1(*this);
     if (lr_can_exp_binary_4(depth + 1))
@@ -38004,7 +38155,7 @@ bool leaf::parsing::instance::lr_can_exp_binary_3(size_t depth)
     resettable resettable1(*this);
     std::shared_ptr<leaf::parsing::instance::exp_binary_3> fake;
     exp_binary_3_state state;
-    if (!m_expbinary4_856(true, fake, state, depth + 1))
+    if (!m_expbinary4_860(true, fake, state, depth + 1))
     {
         return false;
     }
@@ -38012,7 +38163,7 @@ bool leaf::parsing::instance::lr_can_exp_binary_3(size_t depth)
     {
         skip();
         resettable resettable1(*this);
-        if (m_expbinary3_ampersand_expbinary4_855(true, fake, state, depth + 1))
+        if (m_expbinary3_ampersand_expbinary4_859(true, fake, state, depth + 1))
         {
         }
         else
@@ -38026,7 +38177,7 @@ std::shared_ptr<leaf::parsing::instance::exp_binary_3> leaf::parsing::instance::
     auto actual = std::make_shared<leaf::parsing::instance::exp_binary_3>();
     std::shared_ptr<leaf::parsing::instance::exp_binary_3> fake;
     exp_binary_3_state state;
-    if (!m_expbinary4_856(false, actual, state, depth + 1))
+    if (!m_expbinary4_860(false, actual, state, depth + 1))
     {
         report("Something moved wrong (todo: improve error messages)", depth);
         return {};
@@ -38036,7 +38187,7 @@ std::shared_ptr<leaf::parsing::instance::exp_binary_3> leaf::parsing::instance::
     {
         skip();
         resettable resettable1(*this);
-        if (m_expbinary3_ampersand_expbinary4_855(true, fake, state, depth + 1))
+        if (m_expbinary3_ampersand_expbinary4_859(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -38046,7 +38197,7 @@ std::shared_ptr<leaf::parsing::instance::exp_binary_3> leaf::parsing::instance::
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_expbinary3_ampersand_expbinary4_855(false, actual, state, depth + 1);
+            m_expbinary3_ampersand_expbinary4_859(false, actual, state, depth + 1);
         }
         else
         {
@@ -38056,7 +38207,7 @@ std::shared_ptr<leaf::parsing::instance::exp_binary_3> leaf::parsing::instance::
     }
     return actual;
 }
-bool leaf::parsing::instance::m_expbinary2_circumflex_expbinary3_857(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_2>& actual, leaf::parsing::instance::exp_binary_2_state& state, size_t depth)
+bool leaf::parsing::instance::m_expbinary2_circumflex_expbinary3_861(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_2>& actual, leaf::parsing::instance::exp_binary_2_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__circumflex(depth + 1);
@@ -38105,7 +38256,7 @@ bool leaf::parsing::instance::m_expbinary2_circumflex_expbinary3_857(bool is_can
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_expbinary3_858(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_2>& actual, leaf::parsing::instance::exp_binary_2_state& state, size_t depth)
+bool leaf::parsing::instance::m_expbinary3_862(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_2>& actual, leaf::parsing::instance::exp_binary_2_state& state, size_t depth)
 {
     resettable resettable1(*this);
     if (lr_can_exp_binary_3(depth + 1))
@@ -38137,7 +38288,7 @@ bool leaf::parsing::instance::lr_can_exp_binary_2(size_t depth)
     resettable resettable1(*this);
     std::shared_ptr<leaf::parsing::instance::exp_binary_2> fake;
     exp_binary_2_state state;
-    if (!m_expbinary3_858(true, fake, state, depth + 1))
+    if (!m_expbinary3_862(true, fake, state, depth + 1))
     {
         return false;
     }
@@ -38145,7 +38296,7 @@ bool leaf::parsing::instance::lr_can_exp_binary_2(size_t depth)
     {
         skip();
         resettable resettable1(*this);
-        if (m_expbinary2_circumflex_expbinary3_857(true, fake, state, depth + 1))
+        if (m_expbinary2_circumflex_expbinary3_861(true, fake, state, depth + 1))
         {
         }
         else
@@ -38159,7 +38310,7 @@ std::shared_ptr<leaf::parsing::instance::exp_binary_2> leaf::parsing::instance::
     auto actual = std::make_shared<leaf::parsing::instance::exp_binary_2>();
     std::shared_ptr<leaf::parsing::instance::exp_binary_2> fake;
     exp_binary_2_state state;
-    if (!m_expbinary3_858(false, actual, state, depth + 1))
+    if (!m_expbinary3_862(false, actual, state, depth + 1))
     {
         report("Something moved wrong (todo: improve error messages)", depth);
         return {};
@@ -38169,7 +38320,7 @@ std::shared_ptr<leaf::parsing::instance::exp_binary_2> leaf::parsing::instance::
     {
         skip();
         resettable resettable1(*this);
-        if (m_expbinary2_circumflex_expbinary3_857(true, fake, state, depth + 1))
+        if (m_expbinary2_circumflex_expbinary3_861(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -38179,7 +38330,7 @@ std::shared_ptr<leaf::parsing::instance::exp_binary_2> leaf::parsing::instance::
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_expbinary2_circumflex_expbinary3_857(false, actual, state, depth + 1);
+            m_expbinary2_circumflex_expbinary3_861(false, actual, state, depth + 1);
         }
         else
         {
@@ -38189,7 +38340,7 @@ std::shared_ptr<leaf::parsing::instance::exp_binary_2> leaf::parsing::instance::
     }
     return actual;
 }
-bool leaf::parsing::instance::m_expbinary1_verticalbar_expbinary2_859(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_1>& actual, leaf::parsing::instance::exp_binary_1_state& state, size_t depth)
+bool leaf::parsing::instance::m_expbinary1_verticalbar_expbinary2_863(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_1>& actual, leaf::parsing::instance::exp_binary_1_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__vertical_bar(depth + 1);
@@ -38238,7 +38389,7 @@ bool leaf::parsing::instance::m_expbinary1_verticalbar_expbinary2_859(bool is_ca
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_expbinary2_860(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_1>& actual, leaf::parsing::instance::exp_binary_1_state& state, size_t depth)
+bool leaf::parsing::instance::m_expbinary2_864(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_binary_1>& actual, leaf::parsing::instance::exp_binary_1_state& state, size_t depth)
 {
     resettable resettable1(*this);
     if (lr_can_exp_binary_2(depth + 1))
@@ -38270,7 +38421,7 @@ bool leaf::parsing::instance::lr_can_exp_binary_1(size_t depth)
     resettable resettable1(*this);
     std::shared_ptr<leaf::parsing::instance::exp_binary_1> fake;
     exp_binary_1_state state;
-    if (!m_expbinary2_860(true, fake, state, depth + 1))
+    if (!m_expbinary2_864(true, fake, state, depth + 1))
     {
         return false;
     }
@@ -38278,7 +38429,7 @@ bool leaf::parsing::instance::lr_can_exp_binary_1(size_t depth)
     {
         skip();
         resettable resettable1(*this);
-        if (m_expbinary1_verticalbar_expbinary2_859(true, fake, state, depth + 1))
+        if (m_expbinary1_verticalbar_expbinary2_863(true, fake, state, depth + 1))
         {
         }
         else
@@ -38292,7 +38443,7 @@ std::shared_ptr<leaf::parsing::instance::exp_binary_1> leaf::parsing::instance::
     auto actual = std::make_shared<leaf::parsing::instance::exp_binary_1>();
     std::shared_ptr<leaf::parsing::instance::exp_binary_1> fake;
     exp_binary_1_state state;
-    if (!m_expbinary2_860(false, actual, state, depth + 1))
+    if (!m_expbinary2_864(false, actual, state, depth + 1))
     {
         report("Something moved wrong (todo: improve error messages)", depth);
         return {};
@@ -38302,7 +38453,7 @@ std::shared_ptr<leaf::parsing::instance::exp_binary_1> leaf::parsing::instance::
     {
         skip();
         resettable resettable1(*this);
-        if (m_expbinary1_verticalbar_expbinary2_859(true, fake, state, depth + 1))
+        if (m_expbinary1_verticalbar_expbinary2_863(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -38312,7 +38463,7 @@ std::shared_ptr<leaf::parsing::instance::exp_binary_1> leaf::parsing::instance::
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_expbinary1_verticalbar_expbinary2_859(false, actual, state, depth + 1);
+            m_expbinary1_verticalbar_expbinary2_863(false, actual, state, depth + 1);
         }
         else
         {
@@ -38322,7 +38473,7 @@ std::shared_ptr<leaf::parsing::instance::exp_binary_1> leaf::parsing::instance::
     }
     return actual;
 }
-bool leaf::parsing::instance::m_exparithmetic2_slash_expbinary1_861(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_arithmetic_2>& actual, leaf::parsing::instance::exp_arithmetic_2_state& state, size_t depth)
+bool leaf::parsing::instance::m_exparithmetic2_slash_expbinary1_865(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_arithmetic_2>& actual, leaf::parsing::instance::exp_arithmetic_2_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token_slash(depth + 1);
@@ -38371,7 +38522,7 @@ bool leaf::parsing::instance::m_exparithmetic2_slash_expbinary1_861(bool is_can,
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_exparithmetic2_star_expbinary1_862(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_arithmetic_2>& actual, leaf::parsing::instance::exp_arithmetic_2_state& state, size_t depth)
+bool leaf::parsing::instance::m_exparithmetic2_star_expbinary1_866(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_arithmetic_2>& actual, leaf::parsing::instance::exp_arithmetic_2_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token_star(depth + 1);
@@ -38420,7 +38571,7 @@ bool leaf::parsing::instance::m_exparithmetic2_star_expbinary1_862(bool is_can, 
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_expbinary1_863(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_arithmetic_2>& actual, leaf::parsing::instance::exp_arithmetic_2_state& state, size_t depth)
+bool leaf::parsing::instance::m_expbinary1_867(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_arithmetic_2>& actual, leaf::parsing::instance::exp_arithmetic_2_state& state, size_t depth)
 {
     resettable resettable1(*this);
     if (lr_can_exp_binary_1(depth + 1))
@@ -38452,7 +38603,7 @@ bool leaf::parsing::instance::lr_can_exp_arithmetic_2(size_t depth)
     resettable resettable1(*this);
     std::shared_ptr<leaf::parsing::instance::exp_arithmetic_2> fake;
     exp_arithmetic_2_state state;
-    if (!m_expbinary1_863(true, fake, state, depth + 1))
+    if (!m_expbinary1_867(true, fake, state, depth + 1))
     {
         return false;
     }
@@ -38460,10 +38611,10 @@ bool leaf::parsing::instance::lr_can_exp_arithmetic_2(size_t depth)
     {
         skip();
         resettable resettable1(*this);
-        if (m_exparithmetic2_slash_expbinary1_861(true, fake, state, depth + 1))
+        if (m_exparithmetic2_slash_expbinary1_865(true, fake, state, depth + 1))
         {
         }
-        else if (m_exparithmetic2_star_expbinary1_862(true, fake, state, depth + 1))
+        else if (m_exparithmetic2_star_expbinary1_866(true, fake, state, depth + 1))
         {
         }
         else
@@ -38477,7 +38628,7 @@ std::shared_ptr<leaf::parsing::instance::exp_arithmetic_2> leaf::parsing::instan
     auto actual = std::make_shared<leaf::parsing::instance::exp_arithmetic_2>();
     std::shared_ptr<leaf::parsing::instance::exp_arithmetic_2> fake;
     exp_arithmetic_2_state state;
-    if (!m_expbinary1_863(false, actual, state, depth + 1))
+    if (!m_expbinary1_867(false, actual, state, depth + 1))
     {
         report("Something moved wrong (todo: improve error messages)", depth);
         return {};
@@ -38487,7 +38638,7 @@ std::shared_ptr<leaf::parsing::instance::exp_arithmetic_2> leaf::parsing::instan
     {
         skip();
         resettable resettable1(*this);
-        if (m_exparithmetic2_slash_expbinary1_861(true, fake, state, depth + 1))
+        if (m_exparithmetic2_slash_expbinary1_865(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -38497,9 +38648,9 @@ std::shared_ptr<leaf::parsing::instance::exp_arithmetic_2> leaf::parsing::instan
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_exparithmetic2_slash_expbinary1_861(false, actual, state, depth + 1);
+            m_exparithmetic2_slash_expbinary1_865(false, actual, state, depth + 1);
         }
-        else if (m_exparithmetic2_star_expbinary1_862(true, fake, state, depth + 1))
+        else if (m_exparithmetic2_star_expbinary1_866(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -38509,7 +38660,7 @@ std::shared_ptr<leaf::parsing::instance::exp_arithmetic_2> leaf::parsing::instan
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_exparithmetic2_star_expbinary1_862(false, actual, state, depth + 1);
+            m_exparithmetic2_star_expbinary1_866(false, actual, state, depth + 1);
         }
         else
         {
@@ -38519,7 +38670,7 @@ std::shared_ptr<leaf::parsing::instance::exp_arithmetic_2> leaf::parsing::instan
     }
     return actual;
 }
-bool leaf::parsing::instance::m_exparithmetic1_plus_exparithmetic2_864(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_arithmetic_1>& actual, leaf::parsing::instance::exp_arithmetic_1_state& state, size_t depth)
+bool leaf::parsing::instance::m_exparithmetic1_plus_exparithmetic2_868(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_arithmetic_1>& actual, leaf::parsing::instance::exp_arithmetic_1_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token_plus(depth + 1);
@@ -38568,7 +38719,7 @@ bool leaf::parsing::instance::m_exparithmetic1_plus_exparithmetic2_864(bool is_c
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_exparithmetic1_minus_exparithmetic2_865(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_arithmetic_1>& actual, leaf::parsing::instance::exp_arithmetic_1_state& state, size_t depth)
+bool leaf::parsing::instance::m_exparithmetic1_minus_exparithmetic2_869(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_arithmetic_1>& actual, leaf::parsing::instance::exp_arithmetic_1_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token_minus(depth + 1);
@@ -38617,7 +38768,7 @@ bool leaf::parsing::instance::m_exparithmetic1_minus_exparithmetic2_865(bool is_
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_exparithmetic2_866(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_arithmetic_1>& actual, leaf::parsing::instance::exp_arithmetic_1_state& state, size_t depth)
+bool leaf::parsing::instance::m_exparithmetic2_870(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_arithmetic_1>& actual, leaf::parsing::instance::exp_arithmetic_1_state& state, size_t depth)
 {
     resettable resettable1(*this);
     if (lr_can_exp_arithmetic_2(depth + 1))
@@ -38649,7 +38800,7 @@ bool leaf::parsing::instance::lr_can_exp_arithmetic_1(size_t depth)
     resettable resettable1(*this);
     std::shared_ptr<leaf::parsing::instance::exp_arithmetic_1> fake;
     exp_arithmetic_1_state state;
-    if (!m_exparithmetic2_866(true, fake, state, depth + 1))
+    if (!m_exparithmetic2_870(true, fake, state, depth + 1))
     {
         return false;
     }
@@ -38657,10 +38808,10 @@ bool leaf::parsing::instance::lr_can_exp_arithmetic_1(size_t depth)
     {
         skip();
         resettable resettable1(*this);
-        if (m_exparithmetic1_plus_exparithmetic2_864(true, fake, state, depth + 1))
+        if (m_exparithmetic1_plus_exparithmetic2_868(true, fake, state, depth + 1))
         {
         }
-        else if (m_exparithmetic1_minus_exparithmetic2_865(true, fake, state, depth + 1))
+        else if (m_exparithmetic1_minus_exparithmetic2_869(true, fake, state, depth + 1))
         {
         }
         else
@@ -38674,7 +38825,7 @@ std::shared_ptr<leaf::parsing::instance::exp_arithmetic_1> leaf::parsing::instan
     auto actual = std::make_shared<leaf::parsing::instance::exp_arithmetic_1>();
     std::shared_ptr<leaf::parsing::instance::exp_arithmetic_1> fake;
     exp_arithmetic_1_state state;
-    if (!m_exparithmetic2_866(false, actual, state, depth + 1))
+    if (!m_exparithmetic2_870(false, actual, state, depth + 1))
     {
         report("Something moved wrong (todo: improve error messages)", depth);
         return {};
@@ -38684,7 +38835,7 @@ std::shared_ptr<leaf::parsing::instance::exp_arithmetic_1> leaf::parsing::instan
     {
         skip();
         resettable resettable1(*this);
-        if (m_exparithmetic1_plus_exparithmetic2_864(true, fake, state, depth + 1))
+        if (m_exparithmetic1_plus_exparithmetic2_868(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -38694,9 +38845,9 @@ std::shared_ptr<leaf::parsing::instance::exp_arithmetic_1> leaf::parsing::instan
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_exparithmetic1_plus_exparithmetic2_864(false, actual, state, depth + 1);
+            m_exparithmetic1_plus_exparithmetic2_868(false, actual, state, depth + 1);
         }
-        else if (m_exparithmetic1_minus_exparithmetic2_865(true, fake, state, depth + 1))
+        else if (m_exparithmetic1_minus_exparithmetic2_869(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -38706,7 +38857,7 @@ std::shared_ptr<leaf::parsing::instance::exp_arithmetic_1> leaf::parsing::instan
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_exparithmetic1_minus_exparithmetic2_865(false, actual, state, depth + 1);
+            m_exparithmetic1_minus_exparithmetic2_869(false, actual, state, depth + 1);
         }
         else
         {
@@ -38716,7 +38867,7 @@ std::shared_ptr<leaf::parsing::instance::exp_arithmetic_1> leaf::parsing::instan
     }
     return actual;
 }
-bool leaf::parsing::instance::m_expcompare_lessthenequal_exparithmetic1_867(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_compare>& actual, leaf::parsing::instance::exp_compare_state& state, size_t depth)
+bool leaf::parsing::instance::m_expcompare_lessthenequal_exparithmetic1_871(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_compare>& actual, leaf::parsing::instance::exp_compare_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__less_then_equal(depth + 1);
@@ -38765,7 +38916,7 @@ bool leaf::parsing::instance::m_expcompare_lessthenequal_exparithmetic1_867(bool
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_expcompare_lessthen_exparithmetic1_868(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_compare>& actual, leaf::parsing::instance::exp_compare_state& state, size_t depth)
+bool leaf::parsing::instance::m_expcompare_lessthen_exparithmetic1_872(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_compare>& actual, leaf::parsing::instance::exp_compare_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__less_then(depth + 1);
@@ -38814,7 +38965,7 @@ bool leaf::parsing::instance::m_expcompare_lessthen_exparithmetic1_868(bool is_c
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_expcompare_greaterthenequal_exparithmetic1_869(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_compare>& actual, leaf::parsing::instance::exp_compare_state& state, size_t depth)
+bool leaf::parsing::instance::m_expcompare_greaterthenequal_exparithmetic1_873(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_compare>& actual, leaf::parsing::instance::exp_compare_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__greater_then_equal(depth + 1);
@@ -38863,7 +39014,7 @@ bool leaf::parsing::instance::m_expcompare_greaterthenequal_exparithmetic1_869(b
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_expcompare_greaterthen_exparithmetic1_870(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_compare>& actual, leaf::parsing::instance::exp_compare_state& state, size_t depth)
+bool leaf::parsing::instance::m_expcompare_greaterthen_exparithmetic1_874(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_compare>& actual, leaf::parsing::instance::exp_compare_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__greater_then(depth + 1);
@@ -38912,7 +39063,7 @@ bool leaf::parsing::instance::m_expcompare_greaterthen_exparithmetic1_870(bool i
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_exparithmetic1_871(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_compare>& actual, leaf::parsing::instance::exp_compare_state& state, size_t depth)
+bool leaf::parsing::instance::m_exparithmetic1_875(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_compare>& actual, leaf::parsing::instance::exp_compare_state& state, size_t depth)
 {
     resettable resettable1(*this);
     if (lr_can_exp_arithmetic_1(depth + 1))
@@ -38944,7 +39095,7 @@ bool leaf::parsing::instance::lr_can_exp_compare(size_t depth)
     resettable resettable1(*this);
     std::shared_ptr<leaf::parsing::instance::exp_compare> fake;
     exp_compare_state state;
-    if (!m_exparithmetic1_871(true, fake, state, depth + 1))
+    if (!m_exparithmetic1_875(true, fake, state, depth + 1))
     {
         return false;
     }
@@ -38952,16 +39103,16 @@ bool leaf::parsing::instance::lr_can_exp_compare(size_t depth)
     {
         skip();
         resettable resettable1(*this);
-        if (m_expcompare_lessthenequal_exparithmetic1_867(true, fake, state, depth + 1))
+        if (m_expcompare_lessthenequal_exparithmetic1_871(true, fake, state, depth + 1))
         {
         }
-        else if (m_expcompare_lessthen_exparithmetic1_868(true, fake, state, depth + 1))
+        else if (m_expcompare_lessthen_exparithmetic1_872(true, fake, state, depth + 1))
         {
         }
-        else if (m_expcompare_greaterthenequal_exparithmetic1_869(true, fake, state, depth + 1))
+        else if (m_expcompare_greaterthenequal_exparithmetic1_873(true, fake, state, depth + 1))
         {
         }
-        else if (m_expcompare_greaterthen_exparithmetic1_870(true, fake, state, depth + 1))
+        else if (m_expcompare_greaterthen_exparithmetic1_874(true, fake, state, depth + 1))
         {
         }
         else
@@ -38975,7 +39126,7 @@ std::shared_ptr<leaf::parsing::instance::exp_compare> leaf::parsing::instance::l
     auto actual = std::make_shared<leaf::parsing::instance::exp_compare>();
     std::shared_ptr<leaf::parsing::instance::exp_compare> fake;
     exp_compare_state state;
-    if (!m_exparithmetic1_871(false, actual, state, depth + 1))
+    if (!m_exparithmetic1_875(false, actual, state, depth + 1))
     {
         report("Something moved wrong (todo: improve error messages)", depth);
         return {};
@@ -38985,7 +39136,7 @@ std::shared_ptr<leaf::parsing::instance::exp_compare> leaf::parsing::instance::l
     {
         skip();
         resettable resettable1(*this);
-        if (m_expcompare_lessthenequal_exparithmetic1_867(true, fake, state, depth + 1))
+        if (m_expcompare_lessthenequal_exparithmetic1_871(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -38995,9 +39146,9 @@ std::shared_ptr<leaf::parsing::instance::exp_compare> leaf::parsing::instance::l
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_expcompare_lessthenequal_exparithmetic1_867(false, actual, state, depth + 1);
+            m_expcompare_lessthenequal_exparithmetic1_871(false, actual, state, depth + 1);
         }
-        else if (m_expcompare_lessthen_exparithmetic1_868(true, fake, state, depth + 1))
+        else if (m_expcompare_lessthen_exparithmetic1_872(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -39007,9 +39158,9 @@ std::shared_ptr<leaf::parsing::instance::exp_compare> leaf::parsing::instance::l
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_expcompare_lessthen_exparithmetic1_868(false, actual, state, depth + 1);
+            m_expcompare_lessthen_exparithmetic1_872(false, actual, state, depth + 1);
         }
-        else if (m_expcompare_greaterthenequal_exparithmetic1_869(true, fake, state, depth + 1))
+        else if (m_expcompare_greaterthenequal_exparithmetic1_873(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -39019,9 +39170,9 @@ std::shared_ptr<leaf::parsing::instance::exp_compare> leaf::parsing::instance::l
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_expcompare_greaterthenequal_exparithmetic1_869(false, actual, state, depth + 1);
+            m_expcompare_greaterthenequal_exparithmetic1_873(false, actual, state, depth + 1);
         }
-        else if (m_expcompare_greaterthen_exparithmetic1_870(true, fake, state, depth + 1))
+        else if (m_expcompare_greaterthen_exparithmetic1_874(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -39031,7 +39182,7 @@ std::shared_ptr<leaf::parsing::instance::exp_compare> leaf::parsing::instance::l
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_expcompare_greaterthen_exparithmetic1_870(false, actual, state, depth + 1);
+            m_expcompare_greaterthen_exparithmetic1_874(false, actual, state, depth + 1);
         }
         else
         {
@@ -39041,7 +39192,7 @@ std::shared_ptr<leaf::parsing::instance::exp_compare> leaf::parsing::instance::l
     }
     return actual;
 }
-bool leaf::parsing::instance::m_expequality_exclamationequal_expcompare_872(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_equality>& actual, leaf::parsing::instance::exp_equality_state& state, size_t depth)
+bool leaf::parsing::instance::m_expequality_exclamationequal_expcompare_876(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_equality>& actual, leaf::parsing::instance::exp_equality_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__exclamation_equal(depth + 1);
@@ -39090,7 +39241,7 @@ bool leaf::parsing::instance::m_expequality_exclamationequal_expcompare_872(bool
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_expequality_equalequalequal_expcompare_873(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_equality>& actual, leaf::parsing::instance::exp_equality_state& state, size_t depth)
+bool leaf::parsing::instance::m_expequality_equalequalequal_expcompare_877(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_equality>& actual, leaf::parsing::instance::exp_equality_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__equal_equal_equal(depth + 1);
@@ -39139,7 +39290,7 @@ bool leaf::parsing::instance::m_expequality_equalequalequal_expcompare_873(bool 
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_expequality_equalequal_expcompare_874(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_equality>& actual, leaf::parsing::instance::exp_equality_state& state, size_t depth)
+bool leaf::parsing::instance::m_expequality_equalequal_expcompare_878(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_equality>& actual, leaf::parsing::instance::exp_equality_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__equal_equal(depth + 1);
@@ -39188,7 +39339,7 @@ bool leaf::parsing::instance::m_expequality_equalequal_expcompare_874(bool is_ca
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_expequality_tildeequal_expcompare_875(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_equality>& actual, leaf::parsing::instance::exp_equality_state& state, size_t depth)
+bool leaf::parsing::instance::m_expequality_tildeequal_expcompare_879(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_equality>& actual, leaf::parsing::instance::exp_equality_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__tilde_equal(depth + 1);
@@ -39237,7 +39388,7 @@ bool leaf::parsing::instance::m_expequality_tildeequal_expcompare_875(bool is_ca
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_expcompare_876(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_equality>& actual, leaf::parsing::instance::exp_equality_state& state, size_t depth)
+bool leaf::parsing::instance::m_expcompare_880(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_equality>& actual, leaf::parsing::instance::exp_equality_state& state, size_t depth)
 {
     resettable resettable1(*this);
     if (lr_can_exp_compare(depth + 1))
@@ -39269,7 +39420,7 @@ bool leaf::parsing::instance::lr_can_exp_equality(size_t depth)
     resettable resettable1(*this);
     std::shared_ptr<leaf::parsing::instance::exp_equality> fake;
     exp_equality_state state;
-    if (!m_expcompare_876(true, fake, state, depth + 1))
+    if (!m_expcompare_880(true, fake, state, depth + 1))
     {
         return false;
     }
@@ -39277,16 +39428,16 @@ bool leaf::parsing::instance::lr_can_exp_equality(size_t depth)
     {
         skip();
         resettable resettable1(*this);
-        if (m_expequality_exclamationequal_expcompare_872(true, fake, state, depth + 1))
+        if (m_expequality_exclamationequal_expcompare_876(true, fake, state, depth + 1))
         {
         }
-        else if (m_expequality_equalequalequal_expcompare_873(true, fake, state, depth + 1))
+        else if (m_expequality_equalequalequal_expcompare_877(true, fake, state, depth + 1))
         {
         }
-        else if (m_expequality_equalequal_expcompare_874(true, fake, state, depth + 1))
+        else if (m_expequality_equalequal_expcompare_878(true, fake, state, depth + 1))
         {
         }
-        else if (m_expequality_tildeequal_expcompare_875(true, fake, state, depth + 1))
+        else if (m_expequality_tildeequal_expcompare_879(true, fake, state, depth + 1))
         {
         }
         else
@@ -39300,7 +39451,7 @@ std::shared_ptr<leaf::parsing::instance::exp_equality> leaf::parsing::instance::
     auto actual = std::make_shared<leaf::parsing::instance::exp_equality>();
     std::shared_ptr<leaf::parsing::instance::exp_equality> fake;
     exp_equality_state state;
-    if (!m_expcompare_876(false, actual, state, depth + 1))
+    if (!m_expcompare_880(false, actual, state, depth + 1))
     {
         report("Something moved wrong (todo: improve error messages)", depth);
         return {};
@@ -39310,7 +39461,7 @@ std::shared_ptr<leaf::parsing::instance::exp_equality> leaf::parsing::instance::
     {
         skip();
         resettable resettable1(*this);
-        if (m_expequality_exclamationequal_expcompare_872(true, fake, state, depth + 1))
+        if (m_expequality_exclamationequal_expcompare_876(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -39320,9 +39471,9 @@ std::shared_ptr<leaf::parsing::instance::exp_equality> leaf::parsing::instance::
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_expequality_exclamationequal_expcompare_872(false, actual, state, depth + 1);
+            m_expequality_exclamationequal_expcompare_876(false, actual, state, depth + 1);
         }
-        else if (m_expequality_equalequalequal_expcompare_873(true, fake, state, depth + 1))
+        else if (m_expequality_equalequalequal_expcompare_877(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -39332,9 +39483,9 @@ std::shared_ptr<leaf::parsing::instance::exp_equality> leaf::parsing::instance::
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_expequality_equalequalequal_expcompare_873(false, actual, state, depth + 1);
+            m_expequality_equalequalequal_expcompare_877(false, actual, state, depth + 1);
         }
-        else if (m_expequality_equalequal_expcompare_874(true, fake, state, depth + 1))
+        else if (m_expequality_equalequal_expcompare_878(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -39344,9 +39495,9 @@ std::shared_ptr<leaf::parsing::instance::exp_equality> leaf::parsing::instance::
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_expequality_equalequal_expcompare_874(false, actual, state, depth + 1);
+            m_expequality_equalequal_expcompare_878(false, actual, state, depth + 1);
         }
-        else if (m_expequality_tildeequal_expcompare_875(true, fake, state, depth + 1))
+        else if (m_expequality_tildeequal_expcompare_879(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -39356,7 +39507,7 @@ std::shared_ptr<leaf::parsing::instance::exp_equality> leaf::parsing::instance::
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_expequality_tildeequal_expcompare_875(false, actual, state, depth + 1);
+            m_expequality_tildeequal_expcompare_879(false, actual, state, depth + 1);
         }
         else
         {
@@ -39366,7 +39517,7 @@ std::shared_ptr<leaf::parsing::instance::exp_equality> leaf::parsing::instance::
     }
     return actual;
 }
-bool leaf::parsing::instance::m_expand_ampersandampersand_expequality_877(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_and>& actual, leaf::parsing::instance::exp_and_state& state, size_t depth)
+bool leaf::parsing::instance::m_expand_ampersandampersand_expequality_881(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_and>& actual, leaf::parsing::instance::exp_and_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__ampersand_ampersand(depth + 1);
@@ -39415,7 +39566,7 @@ bool leaf::parsing::instance::m_expand_ampersandampersand_expequality_877(bool i
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_expequality_878(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_and>& actual, leaf::parsing::instance::exp_and_state& state, size_t depth)
+bool leaf::parsing::instance::m_expequality_882(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_and>& actual, leaf::parsing::instance::exp_and_state& state, size_t depth)
 {
     resettable resettable1(*this);
     if (lr_can_exp_equality(depth + 1))
@@ -39447,7 +39598,7 @@ bool leaf::parsing::instance::lr_can_exp_and(size_t depth)
     resettable resettable1(*this);
     std::shared_ptr<leaf::parsing::instance::exp_and> fake;
     exp_and_state state;
-    if (!m_expequality_878(true, fake, state, depth + 1))
+    if (!m_expequality_882(true, fake, state, depth + 1))
     {
         return false;
     }
@@ -39455,7 +39606,7 @@ bool leaf::parsing::instance::lr_can_exp_and(size_t depth)
     {
         skip();
         resettable resettable1(*this);
-        if (m_expand_ampersandampersand_expequality_877(true, fake, state, depth + 1))
+        if (m_expand_ampersandampersand_expequality_881(true, fake, state, depth + 1))
         {
         }
         else
@@ -39469,7 +39620,7 @@ std::shared_ptr<leaf::parsing::instance::exp_and> leaf::parsing::instance::lr_ma
     auto actual = std::make_shared<leaf::parsing::instance::exp_and>();
     std::shared_ptr<leaf::parsing::instance::exp_and> fake;
     exp_and_state state;
-    if (!m_expequality_878(false, actual, state, depth + 1))
+    if (!m_expequality_882(false, actual, state, depth + 1))
     {
         report("Something moved wrong (todo: improve error messages)", depth);
         return {};
@@ -39479,7 +39630,7 @@ std::shared_ptr<leaf::parsing::instance::exp_and> leaf::parsing::instance::lr_ma
     {
         skip();
         resettable resettable1(*this);
-        if (m_expand_ampersandampersand_expequality_877(true, fake, state, depth + 1))
+        if (m_expand_ampersandampersand_expequality_881(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -39489,7 +39640,7 @@ std::shared_ptr<leaf::parsing::instance::exp_and> leaf::parsing::instance::lr_ma
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_expand_ampersandampersand_expequality_877(false, actual, state, depth + 1);
+            m_expand_ampersandampersand_expequality_881(false, actual, state, depth + 1);
         }
         else
         {
@@ -39499,7 +39650,7 @@ std::shared_ptr<leaf::parsing::instance::exp_and> leaf::parsing::instance::lr_ma
     }
     return actual;
 }
-bool leaf::parsing::instance::m_expor_verticalbarverticalbar_expand_879(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_or>& actual, leaf::parsing::instance::exp_or_state& state, size_t depth)
+bool leaf::parsing::instance::m_expor_verticalbarverticalbar_expand_883(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_or>& actual, leaf::parsing::instance::exp_or_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__vertical_bar_vertical_bar(depth + 1);
@@ -39548,7 +39699,7 @@ bool leaf::parsing::instance::m_expor_verticalbarverticalbar_expand_879(bool is_
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_expand_880(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_or>& actual, leaf::parsing::instance::exp_or_state& state, size_t depth)
+bool leaf::parsing::instance::m_expand_884(bool is_can, std::shared_ptr<leaf::parsing::instance::exp_or>& actual, leaf::parsing::instance::exp_or_state& state, size_t depth)
 {
     resettable resettable1(*this);
     if (lr_can_exp_and(depth + 1))
@@ -39580,7 +39731,7 @@ bool leaf::parsing::instance::lr_can_exp_or(size_t depth)
     resettable resettable1(*this);
     std::shared_ptr<leaf::parsing::instance::exp_or> fake;
     exp_or_state state;
-    if (!m_expand_880(true, fake, state, depth + 1))
+    if (!m_expand_884(true, fake, state, depth + 1))
     {
         return false;
     }
@@ -39588,7 +39739,7 @@ bool leaf::parsing::instance::lr_can_exp_or(size_t depth)
     {
         skip();
         resettable resettable1(*this);
-        if (m_expor_verticalbarverticalbar_expand_879(true, fake, state, depth + 1))
+        if (m_expor_verticalbarverticalbar_expand_883(true, fake, state, depth + 1))
         {
         }
         else
@@ -39602,7 +39753,7 @@ std::shared_ptr<leaf::parsing::instance::exp_or> leaf::parsing::instance::lr_mat
     auto actual = std::make_shared<leaf::parsing::instance::exp_or>();
     std::shared_ptr<leaf::parsing::instance::exp_or> fake;
     exp_or_state state;
-    if (!m_expand_880(false, actual, state, depth + 1))
+    if (!m_expand_884(false, actual, state, depth + 1))
     {
         report("Something moved wrong (todo: improve error messages)", depth);
         return {};
@@ -39612,7 +39763,7 @@ std::shared_ptr<leaf::parsing::instance::exp_or> leaf::parsing::instance::lr_mat
     {
         skip();
         resettable resettable1(*this);
-        if (m_expor_verticalbarverticalbar_expand_879(true, fake, state, depth + 1))
+        if (m_expor_verticalbarverticalbar_expand_883(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -39622,7 +39773,7 @@ std::shared_ptr<leaf::parsing::instance::exp_or> leaf::parsing::instance::lr_mat
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_expor_verticalbarverticalbar_expand_879(false, actual, state, depth + 1);
+            m_expor_verticalbarverticalbar_expand_883(false, actual, state, depth + 1);
         }
         else
         {
@@ -39632,7 +39783,7 @@ std::shared_ptr<leaf::parsing::instance::exp_or> leaf::parsing::instance::lr_mat
     }
     return actual;
 }
-bool leaf::parsing::instance::m_identnavigation_coloncolon_ident_881(bool is_can, std::shared_ptr<leaf::parsing::instance::ident_navigation>& actual, leaf::parsing::instance::ident_navigation_state& state, size_t depth)
+bool leaf::parsing::instance::m_identnavigation_coloncolon_ident_885(bool is_can, std::shared_ptr<leaf::parsing::instance::ident_navigation>& actual, leaf::parsing::instance::ident_navigation_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__colon_colon(depth + 1);
@@ -39689,7 +39840,7 @@ bool leaf::parsing::instance::m_identnavigation_coloncolon_ident_881(bool is_can
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_ident_882(bool is_can, std::shared_ptr<leaf::parsing::instance::ident_navigation>& actual, leaf::parsing::instance::ident_navigation_state& state, size_t depth)
+bool leaf::parsing::instance::m_ident_886(bool is_can, std::shared_ptr<leaf::parsing::instance::ident_navigation>& actual, leaf::parsing::instance::ident_navigation_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token_ident(depth + 1);
@@ -39726,7 +39877,7 @@ bool leaf::parsing::instance::lr_can_ident_navigation(size_t depth)
     resettable resettable1(*this);
     std::shared_ptr<leaf::parsing::instance::ident_navigation> fake;
     ident_navigation_state state;
-    if (!m_ident_882(true, fake, state, depth + 1))
+    if (!m_ident_886(true, fake, state, depth + 1))
     {
         return false;
     }
@@ -39734,7 +39885,7 @@ bool leaf::parsing::instance::lr_can_ident_navigation(size_t depth)
     {
         skip();
         resettable resettable1(*this);
-        if (m_identnavigation_coloncolon_ident_881(true, fake, state, depth + 1))
+        if (m_identnavigation_coloncolon_ident_885(true, fake, state, depth + 1))
         {
         }
         else
@@ -39748,7 +39899,7 @@ std::shared_ptr<leaf::parsing::instance::ident_navigation> leaf::parsing::instan
     auto actual = std::make_shared<leaf::parsing::instance::ident_navigation>();
     std::shared_ptr<leaf::parsing::instance::ident_navigation> fake;
     ident_navigation_state state;
-    if (!m_ident_882(false, actual, state, depth + 1))
+    if (!m_ident_886(false, actual, state, depth + 1))
     {
         report("Something moved wrong (todo: improve error messages)", depth);
         return {};
@@ -39758,7 +39909,7 @@ std::shared_ptr<leaf::parsing::instance::ident_navigation> leaf::parsing::instan
     {
         skip();
         resettable resettable1(*this);
-        if (m_identnavigation_coloncolon_ident_881(true, fake, state, depth + 1))
+        if (m_identnavigation_coloncolon_ident_885(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -39768,7 +39919,7 @@ std::shared_ptr<leaf::parsing::instance::ident_navigation> leaf::parsing::instan
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_identnavigation_coloncolon_ident_881(false, actual, state, depth + 1);
+            m_identnavigation_coloncolon_ident_885(false, actual, state, depth + 1);
         }
         else
         {
@@ -39778,7 +39929,7 @@ std::shared_ptr<leaf::parsing::instance::ident_navigation> leaf::parsing::instan
     }
     return actual;
 }
-bool leaf::parsing::instance::m_typenavigation_coloncolon_ident_templateusage_883(bool is_can, std::shared_ptr<leaf::parsing::instance::type_navigation>& actual, leaf::parsing::instance::type_navigation_state& state, size_t depth)
+bool leaf::parsing::instance::m_typenavigation_coloncolon_ident_templateusage_887(bool is_can, std::shared_ptr<leaf::parsing::instance::type_navigation>& actual, leaf::parsing::instance::type_navigation_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__colon_colon(depth + 1);
@@ -39852,7 +40003,7 @@ bool leaf::parsing::instance::m_typenavigation_coloncolon_ident_templateusage_88
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_typenavigation_coloncolon_ident_884(bool is_can, std::shared_ptr<leaf::parsing::instance::type_navigation>& actual, leaf::parsing::instance::type_navigation_state& state, size_t depth)
+bool leaf::parsing::instance::m_typenavigation_coloncolon_ident_888(bool is_can, std::shared_ptr<leaf::parsing::instance::type_navigation>& actual, leaf::parsing::instance::type_navigation_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token__colon_colon(depth + 1);
@@ -39909,7 +40060,7 @@ bool leaf::parsing::instance::m_typenavigation_coloncolon_ident_884(bool is_can,
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_typenavigation_templateusage_885(bool is_can, std::shared_ptr<leaf::parsing::instance::type_navigation>& actual, leaf::parsing::instance::type_navigation_state& state, size_t depth)
+bool leaf::parsing::instance::m_typenavigation_templateusage_889(bool is_can, std::shared_ptr<leaf::parsing::instance::type_navigation>& actual, leaf::parsing::instance::type_navigation_state& state, size_t depth)
 {
     resettable resettable1(*this);
     if (p_can_template_usage(depth + 1))
@@ -39936,7 +40087,7 @@ bool leaf::parsing::instance::m_typenavigation_templateusage_885(bool is_can, st
     skip();
     return true;
 }
-bool leaf::parsing::instance::m_ident_886(bool is_can, std::shared_ptr<leaf::parsing::instance::type_navigation>& actual, leaf::parsing::instance::type_navigation_state& state, size_t depth)
+bool leaf::parsing::instance::m_ident_890(bool is_can, std::shared_ptr<leaf::parsing::instance::type_navigation>& actual, leaf::parsing::instance::type_navigation_state& state, size_t depth)
 {
     resettable resettable1(*this);
     auto l2 = token_ident(depth + 1);
@@ -39973,7 +40124,7 @@ bool leaf::parsing::instance::lr_can_type_navigation(size_t depth)
     resettable resettable1(*this);
     std::shared_ptr<leaf::parsing::instance::type_navigation> fake;
     type_navigation_state state;
-    if (!m_ident_886(true, fake, state, depth + 1))
+    if (!m_ident_890(true, fake, state, depth + 1))
     {
         return false;
     }
@@ -39981,13 +40132,13 @@ bool leaf::parsing::instance::lr_can_type_navigation(size_t depth)
     {
         skip();
         resettable resettable1(*this);
-        if (m_typenavigation_coloncolon_ident_templateusage_883(true, fake, state, depth + 1))
+        if (m_typenavigation_coloncolon_ident_templateusage_887(true, fake, state, depth + 1))
         {
         }
-        else if (m_typenavigation_coloncolon_ident_884(true, fake, state, depth + 1))
+        else if (m_typenavigation_coloncolon_ident_888(true, fake, state, depth + 1))
         {
         }
-        else if (m_typenavigation_templateusage_885(true, fake, state, depth + 1))
+        else if (m_typenavigation_templateusage_889(true, fake, state, depth + 1))
         {
         }
         else
@@ -40001,7 +40152,7 @@ std::shared_ptr<leaf::parsing::instance::type_navigation> leaf::parsing::instanc
     auto actual = std::make_shared<leaf::parsing::instance::type_navigation>();
     std::shared_ptr<leaf::parsing::instance::type_navigation> fake;
     type_navigation_state state;
-    if (!m_ident_886(false, actual, state, depth + 1))
+    if (!m_ident_890(false, actual, state, depth + 1))
     {
         report("Something moved wrong (todo: improve error messages)", depth);
         return {};
@@ -40011,7 +40162,7 @@ std::shared_ptr<leaf::parsing::instance::type_navigation> leaf::parsing::instanc
     {
         skip();
         resettable resettable1(*this);
-        if (m_typenavigation_coloncolon_ident_templateusage_883(true, fake, state, depth + 1))
+        if (m_typenavigation_coloncolon_ident_templateusage_887(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -40021,9 +40172,9 @@ std::shared_ptr<leaf::parsing::instance::type_navigation> leaf::parsing::instanc
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_typenavigation_coloncolon_ident_templateusage_883(false, actual, state, depth + 1);
+            m_typenavigation_coloncolon_ident_templateusage_887(false, actual, state, depth + 1);
         }
-        else if (m_typenavigation_coloncolon_ident_884(true, fake, state, depth + 1))
+        else if (m_typenavigation_coloncolon_ident_888(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -40033,9 +40184,9 @@ std::shared_ptr<leaf::parsing::instance::type_navigation> leaf::parsing::instanc
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_typenavigation_coloncolon_ident_884(false, actual, state, depth + 1);
+            m_typenavigation_coloncolon_ident_888(false, actual, state, depth + 1);
         }
-        else if (m_typenavigation_templateusage_885(true, fake, state, depth + 1))
+        else if (m_typenavigation_templateusage_889(true, fake, state, depth + 1))
         {
             resettable1.reset();
             if (!is_first2)
@@ -40045,7 +40196,7 @@ std::shared_ptr<leaf::parsing::instance::type_navigation> leaf::parsing::instanc
                 actual->left = tmp_actual3;
             }
             is_first2 = false;
-            m_typenavigation_templateusage_885(false, actual, state, depth + 1);
+            m_typenavigation_templateusage_889(false, actual, state, depth + 1);
         }
         else
         {
